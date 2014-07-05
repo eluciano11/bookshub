@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="954px" height="615px" viewBox="0 0 954 615" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0.3 (7891) - http://www.bohemiancoding.com/sketch -->
+    <title>Letter</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Letter" sketch:type="MSArtboardGroup">
+            <path d="M261,403 C233.385763,403 211,380.614237 211,353 C211,333.445843 222.224939,316.51341 238.582721,308.294799 C243.96968,287.975478 262.485985,273 284.5,273 C292.832457,273 300.663807,275.145499 307.471746,278.914196 C318.797852,266.667621 335.003491,259 353,259 C381.006579,259 404.675978,277.569671 412.367307,303.068121 C413.23915,303.022894 414.116901,303 415,303 C442.614237,303 465,325.385763 465,353 C465,380.280129 443.152658,402.457537 416,402.990199 L416,403 L261,403 Z" id="Cloud" stroke="#B4B5B8" stroke-width="4" sketch:type="MSShapeGroup"></path>
+            <g id="Title" sketch:type="MSLayerGroup" transform="translate(190.000000, 39.000000)" font-weight="260" font-family="Helvetica" fill="#4C4C4C" font-size="48" sketch:alignment="middle">
+                <text id="Cloud-System-Architecture" sketch:type="MSTextLayer">
+                    <tspan x="1.112" y="47">Cloud System Architecture</tspan>
+                </text>
+            </g>
+            <g id="Distributions" sketch:type="MSLayerGroup" transform="translate(637.000000, 251.000000)" font-weight="260" font-family="Helvetica" fill="#4C4C4C" font-size="24" sketch:alignment="middle">
+                <text id="Phones" sketch:type="MSTextLayer">
+                    <tspan x="26.23" y="67">Phones</tspan>
+                </text>
+                <text id="Tablets" sketch:type="MSTextLayer">
+                    <tspan x="117.734" y="22.9602051">Tablets</tspan>
+                </text>
+                <text id="Web" sketch:type="MSTextLayer">
+                    <tspan x="41.794" y="117.980103">Web</tspan>
+                </text>
+                <text id="Desktops" sketch:type="MSTextLayer">
+                    <tspan x="165.824" y="99.5">Desktops</tspan>
+                </text>
+                <text id="Laptops" sketch:type="MSTextLayer">
+                    <tspan x="127.484" y="168.960205">Laptops</tspan>
+                </text>
+            </g>
+            <g id="Cloud-Components" sketch:type="MSLayerGroup" transform="translate(21.000000, 176.000000)">
+                <text id="Queue" sketch:type="MSTextLayer" font-family="Helvetica" font-size="24" font-weight="260" sketch:alignment="middle" fill="#4C4C4C">
+                    <tspan x="128.226" y="69">Queue</tspan>
+                </text>
+                <text id="Content" sketch:type="MSTextLayer" font-family="Helvetica" font-size="24" font-weight="260" sketch:alignment="middle" fill="#4C4C4C">
+                    <tspan x="251.726" y="23">Content</tspan>
+                </text>
+                <text id="Database" sketch:type="MSTextLayer" font-family="Helvetica" font-size="24" font-weight="260" sketch:alignment="middle" fill="#4C4C4C">
+                    <tspan x="14.48" y="187">Database</tspan>
+                </text>
+                <text id="Bookshub" sketch:type="MSTextLayer" font-family="Helvetica" font-size="24" font-weight="260" sketch:alignment="middle" fill="#4C4C4C">
+                    <tspan x="263.476" y="182">Bookshub</tspan>
+                </text>
+                <text id="Logging" sketch:type="MSTextLayer" font-family="Helvetica" font-size="24" font-weight="260" sketch:alignment="middle" fill="#4C4C4C">
+                    <tspan x="118.824" y="296">Logging</tspan>
+                </text>
+                <text id="Monitoring" sketch:type="MSTextLayer" font-family="Helvetica" font-size="24" font-weight="260" sketch:alignment="middle" fill="#4C4C4C">
+                    <tspan x="264.824" y="305">Monitoring</tspan>
+                </text>
+                <path d="M218.5,129.5 L177.5,83.5" id="Line" stroke="#B4B4B8" stroke-width="3" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M310.5,87.5 L304.5,38.5" id="Line-5" stroke="#B4B4B8" stroke-width="3" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M186.5,270.5 L228.5,227.5" id="Line-3" stroke="#B4B4B8" stroke-width="3" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M326.5,283.5 L338.5,227.5" id="Line-4" stroke="#B4B4B8" stroke-width="3" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M189.5,181.5 L133.5,181.5" id="Line-2" stroke="#B4B4B8" stroke-width="3" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M601.528656,175.5 L444.5,175.5" id="Line-6" stroke="#B4B4B8" stroke-width="3" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>
