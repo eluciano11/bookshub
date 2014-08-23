@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import datetime
 
 from configurations import Configuration, values
 
@@ -38,6 +39,7 @@ class Common(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'south',
+        'rest_framework'
     )
 
     MIDDLEWARE_CLASSES = (
@@ -93,6 +95,28 @@ class Common(Configuration):
     EMAIL_HOST_PASSWORD = values.Value()
     EMAIL_PORT = values.IntegerValue()
     EMAIL_USE_TLS = values.BooleanValue(False)
+
+    # Django REST framework
+    REST_FRAMEWORK = {
+        'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticated',
+        ),
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+        ),
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+            'rest_framework.renderers.BrowsableAPIRenderer',
+        ),
+    }
+
+    JWT_AUTH = {
+        'JWT_PAYLOAD_HANDLER':
+            'bookshub.utils.jwt_handlers.jwt_payload_handler',
+
+        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=90)
+    }
 
 
 class Development(Common):
