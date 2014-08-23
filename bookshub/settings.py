@@ -27,7 +27,7 @@ class Common(Configuration):
 
     TEMPLATE_DEBUG = values.BooleanValue(DEBUG)
 
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = []
 
     # Application definition
 
@@ -38,8 +38,12 @@ class Common(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+
+        # Third party
         'south',
-        'rest_framework'
+        'rest_framework',
+        'django_extensions',
+
     )
 
     MIDDLEWARE_CLASSES = (
