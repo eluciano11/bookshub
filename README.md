@@ -62,7 +62,7 @@ That will install all of the dependencies.
 ###Database
 
 For development, we use sqlite since python comes with the driver and it's Django's default database.
-To create the database and run the migrations(South) do the following:
+To create the database and run the migrations [South](https://godjango.com/3-introduction-to-south-migrations/) do the following:
 
 ```bash
 python manage.py syncdb
