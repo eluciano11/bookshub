@@ -128,9 +128,18 @@ class Development(Common):
 
     TEMPLATE_DEBUG = DEBUG
 
+    # Development-only installed apps
+    Common.INSTALLED_APPS += (
+        'debug_toolbar',
+    )
+
     PROTOCOL = 'http'
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    # Django Debug Toolbar
+    DEBUG_TOOLBAR_PATCH_SETTINGS = values.BooleanValue(
+        environ_prefix=None, default=True)
 
     # Dummy cache for development
     CACHES = {
