@@ -44,6 +44,7 @@ class Common(Configuration):
         'rest_framework',
         'django_extensions',
         'reversion',
+        'django_gravatar',
 
     )
 
