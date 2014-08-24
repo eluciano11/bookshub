@@ -43,7 +43,7 @@ class Common(Configuration):
         'south',
         'rest_framework',
         'django_extensions',
-        'reversion'
+        'reversion',
 
     )
 
