@@ -1,14 +1,3 @@
-"""
-Django settings for bookshub project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
-"""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import datetime
 
@@ -39,6 +28,7 @@ class Common(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'django.contrib.sites',
 
         # Third party
         'south',
@@ -145,7 +135,24 @@ class Development(Common):
     # Development-only installed apps
     Common.INSTALLED_APPS += (
         'debug_toolbar',
+        'rest_framework_swagger',
     )
+
+    SWAGGER_SETTINGS = {
+        "exclude_namespaces": [],
+        "api_version": '0.1',
+        "api_path": "/",
+        "enabled_methods": [
+            'get',
+            'post',
+            'put',
+            'patch',
+            'delete'
+        ],
+        "api_key": '',
+        "is_authenticated": False,
+        "is_superuser": False,
+    }
 
     PROTOCOL = 'http'
 
