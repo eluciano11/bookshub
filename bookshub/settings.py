@@ -32,6 +32,7 @@ class Common(Configuration):
     # Application definition
 
     INSTALLED_APPS = (
+        'bootstrap_admin',
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
@@ -55,6 +56,17 @@ class Common(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
+
+    TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.contrib.auth.context_processors.auth',
+        'django.core.context_processors.debug',
+        'django.core.context_processors.i18n',
+        'django.core.context_processors.media',
+        'django.core.context_processors.static',
+        'django.core.context_processors.tz',
+        'django.core.context_processors.request',
+        'django.contrib.messages.context_processors.messages',
     )
 
     ROOT_URLCONF = 'bookshub.urls'
