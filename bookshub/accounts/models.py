@@ -73,6 +73,9 @@ class Account(BaseModel, AbstractBaseUser):
     def __str__(self):
         return self.email
 
+    def is_admin(self):
+        return self.is_superuser
+
     def save(self, *args, **kwargs):
         if not self.pk or self.has_field_changed('email'):
             self.gravatar_url = get_gravatar_url(self.email)
