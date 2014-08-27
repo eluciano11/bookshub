@@ -36,6 +36,12 @@ class Common(Configuration):
         'django_extensions',
         'reversion',
         'django_gravatar',
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.facebook',
+        'allauth.socialaccount.providers.google',
+        'allauth.socialaccount.providers.twitter',
 
     )
 
@@ -57,6 +63,16 @@ class Common(Configuration):
         'django.core.context_processors.tz',
         'django.core.context_processors.request',
         'django.contrib.messages.context_processors.messages',
+        # allauth specific context processors
+        "allauth.account.context_processors.account",
+        "allauth.socialaccount.context_processors.socialaccount",
+    )
+
+    AUTHENTICATION_BACKENDS = (
+        "django.contrib.auth.backends.ModelBackend",
+
+        # `allauth` specific authentication methods, such as login by e-mail
+        "allauth.account.auth_backends.AuthenticationBackend",
     )
 
     ROOT_URLCONF = 'bookshub.urls'
