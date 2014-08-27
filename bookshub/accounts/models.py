@@ -13,6 +13,7 @@ from django_gravatar.helpers import get_gravatar_url
 from ..utils.models import BaseModel
 from ..utils.jwt_handlers import jwt_payload_handler, jwt_encode_handler
 from .constants import ACCOUNT_TYPE_CHOICES, ACCOUNT_STATUS_CHOICES
+from .managers import AccountManager, ActiveAccountManager
 
 
 def get_logo_path(filename):
@@ -62,6 +63,9 @@ class Account(BaseModel, AbstractBaseUser):
     is_active = models.BooleanField(help_text=is_active_help_text)
 
     token = models.CharField(max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
+
+    objects = AccountManager()
+    active = ActiveAccountManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', 'type', 'title']
