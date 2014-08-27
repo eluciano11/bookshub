@@ -45,7 +45,7 @@ class Common(Configuration):
         'allauth.socialaccount.providers.twitter',
 
         # Apps
-        'bookshub.accounts'
+        'bookshub.users'
 
     )
 
@@ -145,6 +145,22 @@ class Common(Configuration):
 
         'JWT_EXPIRATION_DELTA': datetime.timedelta(days=90)
     }
+
+    AUTH_USER_MODEL = 'users.User'
+
+    # auth and allauth settings
+    LOGIN_REDIRECT_URL = '/'
+    LOGIN_URL = '/accounts/login/'
+    ACCOUNT_EMAIL_VERIFICATION = "none"
+    ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Bookshub]'
+    ACCOUNT_LOGOUT_ON_GET = True
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+    ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+    ACCOUNT_USERNAME_BLACKLIST = ['admin']
+    ACCOUNT_USER_MODEL_USERNAME_FIELD = "email"
+    ACCOUNT_USER_MODEL_EMAIL_FIELD = None
+    ACCOUNT_USERNAME_REQUIRED = False
 
 
 class Development(Common):

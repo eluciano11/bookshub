@@ -1,23 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
-from .models import Account
-
-
-class CustomUserChangeForm(UserChangeForm):
-    class Meta(UserChangeForm.Meta):
-        model = Account
-
-
-class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = Account
+from .forms import UserChangeForm, UserCreationForm
+from .models import User
 
 
 class CustomUserAdmin(UserAdmin):
-    form = CustomUserChangeForm
-    add_form = CustomUserCreationForm
+    form = UserChangeForm
+    add_form = UserCreationForm
     filter_horizontal = ()
     ordering = ('email', )
     readonly_fields = ('token',)
@@ -39,6 +29,11 @@ class CustomUserAdmin(UserAdmin):
                        'google_url', 'token', 'last_login')
         }),
     )
+    add_fieldsets = (
+        (None, {
+            'fields': ('email', 'password1', 'password2')}
+        ),
+    )
 
 
-admin.site.register(Account, CustomUserAdmin)
+admin.site.register(User, CustomUserAdmin)
