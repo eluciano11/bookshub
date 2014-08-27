@@ -21,12 +21,12 @@ def get_logo_path(filename):
            (str(time()).replace('.', '_'), filename)
 
 
-class Account(BaseModel, AbstractBaseUser):
+class User(BaseModel, AbstractBaseUser):
     # Help text
     is_staff_help_text = 'Designates whether the user can log into this admin site.'
 
     is_active_help_text = """Designates whether this user should be treated as
-                            active. Unselect this instead of deleting accounts."""
+                            active. Unselect this instead of deleting users."""
 
     is_superuser_help_text = """Designates that this user has all
                                permissions without explicitly
@@ -60,7 +60,7 @@ class Account(BaseModel, AbstractBaseUser):
 
     is_staff = models.BooleanField(default=False, help_text=is_staff_help_text)
     is_superuser = models.BooleanField(default=False, help_text=is_superuser_help_text)
-    is_active = models.BooleanField(help_text=is_active_help_text)
+    is_active = models.BooleanField(default=True, help_text=is_active_help_text)
 
     token = models.CharField(max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
 
@@ -80,7 +80,7 @@ class Account(BaseModel, AbstractBaseUser):
         if not self.pk or self.has_field_changed('email'):
             self.gravatar_url = get_gravatar_url(self.email)
 
-        return super(Account, self).save(*args, **kwargs)
+        return super(User, self).save(*args, **kwargs)
 
     def has_perm(self, perm, obj=None):
         """
@@ -153,7 +153,7 @@ class Account(BaseModel, AbstractBaseUser):
         """
         Sets the user's password and changes token_version.
         """
-        super(Account, self).set_password(raw_password)
+        super(User, self).set_password(raw_password)
         self.reset_token_version()
 
     def change_password(self, raw_password):
