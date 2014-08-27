@@ -36,12 +36,16 @@ class Common(Configuration):
         'django_extensions',
         'reversion',
         'django_gravatar',
+        'django_countries',
         'allauth',
         'allauth.account',
         'allauth.socialaccount',
         'allauth.socialaccount.providers.facebook',
         'allauth.socialaccount.providers.google',
         'allauth.socialaccount.providers.twitter',
+
+        # Apps
+        'bookshub.accounts'
 
     )
 
