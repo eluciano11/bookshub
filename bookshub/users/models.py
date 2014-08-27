@@ -62,7 +62,7 @@ class User(BaseModel, AbstractBaseUser):
     is_superuser = models.BooleanField(default=False, help_text=is_superuser_help_text)
     is_active = models.BooleanField(default=True, help_text=is_active_help_text)
 
-    token = models.CharField(max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
+    token_version = models.CharField(max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
 
     objects = AccountManager()
     active = ActiveAccountManager()
