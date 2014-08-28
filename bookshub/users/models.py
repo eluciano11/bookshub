@@ -23,6 +23,11 @@ def get_logo_path(filename):
 
 class User(BaseModel, AbstractBaseUser):
     # Help text
+
+    username_help_text = """Required. 30 characters or fewer.
+                           Letters, numbers and
+                           @/./+/-/_ characters"""
+
     is_staff_help_text = 'Designates whether the user can log into this admin site.'
 
     is_active_help_text = """Designates whether this user should be treated as
@@ -33,6 +38,7 @@ class User(BaseModel, AbstractBaseUser):
                                assigning them."""
 
     email = models.EmailField('email address', max_length=254, unique=True)
+    username = models.CharField(max_length=30, help_text=username_help_text, unique=True, blank=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     phone = models.CharField(max_length=16, blank=True)
