@@ -17,4 +17,8 @@ urlpatterns = patterns(
         r'^api/docs/',
         include('rest_framework_swagger.urls')
     ),
+    url(
+        r'^api/',
+        include('bookshub.users.urls')
+    )
 )
