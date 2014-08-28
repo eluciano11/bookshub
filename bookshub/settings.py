@@ -130,8 +130,8 @@ class Common(Configuration):
             'rest_framework.permissions.IsAuthenticated',
         ),
         'DEFAULT_AUTHENTICATION_CLASSES': (
-            'rest_framework.authentication.BasicAuthentication',
-            'rest_framework.authentication.SessionAuthentication',
+            'bookshub.users.authentication.JWTAuthentication',
+            'bookshub.users.authentication.SessionAuthentication',
         ),
         'DEFAULT_RENDERER_CLASSES': (
             'rest_framework.renderers.JSONRenderer',
