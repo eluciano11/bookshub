@@ -170,7 +170,7 @@ class User(BaseModel, AbstractBaseUser):
         self.reset_token_version()
         self.save()
 
-        self.notify_password_updated()
+        #self.notify_password_updated()
 
     def reset_token_version(self):
         """

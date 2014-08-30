@@ -126,3 +126,42 @@ class SignupSerializer(serializers.Serializer):
     def validate(self, attrs):
         user = self.create_user(attrs)
         return UserSerializer(user).data
+
+
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    current_password = serializers.CharField(write_only=True)
+    new_password = fields.PasswordField(write_only=True)
+    new_password_confirmation = fields.PasswordField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('current_password', 'new_password', 'new_password_confirmation',)
+
+    def validate_current_password(self, attrs, source):
+        current_password = attrs[source]
+        user = self.object
+
+        #and not user.check_password(current_password)
+        if user and False:
+            message = 'Current password is invalid'
+            raise serializers.ValidationError(message)
+
+        return attrs
+
+    def validate_new_password_confirmation(self, attrs, source):
+        confirmation = attrs[source]
+        new_password = attrs['new_password']
+
+        if confirmation != new_password:
+            message = 'The passwords are not the same'
+            raise serializers.ValidationError(message)
+
+        return attrs
+
+    def restore_object(self, attrs, instance=None):
+        if instance is not None:
+            print instance
+            instance.change_password(attrs.get('new_password_confirmation'))
+            return instance
+
+        return User()

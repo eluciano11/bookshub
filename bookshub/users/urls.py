@@ -16,5 +16,9 @@ urlpatterns = patterns(
     (
         r'auth/signup/$',
         views.SingupAPIView.as_view()
+    ),
+    (
+        r'auth/change_password/$',
+        views.ChangePasswordAPIView.as_view()
     )
 )
