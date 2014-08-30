@@ -59,6 +59,12 @@ pip install -r requirements.txt
 
 That will install all of the dependencies.
 
+###Environment
+
+This project uses environment variables to keep secret settings secret. To get started, you would need to copy the `.env.example` file to a new file called `.env` in the same directory.
+
+That's it!
+
 ###Database
 
 For development, we use sqlite since python comes with the driver and it's Django's default database.
@@ -75,8 +81,6 @@ python manage.py migrate
 ```
 
 ###Running the project
-
-To run the project, you would need to copy the `.env.example` file to a new file called `.env` in the same directory.
 
 Now, you can run the server by doing this:
 
