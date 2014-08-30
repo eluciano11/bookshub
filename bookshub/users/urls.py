@@ -12,5 +12,9 @@ urlpatterns = patterns(
     (
         r'autocomplete/users/$',
         views.UserAutoCompleteAPIView.as_view()
+    ),
+    (
+        r'auth/signup/$',
+        views.SingupAPIView.as_view()
     )
 )

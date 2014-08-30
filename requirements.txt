@@ -18,7 +18,6 @@ django-reversion==1.8.2
 djangorestframework==2.3.14
 djangorestframework-jwt==0.1.6
 oauthlib==0.6.3
-pygraphviz==1.2
 python-openid==2.2.5
 requests==2.3.0
 requests-oauthlib==0.4.1
