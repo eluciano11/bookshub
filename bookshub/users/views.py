@@ -60,3 +60,18 @@ class SingupAPIView(generics.CreateAPIView):
             return Response(serializer.object)
 
         return Response(serializer.errors)
+
+
+class ChangePasswordAPIView(generics.UpdateAPIView):
+    model = User
+    serializer_class = serializers.ChangePasswordSerializer
+
+    def put(self, request):
+        serializer = self.serializer_class(
+            data=request.DATA, instance=request.user)
+
+        if serializer.is_valid():
+            data = serializers.UserSimpleSerializer(serializer.object).data
+            return Response(data)
+
+        return Response(serializer.errors)
