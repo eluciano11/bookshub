@@ -64,6 +64,8 @@ class SingupAPIView(generics.CreateAPIView):
 
 class ChangePasswordAPIView(generics.UpdateAPIView):
     model = User
+    throttle_classes = ()
+    permission_classes = ()
     serializer_class = serializers.ChangePasswordSerializer
 
     def put(self, request):
@@ -73,5 +75,21 @@ class ChangePasswordAPIView(generics.UpdateAPIView):
         if serializer.is_valid():
             data = serializers.UserSimpleSerializer(serializer.object).data
             return Response(data)
+
+        #fix this
+        return Response(serializer.errors)
+
+
+class ResetPasswordAPIView(generics.UpdateAPIView):
+    model = User
+    throttle_classes = ()
+    permission_classes = ()
+    serializer_class = serializers.ResetPasswordSerializer
+
+    def put(self, request):
+        serializer = self.get_serializer(data=request.DATA)
+
+        if serializer.is_valid():
+            return Response(serializer.data)
 
         return Response(serializer.errors)

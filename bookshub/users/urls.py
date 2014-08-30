@@ -20,5 +20,9 @@ urlpatterns = patterns(
     (
         r'auth/change_password/$',
         views.ChangePasswordAPIView.as_view()
+    ),
+    (
+        r'auth/reset_password/$',
+        views.ResetPasswordAPIView.as_view()
     )
 )
