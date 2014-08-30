@@ -114,7 +114,6 @@ class SignupSerializer(serializers.Serializer):
         status = attrs['status']
         title = attrs['title']
 
-        print 'hola!!!!'
         user = User.objects.create_user(
             username, email, first_name, last_name,
             phone, type, title, password)
@@ -160,7 +159,6 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     def restore_object(self, attrs, instance=None):
         if instance is not None:
-            print instance
             instance.change_password(attrs.get('new_password_confirmation'))
             return instance
 
