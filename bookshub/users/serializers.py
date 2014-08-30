@@ -128,20 +128,34 @@ class SignupSerializer(serializers.Serializer):
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
     current_password = serializers.CharField(write_only=True)
     new_password = fields.PasswordField(write_only=True)
     new_password_confirmation = fields.PasswordField(write_only=True)
 
     class Meta:
         model = User
-        fields = ('current_password', 'new_password', 'new_password_confirmation',)
+        fields = (
+            'email', 'current_password', 'new_password',
+            'new_password_confirmation')
+
+    def validate_email(self, attrs, source):
+        email = attrs[source]
+        user = User.objects.get(email=email)
+
+        if bool(user):
+            self.user = user
+        else:
+            message = 'The email is not valid.'
+            raise serializers.ValidationError(message)
+
+        return attrs
 
     def validate_current_password(self, attrs, source):
         current_password = attrs[source]
-        user = self.object
+        user = self.user
 
-        #and not user.check_password(current_password)
-        if user and False:
+        if user and not user.check_password(current_password):
             message = 'Current password is invalid'
             raise serializers.ValidationError(message)
 
@@ -163,3 +177,49 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
             return instance
 
         return User()
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    """
+    Serializer that handles reset password endpoint.
+    """
+    #token = serializers.CharField(write_only=True)
+    email = serializers.EmailField()
+    new_password = fields.PasswordField(write_only=True)
+
+    def validate_password(self, attrs, source):
+        new_password = attrs[source]
+
+        if new_password:
+            attrs['new_password'] = smart_str(new_password)
+
+        return attrs
+
+    def validate_email(self, attrs, source):
+        email = attrs[source]
+        user = User.objects.get(email=email)
+
+        if bool(user):
+            self.user = user
+        else:
+            message = 'The email is not valid.'
+            raise serializers.ValidationError(message)
+
+        return attrs
+
+    # def validate_token(self, attrs, source):
+    #     token = attrs[source]
+    #
+    #     self.user = User.objects.get_from_password_reset_token(token)
+    #
+    #     if not self.user:
+    #         msg = 'Invalid password reset token.'
+    #         raise serializers.ValidationError(msg)
+    #
+    #     return attrs
+
+    def validate(self, attrs):
+        self.user.change_password(attrs['new_password'])
+        print self.user
+
+        return UserSimpleSerializer(self.user).data
