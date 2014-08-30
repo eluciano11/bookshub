@@ -46,3 +46,17 @@ class UserAutoCompleteAPIView(generics.ListAPIView):
         queryset = super(UserAutoCompleteAPIView, self).filter_queryset(users)
 
         return queryset[:10]
+
+
+class SingupAPIView(generics.CreateAPIView):
+    throttle_classes = ()
+    permission_classes = ()
+    serializer_class = serializers.SignupSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.DATA)
+
+        if serializer.is_valid():
+            return Response(serializer.object)
+
+        return Response(serializer.errors)

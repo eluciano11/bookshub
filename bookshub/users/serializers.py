@@ -1,3 +1,4 @@
+from django.utils.encoding import smart_str
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
@@ -10,7 +11,7 @@ class SigninSerializer(serializers.Serializer):
     """
     Serializer that handles signin endpoint data.
     """
-    email = serializers.CharField(max_length=30)
+    email = serializers.EmailField(max_length=30)
     password = fields.PasswordField(write_only=True)
 
     def validate(self, attrs):
@@ -53,3 +54,75 @@ class UserSimpleSerializer(DynamicFieldsModelSerializer):
                   'country', 'city', 'state', 'zip', 'facebook_url',
                   'twitter_url', 'google_url', 'gravatar_url', 'institution',
                   'department', 'description', 'logo', 'company_name')
+
+
+class SignupSerializer(serializers.Serializer):
+    """
+    Serializers used to create a user.
+    """
+
+    email = serializers.EmailField(max_length=30)
+    password = serializers.CharField(max_length=30, write_only=True)
+    username = serializers.CharField(max_length=30)
+    first_name = serializers.CharField(max_length=30)
+    last_name = serializers.CharField(max_length=30)
+    phone = serializers.CharField(max_length=16)
+    type = serializers.CharField(max_length=20)
+    status = serializers.CharField(max_length=20)
+    title = serializers.CharField(max_length=30)
+
+    def validate_email(self, attrs, source):
+        email = attrs[source].lower().strip()
+
+        is_found = User.objects.filter(email__icontains=email)
+
+        if is_found:
+            message = 'Email already in use'
+            raise serializers.ValidationError(message)
+
+        return attrs
+
+    def validate_username(self, attrs, source):
+        username = attrs[source].lower().strip()
+
+        print username
+
+        is_found = User.objects.filter(username=username).exists()
+
+        if is_found:
+            message = 'Username already in use'
+            raise serializers.ValidationError(message)
+
+        return attrs
+
+    def validate_password(self, attrs, source):
+        password = attrs[source]
+
+        if password:
+            attrs['password'] = smart_str(password)
+
+        return attrs
+
+    def create_user(self, attrs):
+        username = attrs['username']
+        email = attrs['email']
+        password = attrs['password']
+        first_name = attrs['first_name']
+        last_name = attrs['last_name']
+        phone = attrs['phone']
+        type = attrs['type']
+        status = attrs['status']
+        title = attrs['title']
+
+        print 'hola!!!!'
+        user = User.objects.create_user(
+            username, email, first_name, last_name,
+            phone, type, title, password)
+        user.status = status
+        user.save()
+
+        return user
+
+    def validate(self, attrs):
+        user = self.create_user(attrs)
+        return UserSerializer(user).data
