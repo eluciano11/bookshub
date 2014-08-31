@@ -77,6 +77,7 @@ class ChangePasswordAPIView(generics.UpdateAPIView):
             return Response(data)
 
         #fix this
+        #Response will no have a serialzer.errors
         return Response(serializer.errors)
 
 
@@ -92,4 +93,25 @@ class ResetPasswordAPIView(generics.UpdateAPIView):
         if serializer.is_valid():
             return Response(serializer.data)
 
+        return Response(serializer.errors)
+
+
+class CancelAccountAPIView(generics.UpdateAPIView):
+    model = User
+    throttle_classes = ()
+    permission_classes = ()
+    serializer_class = serializers.CancelAccountSerializer
+
+    def put(self, request):
+        serializer = self.serializer_class(
+            data=request.DATA, instance=request.user)
+
+        print serializer.is_valid()
+
+        if serializer.is_valid():
+            self.object = serializer.save()
+            return Response(serializer.data)
+
+        #fix this
+        #Response will no have a serialzer.errors
         return Response(serializer.errors)
