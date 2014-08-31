@@ -85,8 +85,6 @@ class SignupSerializer(serializers.Serializer):
     def validate_username(self, attrs, source):
         username = attrs[source].lower().strip()
 
-        print username
-
         is_found = User.objects.filter(username=username).exists()
 
         if is_found:
@@ -197,14 +195,14 @@ class ResetPasswordSerializer(serializers.Serializer):
 
     def validate_email(self, attrs, source):
         email = attrs[source]
-        user = User.objects.get(email=email)
+        user = User.objects.filter(email=email).exists()
 
-        if bool(user):
-            self.user = user
-        else:
+        if not user:
             message = 'The email is not valid.'
             raise serializers.ValidationError(message)
 
+        #this is for testing!
+        self.user = User.objects.get(email=email)
         return attrs
 
     # def validate_token(self, attrs, source):
@@ -220,6 +218,27 @@ class ResetPasswordSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         self.user.change_password(attrs['new_password'])
-        print self.user
 
         return UserSimpleSerializer(self.user).data
+
+
+class CancelAccountSerializer(serializers.ModelSerializer):
+    password = fields.PasswordField()
+
+    class Meta:
+        model = User
+        fields = ('password',)
+
+    def validate_password(self, attrs, source):
+        password = attrs[source]
+        user = self.object
+
+        if user and not user.check_password(password):
+            message = 'Current password is invalid'
+            raise serializers.ValidationError(message)
+
+        return attrs
+
+    def save_object(self, obj, **kwargs):
+        obj.is_active = False
+        super(CancelAccountSerializer, self).save_object(obj, **kwargs)
