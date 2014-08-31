@@ -106,8 +106,6 @@ class CancelAccountAPIView(generics.UpdateAPIView):
         serializer = self.serializer_class(
             data=request.DATA, instance=request.user)
 
-        print serializer.is_valid()
-
         if serializer.is_valid():
             self.object = serializer.save()
             return Response(serializer.data)
@@ -115,3 +113,18 @@ class CancelAccountAPIView(generics.UpdateAPIView):
         #fix this
         #Response will no have a serialzer.errors
         return Response(serializer.errors)
+
+
+class SettingsAPIView(generics.UpdateAPIView):
+    model = User
+    serializer_class = serializers.SettingsSerializer
+
+    def put(self, request):
+        serializers = self.serializer_class(
+            data=request.DATA, instance=request.user)
+
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+
+        return Response(serializers.errors)

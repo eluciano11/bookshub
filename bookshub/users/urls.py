@@ -28,5 +28,9 @@ urlpatterns = patterns(
     (
         r'auth/cancel_account/$',
         views.CancelAccountAPIView.as_view()
+    ),
+    (
+        r'auth/settings/$',
+        views.SettingsAPIView.as_view()
     )
 )
