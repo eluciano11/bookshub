@@ -15,7 +15,7 @@ urlpatterns = patterns(
     ),
     (
         r'auth/signup/$',
-        views.SingupAPIView.as_view()
+        views.SignupAPIView.as_view()
     ),
     (
         r'auth/change_password/$',
@@ -31,6 +31,6 @@ urlpatterns = patterns(
     ),
     (
         r'auth/settings/$',
-        views.SettingsAPIView.as_view()
+        views.UserSettingsAPIView.as_view()
     )
 )
