@@ -242,3 +242,20 @@ class CancelAccountSerializer(serializers.ModelSerializer):
     def save_object(self, obj, **kwargs):
         obj.is_active = False
         super(CancelAccountSerializer, self).save_object(obj, **kwargs)
+
+
+class SettingsSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=False)
+    username = serializers.CharField(required=False)
+    type = serializers.CharField(required=False)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone',
+          'type', 'status', 'title', 'address_1', 'address_2',
+          'country', 'city', 'state', 'zip', 'facebook_url',
+          'twitter_url', 'google_url', 'gravatar_url', 'institution',
+          'department', 'description', 'logo', 'company_name')
+
+    def save_object(self, obj, **kwargs):
+        super(SettingsSerializer, self).save_object(obj, **kwargs)
