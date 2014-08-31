@@ -170,10 +170,14 @@ class User(BaseModel, AbstractBaseUser):
         self.reset_token_version()
         self.save()
 
-        #self.notify_password_updated()
+        # TODO: send notification email
 
     def reset_token_version(self):
         """
         Resets the user's token_version.
         """
         self.token_version = str(uuid.uuid4())
+
+    def send_password_reset_email(self):
+        # TODO: send reset password email
+        pass
