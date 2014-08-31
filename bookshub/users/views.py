@@ -3,6 +3,7 @@ from rest_framework import generics, filters
 
 from . import serializers
 from .models import User
+from ..utils.response import ErrorResponse
 
 
 class SigninAPIView(generics.CreateAPIView):
@@ -16,7 +17,7 @@ class SigninAPIView(generics.CreateAPIView):
         if serializer.is_valid():
             return Response(serializer.object)
 
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
 class UserAutoCompleteAPIView(generics.ListAPIView):
@@ -63,7 +64,7 @@ class SignupAPIView(generics.CreateAPIView):
         if serializer.is_valid():
             return Response(serializer.object)
 
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
 class ChangePasswordAPIView(generics.UpdateAPIView):
@@ -80,7 +81,7 @@ class ChangePasswordAPIView(generics.UpdateAPIView):
 
         # TODO: fix this
         #Response will no have a serialzer.errors
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
 class ResetPasswordAPIView(generics.UpdateAPIView):
@@ -94,7 +95,7 @@ class ResetPasswordAPIView(generics.UpdateAPIView):
         if serializer.is_valid():
             return Response(serializer.data)
 
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
 class CancelAccountAPIView(generics.UpdateAPIView):
@@ -109,7 +110,7 @@ class CancelAccountAPIView(generics.UpdateAPIView):
             self.object = serializer.save()
             return Response(serializer.data)
 
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
 class UserSettingsAPIView(generics.UpdateAPIView):
