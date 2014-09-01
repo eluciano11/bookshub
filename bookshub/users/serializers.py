@@ -223,7 +223,7 @@ class CancelAccountSerializer(serializers.ModelSerializer):
     """
     Serializer that handles cancel account in user settings endpoint.
     """
-    current_password = fields.PasswordField()
+    current_password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
@@ -236,8 +236,6 @@ class CancelAccountSerializer(serializers.ModelSerializer):
         if user and not user.check_password(password):
             message = 'Current password is invalid'
             raise serializers.ValidationError(message)
-
-        del attrs[source]
 
         return attrs
 
@@ -266,6 +264,9 @@ class UserSettingsSerializer(serializers.ModelSerializer):
                   'department', 'description', 'logo', 'company_name', 'token')
 
     def validate_email(self, attrs, source):
+        if not source in attrs:
+            return attrs
+        
         email = attrs[source].lower()
         user = self.object
 
@@ -279,6 +280,9 @@ class UserSettingsSerializer(serializers.ModelSerializer):
         return attrs
 
     def validate_username(self, attrs, source):
+        if not source in attrs:
+            return attrs
+
         username = attrs[source].lower()
         attrs[source] = username
         user = self.object
