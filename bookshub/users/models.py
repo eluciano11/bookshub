@@ -170,7 +170,7 @@ class User(BaseModel, AbstractBaseUser):
         self.reset_token_version()
         self.save()
 
-        # TODO: send notification email
+        # TODO: send notification email - not sure if needed
 
     def reset_token_version(self):
         """

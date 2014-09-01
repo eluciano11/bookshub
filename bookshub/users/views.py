@@ -79,8 +79,6 @@ class ChangePasswordAPIView(generics.UpdateAPIView):
             data = serializers.UserSettingsSerializer(serializer.object).data
             return Response(data)
 
-        # TODO: fix this
-        #Response will no have a serialzer.errors
         return ErrorResponse(serializer.errors)
 
 
@@ -108,6 +106,7 @@ class CancelAccountAPIView(generics.UpdateAPIView):
 
         if serializer.is_valid():
             self.object = serializer.save()
+            serializer.data['canceled'] = True
             return Response(serializer.data)
 
         return ErrorResponse(serializer.errors)
