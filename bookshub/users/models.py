@@ -1,6 +1,8 @@
 import time
 import uuid
 import jwt
+from calendar import timegm
+from datetime import datetime
 
 from django.db import models
 from django.conf import settings
@@ -9,6 +11,7 @@ from django.contrib.auth.models import AbstractBaseUser
 
 from django_countries.fields import CountryField
 from django_gravatar.helpers import get_gravatar_url
+from rest_framework_jwt.settings import api_settings
 
 from ..utils.models import BaseModel
 from ..utils.jwt_handlers import jwt_payload_handler, jwt_encode_handler
@@ -119,6 +122,10 @@ class User(BaseModel, AbstractBaseUser):
         Returns a JSON Web Token used for Authentication.
         """
         payload = jwt_payload_handler(self)
+        if api_settings.JWT_ALLOW_REFRESH:
+            payload['orig_iat'] = timegm(
+                datetime.utcnow().utctimetuple()
+            )
         return jwt_encode_handler(payload)
 
     @property
