@@ -400,3 +400,48 @@ class UserSettingsSerializer(serializers.ModelSerializer):
 
     def save_object(self, obj, **kwargs):
         super(UserSettingsSerializer, self).save_object(obj, **kwargs)
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone',
+                  'type', 'status', 'title', 'address_1', 'address_2',
+                  'country', 'city', 'state', 'zip', 'facebook_url',
+                  'twitter_url', 'google_url', 'gravatar_url', 'institution',
+                  'department', 'description', 'logo', 'company_name', 'token')
+
+    def validate_email(self, attrs, source):
+        if not source in attrs:
+            return attrs
+        
+        email = attrs[source].lower()
+        user = self.object
+
+        users = User.objects.filter(
+            email__iexact=email).exclude(pk=user.id)
+
+        if users.exists():
+            msg = 'Email already exists.'
+            raise serializers.ValidationError(msg)
+
+        return attrs
+
+    def validate_username(self, attrs, source):
+        if not source in attrs:
+            return attrs
+
+        username = attrs[source].lower()
+        attrs[source] = username
+        user = self.object
+
+        if is_valid_email(username):
+            msg = 'Invalid username.'
+            raise serializers.ValidationError(msg)
+
+        users = User.objects.filter(
+            username=username).exclude(pk=user.id)
+
+        if users.exists():
+            msg = 'Username already exists.'
+            raise serializers.ValidationError(msg)
+
+        return attrs
+
+    def save_object(self, obj, **kwargs):
+        super(UserSettingsSerializer, self).save_object(obj, **kwargs)
