@@ -81,13 +81,15 @@ class ChangePasswordAPIView(generics.UpdateAPIView):
 
         return ErrorResponse(serializer.errors)
 
+    def get_object(self):
+        return self.request.user
+
 
 class ResetPasswordAPIView(generics.UpdateAPIView):
-    authentication_classes = ()
-    permission_classes = ()
+    model = User
     serializer_class = serializers.ResetPasswordSerializer
 
-    def put(self, request):
+    def put(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.DATA)
 
         if serializer.is_valid():
@@ -95,9 +97,14 @@ class ResetPasswordAPIView(generics.UpdateAPIView):
 
         return ErrorResponse(serializer.errors)
 
+    def get_object(self):
+        return self.request.user
+
 
 class CancelAccountAPIView(generics.UpdateAPIView):
     model = User
+    authentication_classes = ()
+    permission_classes = ()
     serializer_class = serializers.CancelAccountSerializer
 
     def put(self, request):
@@ -111,6 +118,9 @@ class CancelAccountAPIView(generics.UpdateAPIView):
 
         return ErrorResponse(serializer.errors)
 
+    def get_object(self):
+        return self.request.user
+
 
 class UserSettingsAPIView(generics.UpdateAPIView):
     model = User
@@ -123,7 +133,6 @@ class UserSettingsAPIView(generics.UpdateAPIView):
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data)
-    serializer_class = serializers.UserSettingsSerializer
 
     def get_object(self):
         return self.request.user
