@@ -22,6 +22,10 @@ urlpatterns = patterns(
         views.ChangePasswordAPIView.as_view()
     ),
     (
+        r'auth/forgot_password/$',
+        views.ForgotPasswordAPIView.as_view()
+    ),
+    (
         r'auth/reset_password/$',
         views.ResetPasswordAPIView.as_view()
     ),
@@ -34,7 +38,7 @@ urlpatterns = patterns(
         views.UserSettingsAPIView.as_view()
     ),
     (
-        r'^auth/refresh/',
+        r'^auth/refresh_token/',
         'rest_framework_jwt.views.refresh_jwt_token'
     ),
 )
