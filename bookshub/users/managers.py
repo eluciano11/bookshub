@@ -12,8 +12,8 @@ class AccountManager(BaseUserManager):
             return None
 
         payload_type = payload.get('type')
-        user_id = payload.get('email')
-        user_token = payload.get('token')
+        user_id = payload.get('id')
+        user_token = payload.get('token_version')
 
         if payload_type == 'PasswordReset' and user_id and user_token:
             try:

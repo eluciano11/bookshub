@@ -3,6 +3,7 @@ from rest_framework import generics, filters
 
 from . import serializers
 from .models import User
+from ..utils.response import ErrorResponse
 
 
 class SigninAPIView(generics.CreateAPIView):
@@ -16,7 +17,7 @@ class SigninAPIView(generics.CreateAPIView):
         if serializer.is_valid():
             return Response(serializer.object)
 
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
 class UserAutoCompleteAPIView(generics.ListAPIView):
@@ -31,7 +32,11 @@ class UserAutoCompleteAPIView(generics.ListAPIView):
 
         kwargs.update({
             'context': context,
-            'exclude': ('username', 'created_at', 'modified_at')
+            'exclude': ('email', 'created_at', 'modified_at', 'phone',
+                        'address_1', 'address_2', 'country', 'city',
+                        'state', 'zip', 'facebook_url', 'twitter_url',
+                        'google_url', 'institution', 'department',
+                        'description', 'logo', 'company_name', )
         })
 
         return serializer_class(*args, **kwargs)
@@ -48,7 +53,7 @@ class UserAutoCompleteAPIView(generics.ListAPIView):
         return queryset[:10]
 
 
-class SingupAPIView(generics.CreateAPIView):
+class SignupAPIView(generics.CreateAPIView):
     throttle_classes = ()
     permission_classes = ()
     serializer_class = serializers.SignupSerializer
@@ -59,13 +64,11 @@ class SingupAPIView(generics.CreateAPIView):
         if serializer.is_valid():
             return Response(serializer.object)
 
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
 class ChangePasswordAPIView(generics.UpdateAPIView):
     model = User
-    throttle_classes = ()
-    permission_classes = ()
     serializer_class = serializers.ChangePasswordSerializer
 
     def put(self, request):
@@ -73,17 +76,14 @@ class ChangePasswordAPIView(generics.UpdateAPIView):
             data=request.DATA, instance=request.user)
 
         if serializer.is_valid():
-            data = serializers.UserSimpleSerializer(serializer.object).data
+            data = serializers.UserSettingsSerializer(serializer.object).data
             return Response(data)
 
-        #fix this
-        #Response will no have a serialzer.errors
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
 class ResetPasswordAPIView(generics.UpdateAPIView):
-    model = User
-    throttle_classes = ()
+    authentication_classes = ()
     permission_classes = ()
     serializer_class = serializers.ResetPasswordSerializer
 
@@ -93,13 +93,11 @@ class ResetPasswordAPIView(generics.UpdateAPIView):
         if serializer.is_valid():
             return Response(serializer.data)
 
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
 class CancelAccountAPIView(generics.UpdateAPIView):
     model = User
-    throttle_classes = ()
-    permission_classes = ()
     serializer_class = serializers.CancelAccountSerializer
 
     def put(self, request):
@@ -108,23 +106,25 @@ class CancelAccountAPIView(generics.UpdateAPIView):
 
         if serializer.is_valid():
             self.object = serializer.save()
+            serializer.data['canceled'] = True
             return Response(serializer.data)
 
-        #fix this
-        #Response will no have a serialzer.errors
-        return Response(serializer.errors)
+        return ErrorResponse(serializer.errors)
 
 
-class SettingsAPIView(generics.UpdateAPIView):
+class UserSettingsAPIView(generics.UpdateAPIView):
     model = User
-    serializer_class = serializers.SettingsSerializer
+    serializer_class = serializers.UserSettingsSerializer
 
-    def put(self, request):
+    def patch(self, request):
         serializers = self.serializer_class(
             data=request.DATA, instance=request.user)
 
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data)
+    serializer_class = serializers.UserSettingsSerializer
 
-        return Response(serializers.errors)
+
+    def get_object(self):
+        return self.request.user
