@@ -143,7 +143,10 @@ class Common(Configuration):
         'JWT_PAYLOAD_HANDLER':
             'bookshub.utils.jwt_handlers.jwt_payload_handler',
 
-        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=90)
+        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
+
+        'JWT_ALLOW_REFRESH': True,
+        'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=90),
     }
 
     AUTH_USER_MODEL = 'users.User'

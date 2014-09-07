@@ -32,5 +32,9 @@ urlpatterns = patterns(
     (
         r'auth/settings/$',
         views.UserSettingsAPIView.as_view()
-    )
+    ),
+    (
+        r'^auth/refresh/',
+        'rest_framework_jwt.views.refresh_jwt_token'
+    ),
 )
