@@ -8,6 +8,7 @@ from django.db import models
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.sites.models import Site
 
 from django_countries.fields import CountryField
 from django_gravatar.helpers import get_gravatar_url
@@ -186,5 +187,9 @@ class User(BaseModel, AbstractBaseUser):
         self.token_version = str(uuid.uuid4())
 
     def send_password_reset_email(self):
-        # TODO: send reset password email
-        pass
+        self.email_user(
+            "Reset Password",
+            # TODO: use template instead of hard coded python
+            "%s/reset_password_url_here/?token=%s" % (Site.objects.get_current(), self.password_reset_token),
+            "robot@bookshub.com"
+        )
