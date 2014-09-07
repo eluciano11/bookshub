@@ -16,7 +16,7 @@ django-gravatar2==1.1.4
 django-rest-swagger==0.1.14
 django-reversion==1.8.2
 djangorestframework==2.3.14
-djangorestframework-jwt==0.1.6
+djangorestframework-jwt==1.0.1
 oauthlib==0.6.3
 python-openid==2.2.5
 requests==2.3.0
