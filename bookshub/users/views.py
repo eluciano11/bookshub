@@ -125,6 +125,5 @@ class UserSettingsAPIView(generics.UpdateAPIView):
             return Response(serializers.data)
     serializer_class = serializers.UserSettingsSerializer
 
-
     def get_object(self):
         return self.request.user
