@@ -10,6 +10,8 @@ class Common(Configuration):
 
     ENVIRONMENT = values.Value(environ_prefix=None, default='DEVELOPMENT')
 
+    MANDRILL_API_KEY = values.Value(environ_prefix=None)
+
     SECRET_KEY = values.SecretValue(environ_prefix=None)
 
     DEBUG = values.BooleanValue(False)
@@ -43,6 +45,7 @@ class Common(Configuration):
         'allauth.socialaccount.providers.facebook',
         'allauth.socialaccount.providers.google',
         'allauth.socialaccount.providers.twitter',
+        'djrill',
 
         # Apps
         'bookshub.users'
@@ -165,7 +168,6 @@ class Common(Configuration):
     ACCOUNT_USER_MODEL_EMAIL_FIELD = None
     ACCOUNT_USERNAME_REQUIRED = False
 
-
 class Development(Common):
     DEBUG = True
 
@@ -195,7 +197,7 @@ class Development(Common):
 
     PROTOCOL = 'http'
 
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 
     # Django Debug Toolbar
     DEBUG_TOOLBAR_PATCH_SETTINGS = values.BooleanValue(
