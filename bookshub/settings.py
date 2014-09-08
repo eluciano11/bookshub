@@ -10,8 +10,6 @@ class Common(Configuration):
 
     ENVIRONMENT = values.Value(environ_prefix=None, default='DEVELOPMENT')
 
-    MANDRILL_API_KEY = values.Value(environ_prefix=None)
-
     SECRET_KEY = values.SecretValue(environ_prefix=None)
 
     DEBUG = values.BooleanValue(False)
@@ -120,6 +118,8 @@ class Common(Configuration):
 
     SITE_ID = 1
 
+    MANDRILL_API_KEY = values.Value(environ_prefix=None)
+
     DEFAULT_FROM_EMAIL = values.Value()
     EMAIL_HOST = values.Value()
     EMAIL_HOST_USER = values.Value()
@@ -197,7 +197,7 @@ class Development(Common):
 
     PROTOCOL = 'http'
 
-    EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
     # Django Debug Toolbar
     DEBUG_TOOLBAR_PATCH_SETTINGS = values.BooleanValue(
@@ -213,6 +213,8 @@ class Development(Common):
 
 class Production(Common):
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
+    EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 
     # django-secure settings
     PROTOCOL = 'https'
+
