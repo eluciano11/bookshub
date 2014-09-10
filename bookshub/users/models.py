@@ -32,7 +32,8 @@ class User(BaseModel, AbstractBaseUser):
                            Letters, numbers and
                            @/./+/-/_ characters"""
 
-    is_staff_help_text = 'Designates whether the user can log into this admin site.'
+    is_staff_help_text = """Designates whether the user
+                            can log into this admin site."""
 
     is_active_help_text = """Designates whether this user should be treated as
                             active. Unselect this instead of deleting users."""
@@ -42,12 +43,16 @@ class User(BaseModel, AbstractBaseUser):
                                assigning them."""
 
     email = models.EmailField('email address', max_length=254, unique=True)
-    username = models.CharField(max_length=30, help_text=username_help_text, unique=True, blank=True)
+    username = models.CharField(
+        max_length=30, help_text=username_help_text,
+        unique=True, blank=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     phone = models.CharField(max_length=16, blank=True)
     type = models.CharField(max_length=20, choices=ACCOUNT_TYPE_CHOICES)
-    status = models.CharField(max_length=20, choices=ACCOUNT_STATUS_CHOICES, default='normal')
+    status = models.CharField(
+        max_length=20, choices=ACCOUNT_STATUS_CHOICES,
+        default='normal')
     title = models.CharField(max_length=30, blank=True)
 
     address_1 = models.CharField(max_length=100, blank=True)
@@ -65,20 +70,25 @@ class User(BaseModel, AbstractBaseUser):
     institution = models.CharField(max_length=100, blank=True)
     department = models.CharField(max_length=50, blank=True)
     description = models.CharField(max_length=140, blank=True)
-    logo = models.ImageField(upload_to=get_logo_path, height_field=100, width_field=100, blank=True)
+    logo = models.ImageField(
+        upload_to=get_logo_path, height_field=100,
+        width_field=100, blank=True)
     company_name = models.CharField(max_length=50, blank=True)
 
     is_staff = models.BooleanField(default=False, help_text=is_staff_help_text)
-    is_superuser = models.BooleanField(default=False, help_text=is_superuser_help_text)
+    is_superuser = models.BooleanField(
+        default=False, help_text=is_superuser_help_text)
     is_active = models.BooleanField(default=True, help_text=is_active_help_text)
 
-    token_version = models.CharField(max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
+    token_version = models.CharField(
+        max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
 
     objects = AccountManager()
     active = ActiveAccountManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', 'type', 'title']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name',
+                       'phone', 'type', 'title']
 
     def __str__(self):
         return self.email
@@ -190,6 +200,7 @@ class User(BaseModel, AbstractBaseUser):
         self.email_user(
             "Reset Password",
             # TODO: use template instead of hard coded python
-            "%s/reset_password_url_here/?token=%s" % (Site.objects.get_current(), self.password_reset_token),
+            "%s/reset_password_url_here/?token=%s"
+            % (Site.objects.get_current(), self.password_reset_token),
             "robot@bookshub.com"
         )
