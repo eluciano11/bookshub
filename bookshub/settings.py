@@ -168,6 +168,22 @@ class Common(Configuration):
     ACCOUNT_USER_MODEL_EMAIL_FIELD = None
     ACCOUNT_USERNAME_REQUIRED = False
 
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "level": "INFO",
+                "class": "logging.StreamHandler",
+            },
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console"],
+            }
+        }
+    }
+
 
 class Development(Common):
     DEBUG = True
