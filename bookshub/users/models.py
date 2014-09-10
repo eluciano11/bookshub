@@ -177,10 +177,6 @@ class User(BaseModel, AbstractBaseUser):
         email.use_template_subject = True
         email.use_template_from = True
 
-        # email.template_content = {
-        #     "LINK": "<a href='*|SITE_NAME|*/reset_password_url_here/?token=*|RESET_TOKEN|*'> Try me </a>"
-        # }
-
         email.global_merge_vars = {
             "SITE_NAME": Site.objects.get_current().name,
             "RESET_TOKEN": self.password_reset_token
