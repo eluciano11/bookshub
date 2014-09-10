@@ -169,6 +169,7 @@ class Common(Configuration):
     ACCOUNT_USERNAME_REQUIRED = False
 
 class Development(Common):
+
     DEBUG = True
 
     TEMPLATE_DEBUG = DEBUG

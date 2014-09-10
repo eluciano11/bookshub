@@ -6,7 +6,7 @@ from datetime import datetime
 
 from django.db import models
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.sites.models import Site
 
@@ -157,11 +157,26 @@ class User(BaseModel, AbstractBaseUser):
         """
         return self.first_name or self.email
 
-    def email_user(self, subject, message, from_email=None, **kwargs):
+    def email_user(self, subject, from_email=None, **kwargs):
         """
         Sends an email to this User.
         """
-        send_mail(subject, message, from_email, [self.email], **kwargs)
+        email = EmailMessage(to=[self.email], from_email=" ")
+
+        email.template_name = "Test"
+        email.use_template_subject = True
+        email.use_template_from = True
+
+        # email.template_content = {
+        #     "LINK": "<a href='*|SITE_NAME|*/reset_password_url_here/?token=*|RESET_TOKEN|*'> Try me </a>"
+        # }
+
+        email.global_merge_vars = {
+            "SITE_NAME": Site.objects.get_current().name,
+            "RESET_TOKEN": self.password_reset_token
+        }
+
+        email.send(fail_silently=False)
 
     def set_password(self, raw_password):
         """
@@ -189,7 +204,5 @@ class User(BaseModel, AbstractBaseUser):
     def send_password_reset_email(self):
         self.email_user(
             "Reset Password",
-            # TODO: use template instead of hard coded python
-            "%s/reset_password_url_here/?token=%s" % (Site.objects.get_current(), self.password_reset_token),
             "robot@bookshub.com"
         )
