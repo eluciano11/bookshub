@@ -1,7 +1,7 @@
 ACCOUNT_TYPE_CHOICES = (
     ('educational', 'educational'),
     ('company', 'company'),
-    ('standard', 'standard')
+    ('StandardError', 'standard')
 )
 
 ACCOUNT_STATUS_CHOICES = (

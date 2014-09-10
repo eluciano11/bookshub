@@ -16,7 +16,7 @@ class Common(Configuration):
 
     TEMPLATE_DEBUG = values.BooleanValue(DEBUG)
 
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['*']
 
     # Application definition
 
@@ -108,9 +108,9 @@ class Common(Configuration):
     STATIC_ROOT = 'staticfiles'
     STATIC_URL = '/static/'
 
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
+    # STATICFILES_DIRS = (
+    #     os.path.join(BASE_DIR, 'static'),
+    # )
 
     TEMPLATE_DIRS = (
         os.path.join(BASE_DIR, 'templates'),
@@ -144,7 +144,7 @@ class Common(Configuration):
 
     JWT_AUTH = {
         'JWT_PAYLOAD_HANDLER':
-            'bookshub.utils.jwt_handlers.jwt_payload_handler',
+        'bookshub.utils.jwt_handlers.jwt_payload_handler',
 
         'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
 
@@ -167,6 +167,23 @@ class Common(Configuration):
     ACCOUNT_USER_MODEL_USERNAME_FIELD = "email"
     ACCOUNT_USER_MODEL_EMAIL_FIELD = None
     ACCOUNT_USERNAME_REQUIRED = False
+
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "level": "INFO",
+                "class": "logging.StreamHandler",
+            },
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console"],
+            }
+        }
+    }
+
 
 class Development(Common):
 
@@ -214,8 +231,7 @@ class Development(Common):
 
 class Production(Common):
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
-    EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
+    EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
 
     # django-secure settings
     PROTOCOL = 'https'
-
