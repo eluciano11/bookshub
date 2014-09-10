@@ -142,12 +142,14 @@ class UserSettingsAPIView(generics.UpdateAPIView):
     serializer_class = serializers.UserSettingsSerializer
 
     def put(self, request):
-        serializers = self.serializer_class(
+        serializer = self.serializer_class(
             data=request.DATA, instance=request.user)
 
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return ErrorResponse(serializer.errors)
 
     def get_object(self):
         return self.request.user
