@@ -1,0 +1,57 @@
+from django.http import HttpResponse
+
+from rest_framework import permissions, status
+from rest_framework.compat import patterns
+from rest_framework.test import APIClient
+from rest_framework.views import APIView
+
+from ...utils.tests import BaseTestCase
+from ..models import User
+from ..authentication import JWTAuthentication
+
+
+class MockView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (JWTAuthentication,)
+
+    def post(self, request):
+        return HttpResponse({'a': 1, 'b': 2, 'c': 3})
+
+
+urlpatterns = patterns(
+    '',
+    (r'^jwt/$', MockView.as_view()),
+)
+
+
+class JSONWebTokenAuthenticationTests(BaseTestCase):
+    urls = 'bookshub.users.tests.test_authentication'
+
+    def setUp(self):
+        self.csrf_client = APIClient(enforce_csrf_checks=True)
+        self.username = 'jpueblo'
+        self.email = 'jpueblo@example.com'
+        self.first_name = 'juan'
+        self.last_name = 'pueblo'
+        self.phone = '111-111-111'
+        self.type = 'educational'
+        self.title = 'student'
+        self.user = User.objects.create_user(
+            self.username, self.email, self.first_name,
+            self.last_name, self.phone, self.type, self.title)
+
+    def test_token_version_change_should_invalidate_token(self):
+        """
+        Tests that a token is invalidated if User.token_version changes.
+        """
+        token = self.user.token
+
+        self.user.reset_token_version()
+        self.user.save()
+
+        auth = 'JWT {0}'.format(token)
+        response = self.csrf_client.post(
+            '/jwt/', {'example': 'example'},
+            HTTP_AUTHORIZATION=auth, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
