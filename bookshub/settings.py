@@ -37,12 +37,6 @@ class Common(Configuration):
         'reversion',
         'django_gravatar',
         'django_countries',
-        'allauth',
-        'allauth.account',
-        'allauth.socialaccount',
-        'allauth.socialaccount.providers.facebook',
-        'allauth.socialaccount.providers.google',
-        'allauth.socialaccount.providers.twitter',
         'djrill',
 
         # Apps
@@ -68,16 +62,6 @@ class Common(Configuration):
         'django.core.context_processors.tz',
         'django.core.context_processors.request',
         'django.contrib.messages.context_processors.messages',
-        # allauth specific context processors
-        "allauth.account.context_processors.account",
-        "allauth.socialaccount.context_processors.socialaccount",
-    )
-
-    AUTHENTICATION_BACKENDS = (
-        "django.contrib.auth.backends.ModelBackend",
-
-        # `allauth` specific authentication methods, such as login by e-mail
-        "allauth.account.auth_backends.AuthenticationBackend",
     )
 
     ROOT_URLCONF = 'bookshub.urls'
@@ -155,20 +139,6 @@ class Common(Configuration):
     }
 
     AUTH_USER_MODEL = 'users.User'
-
-    # auth and allauth settings
-    LOGIN_REDIRECT_URL = '/'
-    LOGIN_URL = '/accounts/login/'
-    ACCOUNT_EMAIL_VERIFICATION = "none"
-    ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Bookshub]'
-    ACCOUNT_LOGOUT_ON_GET = True
-    ACCOUNT_EMAIL_REQUIRED = True
-    ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-    ACCOUNT_LOGOUT_REDIRECT_URL = '/'
-    ACCOUNT_USERNAME_BLACKLIST = ['admin']
-    ACCOUNT_USER_MODEL_USERNAME_FIELD = "email"
-    ACCOUNT_USER_MODEL_EMAIL_FIELD = None
-    ACCOUNT_USERNAME_REQUIRED = False
 
     LOGGING = {
         "version": 1,
