@@ -1,11 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
+
+from reversion import VersionAdmin
 
 from .forms import UserChangeForm, UserCreationForm
 from .models import User
 
 
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(UserAdmin, VersionAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     filter_horizontal = ()
@@ -36,3 +39,4 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(User, CustomUserAdmin)
+admin.site.unregister(Group)
