@@ -16,12 +16,11 @@ class Common(Configuration):
 
     TEMPLATE_DEBUG = values.BooleanValue(DEBUG)
 
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['*']
 
     # Application definition
 
     INSTALLED_APPS = (
-        'bootstrap_admin',
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
@@ -36,6 +35,11 @@ class Common(Configuration):
         'django_extensions',
         'reversion',
         'django_gravatar',
+        'django_countries',
+        'djrill',
+
+        # Apps
+        'bookshub.users'
 
     )
 
@@ -87,15 +91,17 @@ class Common(Configuration):
     STATIC_ROOT = 'staticfiles'
     STATIC_URL = '/static/'
 
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
+    # STATICFILES_DIRS = (
+    #     os.path.join(BASE_DIR, 'static'),
+    # )
 
     TEMPLATE_DIRS = (
         os.path.join(BASE_DIR, 'templates'),
     )
 
     SITE_ID = 1
+
+    MANDRILL_API_KEY = values.Value(environ_prefix=None)
 
     DEFAULT_FROM_EMAIL = values.Value()
     EMAIL_HOST = values.Value()
@@ -110,24 +116,48 @@ class Common(Configuration):
             'rest_framework.permissions.IsAuthenticated',
         ),
         'DEFAULT_AUTHENTICATION_CLASSES': (
-            'rest_framework.authentication.BasicAuthentication',
-            'rest_framework.authentication.SessionAuthentication',
+            'bookshub.users.authentication.JWTAuthentication',
+            'bookshub.users.authentication.SessionAuthentication',
         ),
         'DEFAULT_RENDERER_CLASSES': (
             'rest_framework.renderers.JSONRenderer',
             'rest_framework.renderers.BrowsableAPIRenderer',
         ),
+        'EXCEPTION_HANDLER':
+        'bookshub.utils.exceptions.custom_exception_handler',
     }
 
     JWT_AUTH = {
         'JWT_PAYLOAD_HANDLER':
-            'bookshub.utils.jwt_handlers.jwt_payload_handler',
+        'bookshub.utils.jwt_handlers.jwt_payload_handler',
 
-        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=90)
+        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
+
+        'JWT_ALLOW_REFRESH': True,
+        'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=90),
+    }
+
+    AUTH_USER_MODEL = 'users.User'
+
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "level": "INFO",
+                "class": "logging.StreamHandler",
+            },
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console"],
+            }
+        }
     }
 
 
 class Development(Common):
+
     DEBUG = True
 
     TEMPLATE_DEBUG = DEBUG
@@ -170,8 +200,32 @@ class Development(Common):
     }
 
 
+class Testing(Development):
+    LOGGING_CONFIG = None
+
+    # Database Settings
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(Common.BASE_DIR, 'testing_db.sqlite3'),
+        }
+    }
+
+    # Password Hashers
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+    )
+
+    # South
+    SOUTH_TESTS_MIGRATE = False
+
+    # Debug Toolbar
+    DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
+
 class Production(Common):
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
+    EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
 
     # django-secure settings
     PROTOCOL = 'https'
