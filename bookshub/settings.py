@@ -231,6 +231,29 @@ class Development(Common):
     }
 
 
+class Testing(Development):
+    LOGGING_CONFIG = None
+
+    # Database Settings
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(Common.BASE_DIR, 'testing_db.sqlite3'),
+        }
+    }
+
+    # Password Hashers
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+    )
+
+    # South
+    SOUTH_TESTS_MIGRATE = False
+
+    # Debug Toolbar
+    DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
+
 class Production(Common):
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
     EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
