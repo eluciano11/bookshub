@@ -140,6 +140,8 @@ class Common(Configuration):
             'rest_framework.renderers.JSONRenderer',
             'rest_framework.renderers.BrowsableAPIRenderer',
         ),
+        'EXCEPTION_HANDLER':
+        'bookshub.utils.exceptions.custom_exception_handler',
     }
 
     JWT_AUTH = {

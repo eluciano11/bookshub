@@ -147,7 +147,7 @@ class User(BaseModel, AbstractBaseUser):
         payload = {
             'type': 'PasswordReset',
             'id': self.pk,
-            'token_version': self.token,
+            'token_version': self.token_version,
         }
 
         jwt_token = jwt.encode(payload, settings.SECRET_KEY)

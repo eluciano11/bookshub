@@ -61,6 +61,7 @@ class SignupSerializer(serializers.Serializer):
     """
     Serializers used to create a user.
     """
+    username = serializers.CharField(max_length=30)
     email = serializers.EmailField(max_length=254)
     password = fields.PasswordField(write_only=True)
     username = serializers.CharField(max_length=30)
@@ -85,7 +86,6 @@ class SignupSerializer(serializers.Serializer):
         username = attrs[source].lower().strip()
 
         is_found = User.objects.filter(username__iexact=username)
-
         if is_found:
             message = 'Username already in use'
             raise serializers.ValidationError(message)
@@ -215,7 +215,7 @@ class ResetPasswordSerializer(serializers.Serializer):
         self.user.change_password(attrs['new_password'])
 
         return {
-            'password_reset': True
+            'password_reset': True,
         }
 
 
@@ -252,16 +252,17 @@ class UserSettingsSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(required=False, max_length=30)
     email = serializers.EmailField(required=False)
     username = serializers.CharField(required=False)
-    type = serializers.CharField(required=False)
     token = serializers.Field(source='token')
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'phone',
-          'type', 'status', 'title', 'address_1', 'address_2',
-          'country', 'city', 'state', 'zip', 'facebook_url',
-          'twitter_url', 'google_url', 'gravatar_url', 'institution',
-          'department', 'description', 'logo', 'company_name')
+        fields = (
+            'id', 'username', 'email', 'first_name', 'last_name', 'phone',
+            'title', 'address_1', 'address_2', 'country', 'city',
+            'state', 'zip', 'facebook_url', 'twitter_url', 'google_url',
+            'gravatar_url', 'institution', 'department', 'description',
+            'logo', 'company_name', 'token',
+        )
 
     def validate_email(self, attrs, source):
         if not source in attrs:
@@ -302,4 +303,3 @@ class UserSettingsSerializer(serializers.ModelSerializer):
 
     def save_object(self, obj, **kwargs):
         super(UserSettingsSerializer, self).save_object(obj, **kwargs)
-

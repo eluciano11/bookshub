@@ -100,26 +100,22 @@ class ForgotPasswordAPIView(generics.CreateAPIView):
         return ErrorResponse(serializer.errors)
 
 
-class ResetPasswordAPIView(generics.UpdateAPIView):
-    model = User
+class ResetPasswordAPIView(generics.CreateAPIView):
+    authentication_classes = ()
+    permission_classes = ()
     serializer_class = serializers.ResetPasswordSerializer
 
-    def put(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.DATA)
 
         if serializer.is_valid():
-            return Response(serializer.data)
+            return Response(serializer.object)
 
         return ErrorResponse(serializer.errors)
-
-    def get_object(self):
-        return self.request.user
 
 
 class CancelAccountAPIView(generics.UpdateAPIView):
     model = User
-    authentication_classes = ()
-    permission_classes = ()
     serializer_class = serializers.CancelAccountSerializer
 
     def put(self, request):
@@ -133,11 +129,8 @@ class CancelAccountAPIView(generics.UpdateAPIView):
 
         return ErrorResponse(serializer.errors)
 
-    def get_object(self):
-        return self.request.user
 
-
-class UserSettingsAPIView(generics.UpdateAPIView):
+class UserSettingsAPIView(generics.RetrieveAPIView, generics.UpdateAPIView):
     model = User
     serializer_class = serializers.UserSettingsSerializer
 
