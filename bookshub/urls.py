@@ -13,10 +13,6 @@ urlpatterns = patterns(
         include(admin.site.urls)
     ),
     url(
-        r'^accounts/',
-        include('allauth.urls')
-    ),
-    url(
         r'^api/',
         include('bookshub.users.urls')
     )
