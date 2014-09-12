@@ -64,7 +64,6 @@ class SignupSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=30)
     email = serializers.EmailField(max_length=254)
     password = fields.PasswordField(write_only=True)
-    username = serializers.CharField(max_length=30)
     first_name = serializers.CharField(max_length=30)
     last_name = serializers.CharField(max_length=30)
     phone = serializers.CharField(max_length=16)
