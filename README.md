@@ -86,4 +86,11 @@ python manage.py runserver
 
 Now you can visit `http://localhost:8000` and you are good to go!
 
+###Testing
+
+You can run unit tests using this command
+```bash
+python manage.py test --configuration=Testing
+```
+
 **For any questions and/or recommendations, please contact the team members.**
