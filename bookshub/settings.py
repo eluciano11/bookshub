@@ -37,10 +37,11 @@ class Common(Configuration):
         'django_gravatar',
         'django_countries',
         'djrill',
+        'taggit',
 
         # Apps
-        'bookshub.users'
-
+        'bookshub.users',
+        'bookshub.books',
     )
 
     MIDDLEWARE_CLASSES = (
