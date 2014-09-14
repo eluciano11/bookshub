@@ -2,17 +2,19 @@ from django.contrib import admin
 
 from .models import Book, Review, Image, Category
 
-
-class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'user', 'price', 'start_date', 'quantity')
+from reversion import VersionAdmin
 
 
-class ReviewAdmin(admin.ModelAdmin):
+class BookAdmin(VersionAdmin, admin.ModelAdmin):
+    list_display = ('title', 'owner', 'price', 'start_date', 'quantity')
+
+
+class ReviewAdmin(VersionAdmin, admin.ModelAdmin):
     list_display = ('user', 'book', 'review', 'pub_date')
 
 
-class ImageAdmin(admin.ModelAdmin):
-    list_display = ('user', 'image')
+class ImageAdmin(VersionAdmin, admin.ModelAdmin):
+    list_display = ('book', 'image')
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Review, ReviewAdmin)
