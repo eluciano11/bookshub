@@ -1,0 +1,47 @@
+/* index Styles Begins*/
+/*Navbar Styles*/
+.navbar.navbar-inverse {
+    background-color: transparent;
+    border-style: hidden;
+}
+/*Section Styles*/
+.index-background {
+    position: relative;
+    z-index: -1;
+    width: 100vw;
+    height: 102vh;
+    margin-top: -7%;
+}
+.searchInput {
+    position: absolute;
+    margin-bottom: 20%;
+    top: 50%;
+    left: 50%;
+    margin-top: 0%;
+    margin-left: -25%;
+    width: 50%;
+}
+#form-search {
+    margin-bottom: 0;
+}
+.section-background {
+    max-width: 100%;
+    width: 100vw;
+    height: 100px;
+    position: absolute;
+    z-index: -1;
+}
+.requested-books {
+    padding-top: 5%;
+}
+.slogan-section {
+    padding-top: 1%;
+    position: relative;
+    color: white;
+}
+/*Footer Styles*/
+#footer {
+    height: 60px;
+    background-color: #eee;
+}
+/*Index Styles End*/
