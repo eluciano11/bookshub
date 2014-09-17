@@ -3,6 +3,7 @@
 body {
     padding-top: 20px;
     padding-bottom: 20px;
+  
 }
 /* Everything but the jumbotron gets side spacing for mobile first views */
 
@@ -22,6 +23,9 @@ body {
     margin-bottom: 0;
     line-height: 40px;
     padding-bottom: 19px;
+}
+.image {
+    margin-left: 5px;
 }
 .btn-margin {
     margin: 0 10px;
@@ -48,7 +52,9 @@ body {
 .jumbotron {
     text-align: center;
     border-bottom: 1px solid #e5e5e5;
-    background-color: rgba(252, 251, 240, 1.0);
+    background-color: rgba(247, 237, 195, 1.0);
+    margin-left: 60px;
+    margin-right: 60px;
 }
 .letter {
     font-family: times, Times New Roman, times-roman, georgia, serif;
