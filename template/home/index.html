@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../static/styles.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    </head>
+</head>
 
 <body>
     <!--Navbar Begins -->
@@ -27,8 +27,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-right" role="form">
-                    <button type="button" class="butn btn-green">Login</button>
-                    <button type="button" class="butn btn-blue">Sign Up</button>
+                    <ul class="nav navbar-nav">
+                        <li><a href="">Log In</a>
+                        </li>
+                        <li><a href="">Sign Up</a>
+                        </li>
+                    </ul>
                 </form>
             </div>
             <!-- /.navbar-collapse -->
@@ -45,16 +49,46 @@
                     <h1 class="text-center">
                         Search your books easier!
                     </h1>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Search</button>
-                        </span>
+                    <div clas<div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Default
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a>
+                            </li>
+                            <li><a href="#">Another action</a>
+                            </li>
+                            <li><a href="#">Something else here</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </div>s="input-group">
+                    <input type="text" class="form-control">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Default
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a>
+                            </li>
+                            <li><a href="#">Another action</a>
+                            </li>
+                            <li><a href="#">Something else here</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a>
+                            </li>
+                        </ul>
                     </div>
-                    <!-- /input-group -->
-                    <!-- /.col-lg-6 -->
                 </div>
+                <!-- /input-group -->
+                <!-- /.col-lg-6 -->
             </div>
+        </div>
         </div>
     </form>
 
