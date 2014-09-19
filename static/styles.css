@@ -6,6 +6,13 @@
     background-color: transparent;
     border-style: hidden;
 }
+.navbar-inverse .navbar-nav>li>a {
+    color: white;
+    font-weight: 800;
+}
+.navbar-inverse .navbar-brand {
+    color: white;
+}
 /*Section Styles*/
 
 .index-background {
@@ -52,7 +59,7 @@
 
 /*Button Styles Begins*/
 
-.butn{
+.butn {
     border-radius: 0;
     background-color: transparent;
     font-size: 12px;
