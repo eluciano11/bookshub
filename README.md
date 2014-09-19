@@ -18,7 +18,7 @@ You can download the python installer [here.](https://www.python.org/downloads/)
 To check if you have python installed, you can try the following in the command line.
 
 ```bash
-python
+$ python
 ```
 
 This will get you to the python shell and it also provides the python version that's installed.
@@ -32,19 +32,19 @@ affect your global environment.
 To do this in python, you can install `virtualenv` with `easy_install` or `pip`. We recommend `pip`.
 
 ```bash
-sudo pip install virtualenv
+$ sudo pip install virtualenv
 ```
 
 To create a `virtualenv`, select a folder where you want to work with the project and do the following:
  
 ```bash
-virtualenv venv
+$ virtualenv venv
 ```
 
 That will create a virtual environment for python. To activate it do the following:
 
 ```bash
-source venv/bin/activate
+$ source venv/bin/activate
 ```
 
 ###Dependencies
@@ -54,10 +54,20 @@ Now that you are in your venv, let's take care of project dependencies.
 In the command line, go to the projects root folder and do the following:
 
 ```bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 That will install all of the dependencies.
+
+###Security
+
+We are now encrypting certain fields with the django-encrypted-fields package. Due to this you will now have to generated keys for this package to work. You would need to do the following.
+
+```bash
+$ mkdir fieldkeys
+$ keyczart create --location=fieldkeys --purpose=crypt
+$ keyczart addkey --location=fieldkeys --status=primary --size=256
+```
 
 ###Environment
 
@@ -71,13 +81,13 @@ For development, we use sqlite since python comes with the driver and it's Djang
 To create the database and run the migrations [South](https://godjango.com/3-introduction-to-south-migrations/) do the following:
 
 ```bash
-python manage.py syncdb
+$ python manage.py syncdb
 ```
 
 Then for migrations
 
 ```bash
-python manage.py migrate
+$ python manage.py migrate
 ```
 
 ###Running the project
