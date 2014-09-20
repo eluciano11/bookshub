@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "hub-app",
   "version": "0.0.0",
   "dependencies": {
     "angular": "1.2.16",

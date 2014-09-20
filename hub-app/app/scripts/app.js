@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name appApp
+ * @name hubAppApp
  * @description
- * # appApp
+ * # hubAppApp
  *
  * Main module of the application.
  */
 angular
-  .module('appApp', [
+  .module('hubAppApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -20,6 +20,10 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
+        templateUrl: 'views/home.html',
+        controller: 'HomeCtrl'
+      })
+      .when('/login', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
@@ -31,3 +35,65 @@ angular
         redirectTo: '/'
       });
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(function(){
+
+  var app = angular.module('signUp',[]);
+
+  app.controller('BookSUController',function(){
+
+     
+
+
+
+
+
+
+
+  });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

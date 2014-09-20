@@ -1,4 +1,4 @@
-// Generated on 2014-09-10 using generator-angular 0.9.2
+// Generated on 2014-09-11 using generator-angular 0.9.2
 'use strict';
 
 // # Globbing
@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 
   // Configurable paths for the application
   var appConfig = {
-    app: require('./bower.json').appPath || 'app',
+    app: require('./app/bower.json').appPath || 'app',
     dist: 'dist'
   };
 

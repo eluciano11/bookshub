@@ -1,0 +1,184 @@
+/* Space out content a bit */
+
+body {
+    padding-bottom: 20px;
+    background-color: #eaeaea;
+  
+}
+/* Everything but the jumbotron gets side spacing for mobile first views */
+
+.header, .marketing, .footer {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/* Custom page header */
+
+.header {
+    border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+}
+.image {
+    margin-left: 5px;
+}
+.btn-margin {
+    margin: 0 10px;
+}
+/* Custom page footer */
+
+.footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+/* Customize container */
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+}
+.container-narrow > hr {
+    margin: 30px 0;
+}
+/* Main marketing message and sign up button */
+
+.jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: rgba(247, 237, 195, 1.0);
+    margin-left: 60px;
+    margin-right: 60px;
+}
+.letter {
+    font-family: times, Times New Roman, times-roman, georgia, serif;
+    color: #444;
+    margin: 0;
+    padding: 0px 0px 6px 0px;
+    font-size: 51px;
+    line-height: 44px;
+    letter-spacing: -2px;
+    font-weight: bold;
+}
+/* Supporting marketing content */
+
+.marketing {
+    margin: 40px 0;
+}
+.marketing p + h4 {
+    margin-top: 28px;
+}
+/* Responsive: Portrait tablets and up */
+
+@media screen and (min-width: 768px) {
+    /* Remove the padding we set earlier */
+    .header, .marketing, .footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    /* Space out the masthead */
+    .header {
+        margin-bottom: 30px;
+    }
+    /* Remove the bottom border on the jumbotron for visual effect */
+    .jumbotron {
+        border-bottom: 0;
+    }
+}
+/* index Styles Begins*/
+
+/*Navbar Styles*/
+
+.navbar.navbar-inverse {
+    background-color: transparent;
+    border-style: hidden;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: white;
+    font-weight: 800;
+}
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+/*Section Styles*/
+
+.index-background {
+    position: relative;
+    z-index: -1;
+    width: 100vw;
+    height: 102vh;
+    margin-top: -7%;
+}
+.searchInput {
+    position: absolute;
+    margin-bottom: 20%;
+    top: 50%;
+    left: 50%;
+    margin-top: 0%;
+    margin-left: -25%;
+    width: 50%;
+}
+#form-search {
+    margin-bottom: 0;
+}
+.section-background {
+    max-width: 100%;
+    width: 100vw;
+    height: 100px;
+    position: absolute;
+    z-index: -1;
+}
+.requested-books {
+    padding-top: 5%;
+}
+.slogan-section {
+    padding-top: 1%;
+    position: relative;
+    color: white;
+}
+/*Footer Styles*/
+
+#footer {
+    height: 60px;
+    background-color: #eee;
+}
+/*Index Styles End*/
+
+/*Button Styles Begins*/
+
+.butn {
+    border-radius: 0;
+    background-color: transparent;
+    font-size: 12px;
+    font-weight: 500;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    letter-spacing: 0.110em;
+}
+.btn-green {
+    color: rgba(35, 204, 97, 0.9);
+    border: 3px solid rgba(35, 204, 97, 0.7);
+}
+.btn-red {
+    color: rgba(204, 35, 38, 0.9);
+    border: 3px solid rgba(204, 35, 38, 0.7);
+}
+.btn-blue {
+    color: rgba(35, 125, 204, 0.9);
+    border: 3px solid rgba(35, 125, 204, 0.7);
+}
+.btn-lightblue {
+    color: rgba(37, 216, 219, 0.9);
+    border: 3px solid rgba(37, 216, 219, 0.7);
+}
+.btn-warning {
+    color: rgba(227, 177, 41, 0.9);
+    border: 3px solid rgba(227, 177, 41, 0.7);
+}
+/*Button Styles End*/
