@@ -17,7 +17,7 @@ urlpatterns = patterns(
         include('bookshub.users.urls')
     ),
     url(
-        r'^api/books/',
+        r'^api/',
         include('bookshub.books.urls')
     ),
 )
