@@ -1,5 +1,3 @@
-from django.conf.urls import patterns
-
 from rest_framework.routers import DefaultRouter
 
 from . import views
