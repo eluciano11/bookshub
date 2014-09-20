@@ -4,7 +4,7 @@ from django.db import models
 
 from ..users.models import User
 from ..utils.models import BaseModel
-from .constants import BOOK_CONDITION, CATEGORY_CHOICES
+from .constants import BOOK_CONDITION, CATEGORY_CHOICES, REQUEST_STATUS
 from jsonfield import JSONField
 
 from taggit.managers import TaggableManager
@@ -17,7 +17,7 @@ def get_book_image_path(filename):
 
 class Category(BaseModel):
     name = models.CharField(
-        choices=CATEGORY_CHOICES, max_length=30, default='accounting')
+        choices=CATEGORY_CHOICES, max_length=30)
 
     def __str__(self):
         return self.name
@@ -32,14 +32,11 @@ class Book(BaseModel):
     isbn_10 = models.CharField(max_length=10, blank=True)
     isbn_13 = models.CharField(max_length=13, blank=True)
     title = models.CharField(max_length=75)
-    price = models.DecimalField(
-        max_digits=5, decimal_places=2)
-    condition = models.CharField(
-        choices=BOOK_CONDITION, max_length=10,
-        default='new')
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    condition = models.CharField(choices=BOOK_CONDITION, max_length=10)
     quantity = models.PositiveSmallIntegerField(default=1)
     author = models.CharField(max_length=50)
-    edition = models.CharField(max_length=15)
+    edition = models.CharField(max_length=15, blank=True)
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(null=True)
 
@@ -68,14 +65,31 @@ class Image(BaseModel):
     book = models.ForeignKey(Book)
 
     image = models.ImageField(
-        upload_to=get_book_image_path, height_field=100,
+        upload_to=get_book_image_path,
+        height_field=100,
         width_field=100)
 
     def __str__(self):
-        return self.book.title
+        return self.book
 
 
-class Search(BaseModel):
+class Viewed(BaseModel):
     user = models.ForeignKey(User)
     book = models.ForeignKey(Book)
-    pub_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.book
+
+
+class Requested(BaseModel):
+    user = models.ForeignKey(User)
+    status = models.CharField(
+        choices=REQUEST_STATUS, max_length=10, default='requested')
+    isbn10 = models.CharField(max_length=10, blank=True)
+    isbn13 = models.CharField(max_length=10, blank=True)
+    title = models.CharField(max_length=75, blank=True)
+    author = models.CharField(max_length=50, blank=True)
+    extra_data = JSONField()
+
+    def __str__(self):
+        return self.id
