@@ -24,3 +24,7 @@ CATEGORY_CHOICES = (
     ('social_science', 'Social Science'),
     ('travel', 'Travel')
 )
+REQUEST_STATUS = (
+    ('requested', 'Requested'),
+    ('closed', 'Closed'),
+)
