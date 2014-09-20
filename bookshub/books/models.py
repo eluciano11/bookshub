@@ -17,7 +17,7 @@ def get_book_image_path(filename):
 
 class Category(BaseModel):
     name = models.CharField(
-        choices=CATEGORY_CHOICES, max_length=30)
+        choices=CATEGORY_CHOICES, max_length=30, primary_key=True)
 
     def __str__(self):
         return self.name
@@ -43,10 +43,13 @@ class Book(BaseModel):
     description = models.CharField(
         max_length=140, help_text=description_help_text)
     publisher = models.CharField(max_length=75)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.title
+
+    def get_tags_display(self):
+        return self.tags.values_list('name', flat=True)
 
 
 class Review(BaseModel):

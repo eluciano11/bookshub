@@ -22,7 +22,8 @@ CATEGORY_CHOICES = (
     ('psychology', 'Psychology'),
     ('spanish', 'Spanish'),
     ('social_science', 'Social Science'),
-    ('travel', 'Travel')
+    ('travel', 'Travel'),
+    ('other', 'other')
 )
 REQUEST_STATUS = (
     ('requested', 'Requested'),
