@@ -5,6 +5,7 @@ from django.db import models
 from ..users.models import User
 from ..utils.models import BaseModel
 from .constants import BOOK_CONDITION, CATEGORY_CHOICES
+from jsonfield import JSONField
 
 from taggit.managers import TaggableManager
 
@@ -72,3 +73,9 @@ class Image(BaseModel):
 
     def __str__(self):
         return self.book.title
+
+
+class Search(BaseModel):
+    user = models.ForeignKey(User)
+    book = models.ForeignKey(Book)
+    pub_date = models.DateTimeField()
