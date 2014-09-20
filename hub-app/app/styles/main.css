@@ -1,8 +1,8 @@
 /* Space out content a bit */
 
 body {
-    padding-top: 20px;
     padding-bottom: 20px;
+    background-color: #eaeaea;
   
 }
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -91,3 +91,94 @@ body {
         border-bottom: 0;
     }
 }
+/* index Styles Begins*/
+
+/*Navbar Styles*/
+
+.navbar.navbar-inverse {
+    background-color: transparent;
+    border-style: hidden;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: white;
+    font-weight: 800;
+}
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+/*Section Styles*/
+
+.index-background {
+    position: relative;
+    z-index: -1;
+    width: 100vw;
+    height: 102vh;
+    margin-top: -7%;
+}
+.searchInput {
+    position: absolute;
+    margin-bottom: 20%;
+    top: 50%;
+    left: 50%;
+    margin-top: 0%;
+    margin-left: -25%;
+    width: 50%;
+}
+#form-search {
+    margin-bottom: 0;
+}
+.section-background {
+    max-width: 100%;
+    width: 100vw;
+    height: 100px;
+    position: absolute;
+    z-index: -1;
+}
+.requested-books {
+    padding-top: 5%;
+}
+.slogan-section {
+    padding-top: 1%;
+    position: relative;
+    color: white;
+}
+/*Footer Styles*/
+
+#footer {
+    height: 60px;
+    background-color: #eee;
+}
+/*Index Styles End*/
+
+/*Button Styles Begins*/
+
+.butn {
+    border-radius: 0;
+    background-color: transparent;
+    font-size: 12px;
+    font-weight: 500;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    letter-spacing: 0.110em;
+}
+.btn-green {
+    color: rgba(35, 204, 97, 0.9);
+    border: 3px solid rgba(35, 204, 97, 0.7);
+}
+.btn-red {
+    color: rgba(204, 35, 38, 0.9);
+    border: 3px solid rgba(204, 35, 38, 0.7);
+}
+.btn-blue {
+    color: rgba(35, 125, 204, 0.9);
+    border: 3px solid rgba(35, 125, 204, 0.7);
+}
+.btn-lightblue {
+    color: rgba(37, 216, 219, 0.9);
+    border: 3px solid rgba(37, 216, 219, 0.7);
+}
+.btn-warning {
+    color: rgba(227, 177, 41, 0.9);
+    border: 3px solid rgba(227, 177, 41, 0.7);
+}
+/*Button Styles End*/
