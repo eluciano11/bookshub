@@ -53,17 +53,6 @@ class Common(Configuration):
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
 
-    TEMPLATE_CONTEXT_PROCESSORS = (
-        'django.contrib.auth.context_processors.auth',
-        'django.core.context_processors.debug',
-        'django.core.context_processors.i18n',
-        'django.core.context_processors.media',
-        'django.core.context_processors.static',
-        'django.core.context_processors.tz',
-        'django.core.context_processors.request',
-        'django.contrib.messages.context_processors.messages',
-    )
-
     ROOT_URLCONF = 'bookshub.urls'
 
     WSGI_APPLICATION = 'bookshub.wsgi.application'
@@ -132,10 +121,7 @@ class Common(Configuration):
         'JWT_PAYLOAD_HANDLER':
         'bookshub.utils.jwt_handlers.jwt_payload_handler',
 
-        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3),
-
         'JWT_ALLOW_REFRESH': True,
-        'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=90),
     }
 
     AUTH_USER_MODEL = 'users.User'
@@ -155,6 +141,8 @@ class Common(Configuration):
             }
         }
     }
+
+    ENCRYPTED_FIELDS_KEYDIR = 'fieldkeys'
 
 
 class Development(Common):
