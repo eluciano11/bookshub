@@ -49,6 +49,8 @@ $ source venv/bin/activate
 
 ###Dependencies
 
+####Backend
+
 Now that you are in your venv, let's take care of project dependencies.
 
 In the command line, go to the projects root folder and do the following:
@@ -57,7 +59,23 @@ In the command line, go to the projects root folder and do the following:
 $ pip install -r requirements.txt
 ```
 
-That will install all of the dependencies.
+That will install all of the dependencies of the backend server.
+
+####Frontend
+
+Now you need to install the frontend dependencies. Go to the hub-app directory and run this:
+
+```bash
+$ npm install
+```
+
+That will install the necessary node modules for this project.
+
+Then switch to the app directory and run this:
+
+```bash
+$ bower install
+```
 
 ###Security
 
@@ -92,19 +110,23 @@ $ python manage.py migrate
 
 ###Running the project
 
-Now, you can run the server by doing this:
+Now, you can run the backend server.
 
 ```bash
-python manage.py runserver
+$ python manage.py runserver
 ```
 
-Now you can visit `http://localhost:8000` and you are good to go!
+To run the frontend server, we use grunt. From the root folder of the project, go into the hub-app directory and run this:
+
+```bash
+$ grunt serve
+```
 
 ###Testing
 
 You can run unit tests using this command
 ```bash
-python manage.py test --configuration=Testing
+$ python manage.py test --configuration=Testing
 ```
 
 **For any questions and/or recommendations, please contact the team members.**
