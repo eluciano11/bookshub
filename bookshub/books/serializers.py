@@ -10,7 +10,7 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = ('id', 'title', 'condition', 'price', 'author', 'description',
                   'publisher', 'category', 'isbn_10', 'isbn_13', 'quantity',
-                  'author', 'edition', 'tags')
+                  'edition', 'tags')
 
     def save_object(self, obj, **kwargs):
         obj.owner = self.context['request'].user
