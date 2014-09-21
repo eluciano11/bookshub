@@ -203,7 +203,6 @@ class ResetPasswordSerializer(serializers.Serializer):
         token = attrs[source]
 
         self.user = User.objects.get_from_password_reset_token(token)
-
         if not self.user:
             msg = 'Invalid password reset token.'
             raise serializers.ValidationError(msg)
