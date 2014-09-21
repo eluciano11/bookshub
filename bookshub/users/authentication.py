@@ -17,9 +17,10 @@ class JWTAuthentication(JSONWebTokenAuthentication):
         try:
             user = User.objects.get(
                 pk=payload['user_id'],
-                token_version=payload['token_version'],
                 is_active=True
             )
+            if user.token_version != payload['token_version']:
+                raise User.DoesNotExist
         except User.DoesNotExist:
             msg = 'Invalid signature'
             raise exceptions.AuthenticationFailed(msg)
