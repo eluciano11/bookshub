@@ -17,7 +17,9 @@ class AccountManager(BaseUserManager):
 
         if payload_type == 'PasswordReset' and user_id and user_token:
             try:
-                return self.get(pk=user_id, token_version=user_token)
+                user = self.get(pk=user_id)
+                if user.token_version == user_token:
+                    return user
             except self.model.DoesNotExist:
                 pass
 
