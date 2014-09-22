@@ -18,7 +18,7 @@ class ImageAdmin(VersionAdmin, admin.ModelAdmin):
 
 
 class RequestedAdmin(VersionAdmin, admin.ModelAdmin):
-    list_display = ('user', 'title', 'author', 'status', 'isbn_10', 'isbn_13')
+    list_display = ('title', 'author', 'status', 'isbn_10', 'isbn_13')
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Review, ReviewAdmin)
