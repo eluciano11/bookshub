@@ -88,8 +88,8 @@ class Requested(BaseModel):
     user = models.ForeignKey(User)
     status = models.CharField(
         choices=REQUEST_STATUS, max_length=10, default='requested')
-    isbn10 = models.CharField(max_length=10, blank=True)
-    isbn13 = models.CharField(max_length=10, blank=True)
+    isbn_10 = models.CharField(max_length=10, blank=True)
+    isbn_13 = models.CharField(max_length=13, blank=True)
     title = models.CharField(max_length=75, blank=True)
     author = models.CharField(max_length=50, blank=True)
     extra_data = JSONField()
