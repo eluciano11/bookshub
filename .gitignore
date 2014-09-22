@@ -12,3 +12,4 @@ dist
 bower_components
 staticfiles
 fieldkeys
+uploaded_files
