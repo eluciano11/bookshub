@@ -4,6 +4,7 @@ from . import views
 
 router = DefaultRouter()
 
+router.register(r'books/requested', views.RequestedViewSet)
 router.register(r'books', views.BookViewSet)
 
 urlpatterns = router.urls

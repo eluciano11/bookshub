@@ -1,9 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 
-from .models import Book
+from .models import Book, Requested
 from .permissions import BookPermission
-from .serializers import BookSerializer
+from .serializers import BookSerializer, RequestedSerializer
 from ..utils.response import ErrorResponse
 
 
@@ -24,6 +24,20 @@ class BookViewSet(ModelViewSet):
         serializer = self.get_serializer(data=request.DATA)
 
         if serializer.is_valid():
+            return Response(serializer.object)
+
+        return ErrorResponse(serializer.errors)
+
+
+class RequestedViewSet(ModelViewSet):
+    model = Requested
+    serializer_class = RequestedSerializer
+    permission_classes = ()
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.DATA)
+
+        if serializer.is_valid() and request.user.is_authenticated():
             return Response(serializer.object)
 
         return ErrorResponse(serializer.errors)
