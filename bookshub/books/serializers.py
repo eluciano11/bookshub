@@ -1,16 +1,12 @@
 from rest_framework import serializers
 
-<<<<<<< HEAD
-from .models import Book, Requested
-=======
-from .models import Book, Image
+from .models import Book, Requested, Image
 
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = ('id', 'image', )
->>>>>>> FETCH_HEAD
 
 
 class BookSerializer(serializers.ModelSerializer):

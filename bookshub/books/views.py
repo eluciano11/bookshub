@@ -1,15 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 
-<<<<<<< HEAD
-from .models import Book, Requested
-from .permissions import BookPermission
-from .serializers import BookSerializer, RequestedSerializer
-=======
-from .models import Book, Image
+from .models import Book, Requested, Image
 from .permissions import BookPermission, ImagePermission
-from .serializers import BookSerializer, ImageSerializer
->>>>>>> FETCH_HEAD
+from .serializers import BookSerializer, RequestedSerializer, ImageSerializer
 from ..utils.response import ErrorResponse
 
 
@@ -35,7 +29,6 @@ class BookViewSet(ModelViewSet):
         return ErrorResponse(serializer.errors)
 
 
-<<<<<<< HEAD
 class RequestedViewSet(ModelViewSet):
     model = Requested
     serializer_class = RequestedSerializer
@@ -48,7 +41,8 @@ class RequestedViewSet(ModelViewSet):
             return Response(serializer.object)
 
         return ErrorResponse(serializer.errors)
-=======
+
+
 class BookImageViewSet(ModelViewSet):
     model = Image
     serializer_class = ImageSerializer
@@ -60,4 +54,3 @@ class BookImageViewSet(ModelViewSet):
 
     def pre_save(self, obj, *args, **kwargs):
         obj.book_id = self.kwargs['id']
->>>>>>> FETCH_HEAD
