@@ -1,3 +1,4 @@
+from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 
@@ -54,3 +55,17 @@ class BookImageViewSet(ModelViewSet):
 
     def pre_save(self, obj, *args, **kwargs):
         obj.book_id = self.kwargs['id']
+
+
+class TopRequestedAPIView(generics.ListAPIView):
+    model = Requested
+    serializer_class = RequestedSerializer
+    permission_classes = ()
+    queryset = Requested.objects.order_by('-count')[:5]
+
+
+# class TopSellersAPIView(generics.ListAPIView):
+#     model = Book
+#     serializer_class = BookSerializer
+#     permission_classes = ()
+#     queryset = Requested.objects.order_by('-count')[:5]

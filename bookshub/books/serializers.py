@@ -4,6 +4,7 @@ from .models import Book, Requested, Image
 
 
 class ImageSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Image
         fields = ('id', 'image', )
@@ -24,6 +25,8 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class RequestedSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Requested
-        fields = ('user', 'status', 'isbn_10', 'isbn_13', 'title', 'author')
+        fields = ('user', 'status', 'isbn_10',
+                  'isbn_13', 'title', 'author', 'count')
