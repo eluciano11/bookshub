@@ -120,7 +120,8 @@ class Common(Configuration):
     JWT_AUTH = {
         'JWT_PAYLOAD_HANDLER':
         'bookshub.utils.jwt_handlers.jwt_payload_handler',
-
+        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=200),
+        'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=201),
         'JWT_ALLOW_REFRESH': True,
     }
 

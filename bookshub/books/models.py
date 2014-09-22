@@ -1,4 +1,4 @@
-import time
+from time import time
 
 from django.db import models
 
@@ -8,11 +8,6 @@ from .constants import BOOK_CONDITION, CATEGORY_CHOICES, REQUEST_STATUS
 from jsonfield import JSONField
 
 from taggit.managers import TaggableManager
-
-
-def get_book_image_path(filename):
-    return "books/%s_%s" % \
-           (str(time()).replace('.', '_'), filename)
 
 
 class Category(BaseModel):
@@ -67,10 +62,11 @@ class Review(BaseModel):
 class Image(BaseModel):
     book = models.ForeignKey(Book)
 
-    image = models.ImageField(
-        upload_to=get_book_image_path,
-        height_field=100,
-        width_field=100)
+    def get_book_image_path(self, filename):
+        return "uploaded_files/books/%s_%s"\
+            % (str(time()).replace('.', '_'), filename)
+
+    image = models.ImageField(upload_to=get_book_image_path)
 
     def __str__(self):
         return self.book
