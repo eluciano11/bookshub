@@ -1,4 +1,4 @@
-import time
+from time import time
 import uuid
 import jwt
 from calendar import timegm
