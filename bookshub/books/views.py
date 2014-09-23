@@ -2,9 +2,9 @@ from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 
-from .models import Book, Requested, Image
+from .models import Book, Requested, Image, Review
 from .permissions import BookPermission, ImagePermission
-from .serializers import BookSerializer, RequestedSerializer, ImageSerializer
+from .serializers import BookSerializer, RequestedSerializer, ImageSerializer, ReviewSerializer
 from ..utils.response import ErrorResponse
 
 
@@ -55,6 +55,20 @@ class BookImageViewSet(ModelViewSet):
 
     def pre_save(self, obj, *args, **kwargs):
         obj.book_id = self.kwargs['id']
+
+
+class ReviewViewSet(ModelViewSet):
+    model = Review
+    serializer_class = ReviewSerializer
+    permission_classes = ()
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.DATA)
+
+        if serializer.is_valid() and request.user.is_authenticated():
+            return Response(serializer.object)
+
+        return ErrorResponse(serializer.errors)
 
 
 class TopRequestedAPIView(generics.ListAPIView):
