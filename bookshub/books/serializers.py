@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Book, Requested, Image
+from .models import Book, Requested, Image, Review
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -30,3 +30,10 @@ class RequestedSerializer(serializers.ModelSerializer):
         model = Requested
         fields = ('user', 'status', 'isbn_10',
                   'isbn_13', 'title', 'author', 'count')
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Review
+        fields = ('user', 'book', 'review', 'score', 'pub_date')
