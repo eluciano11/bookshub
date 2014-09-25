@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 
-from .models import Book, Requested, Image, Review
+from .models import Book, Requested, Image, Review, Viewed
 from .permissions import BookPermission, ImagePermission
 from .serializers import BookSerializer, RequestedSerializer, ImageSerializer, ReviewSerializer
 from ..utils.response import ErrorResponse
@@ -77,6 +77,22 @@ class TopRequestedAPIView(generics.ListAPIView):
     permission_classes = ()
     queryset = Requested.objects.order_by('-count')[:5]
 
+
+class TopRecommendedAPIView(generics.ListAPIView):
+    model = Book
+    serializer_class = BookSerializer
+    permission_classes = ()
+
+    def get_queryset(self):
+        viewed = Viewed.objects.filter(user=self.request.user)
+        category_recommended = []
+        top_reviewed = []
+        for data in viewed:
+            if data.book.category not in category_recommended:
+                category_recommended.append(data.book.category)
+                top_reviewed.append(
+                    Review.objects.filter(
+                        book__category=data.book.category).order_by('-score')[:5])
 
 # class TopSellersAPIView(generics.ListAPIView):
 #     model = Book

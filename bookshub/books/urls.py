@@ -16,6 +16,8 @@ urlpatterns += patterns(
     '',
     url(r'^books/top/requested/$',
         views.TopRequestedAPIView.as_view(), name='top_requested'),
+    url(r'^books/top/recommended/$',
+        views.TopRecommendedAPIView.as_view(), name='top_recommended'),
     # url(r'^books/top/sellers/$',
     #     views.TopSellersAPIView.as_view(), name='top_sellers'),
 )

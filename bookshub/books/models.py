@@ -77,7 +77,7 @@ class Viewed(BaseModel):
     book = models.ForeignKey(Book)
 
     def __str__(self):
-        return self.book
+        return self.book.title
 
 
 class Requested(BaseModel):
