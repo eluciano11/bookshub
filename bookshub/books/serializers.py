@@ -10,6 +10,15 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = ('id', 'image', )
 
 
+class BookSimpleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Book
+        fields = ('id', 'title', 'condition', 'price', 'author', 'description',
+                  'publisher', 'category', 'isbn_10', 'isbn_13', 'quantity',
+                  'edition')
+
+
 class BookSerializer(serializers.ModelSerializer):
     tags = serializers.Field(source='get_tags_display')
 
