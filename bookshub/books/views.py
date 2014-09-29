@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from .models import Book, Requested, Image, Review, Viewed
 from .permissions import BookPermission, ImagePermission
-from .serializers import BookSerializer, RequestedSerializer, ImageSerializer, ReviewSerializer
+from .serializers import BookSerializer, RequestedSerializer, ImageSerializer, ReviewSerializer, BookSimpleSerializer
 from ..utils.response import ErrorResponse
 
 
@@ -71,16 +71,35 @@ class ReviewViewSet(ModelViewSet):
         return ErrorResponse(serializer.errors)
 
 
+class SearchAPIView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSimpleSerializer
+    permission_classes = ()
+
+    def get_queryset(self):
+        search_by = self.request.QUERY_PARAMS.get('search_by')
+        search_string = self.request.QUERY_PARAMS.get('search_string')
+
+        if search_by != 'isbn_10' and search_by != 'isbn_13':
+            field_specification = search_by + '__icontains'
+            return Book.objects.filter(**{
+                field_specification: search_string})
+        else:
+            print 'hello'
+            return Book.objects.filter(**{
+                search_by: search_string})
+
+
 class TopRequestedAPIView(generics.ListAPIView):
     model = Requested
+    queryset = Requested.objects.order_by('-count')[:5]
     serializer_class = RequestedSerializer
     permission_classes = ()
-    queryset = Requested.objects.order_by('-count')[:5]
 
 
 class TopRecommendedAPIView(generics.ListAPIView):
     model = Book
-    serializer_class = BookSerializer
+    serializer_class = BookSimpleSerializer
     permission_classes = ()
 
     def get_queryset(self):
@@ -93,6 +112,7 @@ class TopRecommendedAPIView(generics.ListAPIView):
                 top_reviewed.append(
                     Review.objects.filter(
                         book__category=data.book.category).order_by('-score')[:5])
+
 
 # class TopSellersAPIView(generics.ListAPIView):
 #     model = Book
