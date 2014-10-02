@@ -85,8 +85,9 @@ class SearchAPIView(generics.ListAPIView):
             return Book.objects.filter(**{
                 field_specification: search_string})
         else:
+            field_specification = search_by + '__iexact'
             return Book.objects.filter(**{
-                search_by: search_string})
+                field_specification: search_string})
 
 
 class TopRequestedAPIView(generics.ListAPIView):
