@@ -85,7 +85,6 @@ class SearchAPIView(generics.ListAPIView):
             return Book.objects.filter(**{
                 field_specification: search_string})
         else:
-            print 'hello'
             return Book.objects.filter(**{
                 search_by: search_string})
 
