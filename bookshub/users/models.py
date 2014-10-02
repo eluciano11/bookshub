@@ -213,3 +213,14 @@ class User(BaseModel, AbstractBaseUser):
             "Reset Password",
             "robot@bookshub.com"
         )
+
+
+class Review(BaseModel):
+    created_by = models.ForeignKey(User, related_name='created_by')
+    owner = models.ForeignKey(User, related_name='owner')
+
+    score = models.FloatField(default=0.0)
+    text = models.CharField(max_length=140, blank=True)
+
+    def __str__(self):
+        return self.text
