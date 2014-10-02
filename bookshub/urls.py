@@ -15,13 +15,21 @@ urlpatterns = patterns(
     url(
         r'^api/',
         include('bookshub.users.urls')
-    )
+    ),
+    url(
+        r'^api/',
+        include('bookshub.books.urls')
+    ),
 )
 
-if settings.ENVIRONMENT == 'Production':
+if settings.ENVIRONMENT != 'Production':
     urlpatterns += (
         url(
             r'^api/docs/',
             include('rest_framework_swagger.urls')
         ),
+        url(
+            r'^(?P<path>.*)$',
+            'django.views.static.serve',
+            {'document_root': settings.MEDIA_ROOT}),
     )

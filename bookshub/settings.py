@@ -37,10 +37,11 @@ class Common(Configuration):
         'django_gravatar',
         'django_countries',
         'djrill',
+        'taggit',
 
         # Apps
-        'bookshub.users'
-
+        'bookshub.users',
+        'bookshub.books',
     )
 
     MIDDLEWARE_CLASSES = (
@@ -84,9 +85,9 @@ class Common(Configuration):
     #     os.path.join(BASE_DIR, 'static'),
     # )
 
-    TEMPLATE_DIRS = (
-        os.path.join(BASE_DIR, 'templates'),
-    )
+    # TEMPLATE_DIRS = (
+    #     os.path.join(BASE_DIR, 'templates'),
+    # )
 
     SITE_ID = 1
 
@@ -119,7 +120,8 @@ class Common(Configuration):
     JWT_AUTH = {
         'JWT_PAYLOAD_HANDLER':
         'bookshub.utils.jwt_handlers.jwt_payload_handler',
-
+        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=200),
+        'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=201),
         'JWT_ALLOW_REFRESH': True,
     }
 
