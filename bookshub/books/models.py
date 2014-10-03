@@ -107,14 +107,15 @@ def recalculate_total_score(sender, **kwargs):
     score = 0
     count = reviews.count()
 
-    for r in reviews:
-        accumulator += r.score
+    if count > 0:
+        for r in reviews:
+            accumulator += r.score
 
-    score = (accumulator * MULTIPLY_VALUE) / count
+        score = (accumulator * MULTIPLY_VALUE) / count
 
-    book = Book.objects.get(id=c.book.id)
-    book.score = score
+        book = Book.objects.get(id=c.book.id)
+        book.score = score
 
-    book.save()
+        book.save()
 
 post_save.connect(recalculate_total_score, sender=Review)
