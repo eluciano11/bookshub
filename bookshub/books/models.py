@@ -1,10 +1,11 @@
 from time import time
 
 from django.db import models
+from django.db.models.signals import post_save
 
 from ..users.models import User
 from ..utils.models import BaseModel
-from .constants import BOOK_CONDITION, CATEGORY_CHOICES, REQUEST_STATUS
+from .constants import BOOK_CONDITION, CATEGORY_CHOICES, REQUEST_STATUS, MULTIPLY_VALUE
 from jsonfield import JSONField
 
 from taggit.managers import TaggableManager
@@ -35,6 +36,7 @@ class Book(BaseModel):
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(null=True)
 
+    score = models.FloatField(null=True, default=0.0)
     description = models.CharField(
         max_length=140, help_text=description_help_text)
     publisher = models.CharField(max_length=75)
@@ -93,3 +95,26 @@ class Requested(BaseModel):
 
     def __str__(self):
         return self.id
+
+
+def recalculate_total_score(sender, **kwargs):
+    c = kwargs['instance']
+
+    reviews = Review.objects.filter(
+        book=c.book.id, score__isnull=False).exclude(score__lte=0.0)
+
+    accumulator = 0
+    score = 0
+    count = reviews.count()
+
+    for r in reviews:
+        accumulator += r.score
+
+    score = (accumulator * MULTIPLY_VALUE) / count
+
+    book = Book.objects.get(id=c.book.id)
+    book.score = score
+
+    book.save()
+
+post_save.connect(recalculate_total_score, sender=Review)
