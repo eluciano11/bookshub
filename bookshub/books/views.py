@@ -71,8 +71,17 @@ class ReviewViewSet(ModelViewSet):
         return ErrorResponse(serializer.errors)
 
 
+class AllReviewsAPIView(generics.ListAPIView):
+    serializer_class = ReviewSerializer
+    authentication_classes = ()
+    permission_classes = ()
+
+    def get_queryset(self):
+        book_id = self.kwargs['id']
+        return Review.objects.filter(book=book_id)
+
+
 class SearchAPIView(generics.ListAPIView):
-    queryset = Book.objects.all()
     serializer_class = BookSimpleSerializer
     permission_classes = ()
 

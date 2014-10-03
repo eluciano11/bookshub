@@ -29,3 +29,4 @@ REQUEST_STATUS = (
     ('requested', 'Requested'),
     ('closed', 'Closed'),
 )
+MULTIPLY_VALUE = 20
