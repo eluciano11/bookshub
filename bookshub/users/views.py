@@ -1,8 +1,9 @@
 from rest_framework.response import Response
 from rest_framework import generics, filters
+from rest_framework.viewsets import ModelViewSet
 
 from . import serializers
-from .models import User
+from .models import User, Review
 from ..utils.response import ErrorResponse
 
 
@@ -146,3 +147,42 @@ class UserSettingsAPIView(generics.RetrieveAPIView, generics.UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class UserReviewViewSet(ModelViewSet):
+    model = Review
+    serializer_class = serializers.UserReviewSerializer
+
+    def get_queryset(self):
+        return Review.objects.filter(owner=self.kwargs['user_id'])
+
+    def initialize_request(self, request, *args, **kwargs):
+        """
+        Disable authentication and permissions for `list` action.
+        """
+        initialized_request = super(
+            UserReviewViewSet, self).initialize_request(
+                request, *args, **kwargs)
+
+        user = request.user
+        request_method = request.method.lower()
+        action = self.action_map.get(request_method)
+
+        if not user.is_authenticated() and\
+                (action == 'list' or action == 'retrieve'):
+            self.authentication_classes = ()
+            self.permission_classes = ()
+
+        return initialized_request
+
+    def get_serializer(self, *args, **kwargs):
+        serializer_class = self.get_serializer_class()
+        context = self.get_serializer_context()
+
+        if self.request.method != 'GET':
+            kwargs.update({
+                'context': context,
+                'exclude': ('created_by', 'owner')
+            })
+
+        return serializer_class(*args, **kwargs)

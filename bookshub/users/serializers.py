@@ -2,7 +2,7 @@ from django.utils.encoding import smart_str
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
-from .models import User
+from .models import User, Review
 from ..utils.serializers import DynamicFieldsModelSerializer
 from ..utils import fields
 from ..utils.validators import is_valid_email
@@ -301,3 +301,15 @@ class UserSettingsSerializer(serializers.ModelSerializer):
 
     def save_object(self, obj, **kwargs):
         super(UserSettingsSerializer, self).save_object(obj, **kwargs)
+
+
+class UserReviewSerializer(DynamicFieldsModelSerializer):
+
+    class Meta:
+        model = Review
+        fields = ('id', 'created_by', 'owner', 'score', 'text', 'created_at')
+
+    def save_object(self, obj, **kwargs):
+        obj.created_by = self.context['request'].user
+        obj.owner_id = self.context['view'].kwargs['user_id']
+        super(UserReviewSerializer, self).save_object(obj, **kwargs)

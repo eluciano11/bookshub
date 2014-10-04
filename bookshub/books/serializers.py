@@ -46,3 +46,24 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('user', 'book', 'review', 'score', 'pub_date')
+
+    def validate(self, attrs):
+        review = attrs.get('review')
+        score = attrs.get('score')
+
+        if not review and score == 0.0:
+            msg = 'Please write a review and/or give a score.'
+            raise serializers.ValidationError(msg)
+
+        if review:
+            user = attrs['user']
+            book = attrs['book']
+
+            reviews = Review.objects.filter(
+                user=user, book=book).exclude(score__lte=0.0).count()
+
+            if reviews > 0 and score != 0.0:
+                msg = 'You have already scored this book.'
+                raise serializers.ValidationError(msg)
+
+        return attrs

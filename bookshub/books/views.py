@@ -1,6 +1,9 @@
 from rest_framework import generics
+# from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+# from rest_framework import status
 
 from .models import Book, Requested, Image, Review, Viewed
 from .permissions import BookPermission, ImagePermission
@@ -60,19 +63,34 @@ class BookImageViewSet(ModelViewSet):
 class ReviewViewSet(ModelViewSet):
     model = Review
     serializer_class = ReviewSerializer
-    permission_classes = ()
+
+    def initialize_request(self, request, *args, **kwargs):
+        """
+        Disable authentication and permissions for `create` action.
+        """
+        initialized_request = super(
+            ReviewViewSet, self).initialize_request(request, *args, **kwargs)
+
+        user = request.user
+        request_method = request.method.lower()
+        action = self.action_map.get(request_method)
+
+        if not user.is_authenticated() and (action == 'list' or action == 'retrive'):
+            self.authentication_classes = ()
+            self.permission_classes = (IsAuthenticatedOrReadOnly,)
+
+        return initialized_request
 
     def post(self, request):
         serializer = self.get_serializer(data=request.DATA)
 
-        if serializer.is_valid() and request.user.is_authenticated():
+        if serializer.is_valid():
             return Response(serializer.object)
 
         return ErrorResponse(serializer.errors)
 
 
 class SearchAPIView(generics.ListAPIView):
-    queryset = Book.objects.all()
     serializer_class = BookSimpleSerializer
     permission_classes = ()
 
@@ -85,8 +103,9 @@ class SearchAPIView(generics.ListAPIView):
             return Book.objects.filter(**{
                 field_specification: search_string})
         else:
+            field_specification = search_by + '__iexact'
             return Book.objects.filter(**{
-                search_by: search_string})
+                field_specification: search_string})
 
 
 class TopRequestedAPIView(generics.ListAPIView):
