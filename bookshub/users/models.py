@@ -13,7 +13,7 @@ from django.contrib.sites.models import Site
 from django_countries.fields import CountryField
 from django_gravatar.helpers import get_gravatar_url
 from rest_framework_jwt.settings import api_settings
-from encrypted_fields import EncryptedCharField
+# from encrypted_fields import EncryptedCharField
 
 from ..utils.models import BaseModel
 from ..utils.jwt_handlers import jwt_payload_handler, jwt_encode_handler
@@ -81,7 +81,10 @@ class User(BaseModel, AbstractBaseUser):
         default=False, help_text=is_superuser_help_text)
     is_active = models.BooleanField(default=True, help_text=is_active_help_text)
 
-    token_version = EncryptedCharField(
+    # token_version = EncryptedCharField(
+    #     max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
+
+    token_version = models.CharField(
         max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
 
     objects = AccountManager()
