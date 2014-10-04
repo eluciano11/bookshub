@@ -25,7 +25,7 @@ urlpatterns = patterns(
 if settings.ENVIRONMENT != 'Production':
     urlpatterns += (
         url(
-            r'^api/docs/',
+            r'^api-docs/',
             include('rest_framework_swagger.urls')
         ),
         url(
