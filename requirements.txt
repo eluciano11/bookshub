@@ -21,6 +21,7 @@ djangorestframework-jwt==1.0.1
 djrill==1.1.1
 gunicorn==19.1.1
 jsonfield==1.0.0
+psycopg2==2.5.4
 pyasn1==0.1.7
 pycrypto==2.6.1
 python-keyczar==0.71c
