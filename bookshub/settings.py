@@ -150,6 +150,9 @@ class Common(Configuration):
     ENCRYPTED_FIELDS_KEYDIR = 'fieldkeys'
     # ENCRYPTED_FIELDS_KEYDIR = 'fieldkeys'
 
+    # CORS settings
+    CORS_ORIGIN_ALLOW_ALL = True
+
 
 class Development(Common):
 
@@ -193,9 +196,6 @@ class Development(Common):
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
-
-    # CORS settings
-    CORS_ORIGIN_ALLOW_ALL = True
 
 
 class Testing(Development):
