@@ -164,7 +164,7 @@ class Development(Common):
     SWAGGER_SETTINGS = {
         "exclude_namespaces": [],
         "api_version": '0.1',
-        "api_path": "",
+        "api_path": "/",
         "enabled_methods": [
             'get',
             'post',
