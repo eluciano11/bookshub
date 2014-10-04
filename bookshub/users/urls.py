@@ -1,8 +1,15 @@
 from django.conf.urls import patterns
+from rest_framework.routers import DefaultRouter
 
 from . import views
 
-urlpatterns = patterns(
+router = DefaultRouter()
+
+router.register(r'users/(?P<user_id>\d+)/reviews', views.UserReviewViewSet)
+
+urlpatterns = router.urls
+
+urlpatterns += patterns(
     # Prefix
     '',
     (
@@ -41,4 +48,5 @@ urlpatterns = patterns(
         r'^auth/refresh_token/',
         'rest_framework_jwt.views.refresh_jwt_token'
     ),
+
 )
