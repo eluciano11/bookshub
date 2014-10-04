@@ -155,6 +155,8 @@ class Development(Common):
 
     TEMPLATE_DEBUG = DEBUG
 
+    DEBUG_TOOLBAR_PATCH_SETTINGS = values.BooleanValue(False)
+
     # Development-only installed apps
     Common.INSTALLED_APPS += (
         'debug_toolbar',
