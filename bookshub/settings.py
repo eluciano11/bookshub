@@ -217,5 +217,7 @@ class Production(Common):
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
     EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
 
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
     # django-secure settings
     PROTOCOL = 'https'
