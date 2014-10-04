@@ -1,0 +1,1 @@
+web: gunicorn bookshub.wsgi --log-file -
