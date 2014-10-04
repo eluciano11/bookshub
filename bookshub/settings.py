@@ -39,6 +39,7 @@ class Common(Configuration):
         'djrill',
         'taggit',
         'djangosecure',
+        'corsheaders',
 
         # Apps
         'bookshub.users',
@@ -47,6 +48,7 @@ class Common(Configuration):
 
     MIDDLEWARE_CLASSES = (
         'djangosecure.middleware.SecurityMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
@@ -191,6 +193,9 @@ class Development(Common):
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
+
+    # CORS settings
+    CORS_ORIGIN_ALLOW_ALL = True
 
 
 class Testing(Development):
