@@ -155,8 +155,6 @@ class Development(Common):
 
     TEMPLATE_DEBUG = DEBUG
 
-    DEBUG_TOOLBAR_PATCH_SETTINGS = values.BooleanValue(False)
-
     # Development-only installed apps
     Common.INSTALLED_APPS += (
         'debug_toolbar',
@@ -166,7 +164,7 @@ class Development(Common):
     SWAGGER_SETTINGS = {
         "exclude_namespaces": [],
         "api_version": '0.1',
-        "api_path": "/",
+        "api_path": "",
         "enabled_methods": [
             'get',
             'post',
@@ -185,7 +183,7 @@ class Development(Common):
 
     # Django Debug Toolbar
     DEBUG_TOOLBAR_PATCH_SETTINGS = values.BooleanValue(
-        environ_prefix=None, default=True)
+        environ_prefix=None, default=False)
 
     # Dummy cache for development
     CACHES = {
