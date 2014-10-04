@@ -39,6 +39,7 @@ class Common(Configuration):
         'djrill',
         'taggit',
         'djangosecure',
+        'corsheaders',
 
         # Apps
         'bookshub.users',
@@ -47,6 +48,7 @@ class Common(Configuration):
 
     MIDDLEWARE_CLASSES = (
         'djangosecure.middleware.SecurityMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
@@ -148,6 +150,9 @@ class Common(Configuration):
     ENCRYPTED_FIELDS_KEYDIR = 'fieldkeys'
     # ENCRYPTED_FIELDS_KEYDIR = 'fieldkeys'
 
+    # CORS settings
+    CORS_ORIGIN_ALLOW_ALL = True
+
 
 class Development(Common):
 
@@ -183,7 +188,7 @@ class Development(Common):
 
     # Django Debug Toolbar
     DEBUG_TOOLBAR_PATCH_SETTINGS = values.BooleanValue(
-        environ_prefix=None, default=True)
+        environ_prefix=None, default=False)
 
     # Dummy cache for development
     CACHES = {
