@@ -145,7 +145,7 @@ class Common(Configuration):
         }
     }
 
-    ENCRYPTED_FIELDS_KEYDIR = 'fieldkeys'
+    # ENCRYPTED_FIELDS_KEYDIR = 'fieldkeys'
 
 
 class Development(Common):
