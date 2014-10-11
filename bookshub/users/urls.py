@@ -45,6 +45,10 @@ urlpatterns += patterns(
         views.UserSettingsAPIView.as_view()
     ),
     (
+        r'auth/users/(?P<pk>\d+)/profile/$',
+        views.UserProfileAPIView.as_view()
+    ),
+    (
         r'^auth/refresh_token/',
         'rest_framework_jwt.views.refresh_jwt_token'
     ),
