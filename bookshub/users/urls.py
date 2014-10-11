@@ -45,7 +45,7 @@ urlpatterns += patterns(
         views.UserSettingsAPIView.as_view()
     ),
     (
-        r'auth/users/(?P<pk>\d+)/profile/$',
+        r'auth/users/(?P<id>\d+)/profile/$',
         views.UserProfileAPIView.as_view()
     ),
     (

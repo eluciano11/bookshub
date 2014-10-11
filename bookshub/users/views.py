@@ -191,4 +191,4 @@ class UserReviewViewSet(ModelViewSet):
 class UserProfileAPIView(generics.RetrieveAPIView):
     model = User
     serializer_class = serializers.UserSimpleSerializer
-    lookup_url_kwarg = 'pk'
+    lookup_url_kwarg = 'id'
