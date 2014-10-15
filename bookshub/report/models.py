@@ -6,16 +6,22 @@ from ..books.models import Book
 from .constans import USER_REPORT, BOOK_REPORT
 
 
-class ReportUser(BaseModel):
+class ReportedUser(BaseModel):
     sender = models.ManyToManyField(User, related_name='sender')
     receiver = models.ForeignKey(User, related_name='receiver')
 
     reason = models.CharField(choices=USER_REPORT, max_length=1)
 
+    def __str__(self):
+        return self.reason
 
-class ReportBook(BaseModel):
+
+class ReportedBook(BaseModel):
     book = models.ForeignKey(Book, related_name='book_title')
     sender = models.ForeignKey(User)
     seller = models.ForeignKey(Book, related_name='book_owner')
 
     reason = models.CharField(choices=BOOK_REPORT, max_length=1)
+
+    def __str__(self):
+        return self.book

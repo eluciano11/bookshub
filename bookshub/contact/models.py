@@ -11,3 +11,6 @@ class Message(BaseModel):
     body = models.CharField(max_length=300, blank=False)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=1)
     status = models.CharField(choices=STATUS_CHOICES, max_length=10)
+
+    def __str__(self):
+        return self.subject
