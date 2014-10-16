@@ -155,6 +155,9 @@ class Common(Configuration):
     # CORS settings
     CORS_ORIGIN_ALLOW_ALL = True
 
+    #Email
+    BOOKSHUB_EMAIL = values.Value(environ_prefix=None, default='DEVELOPMENT')
+
 
 class Development(Common):
 
