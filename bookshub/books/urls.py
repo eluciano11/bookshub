@@ -12,12 +12,12 @@ urlpatterns = router.urls
 
 urlpatterns += patterns(
     '',
-    url(r'^search/$',
-        views.SearchAPIView.as_view(), name='search'),
     url(r'^books/$',
         views.CreateBookAPIView.as_view(), name='books'),
     url(r'^books/(?P<id>\d+)/$',
         views.SpecificBookAPIView.as_view(), name='specific_book'),
+    url(r'^search/$',
+        views.SearchAPIView.as_view(), name='search'),
     url(r'^books/top/requested/$',
         views.TopRequestedAPIView.as_view(), name='top_requested'),
     url(r'^books/top/recommended/$',

@@ -11,7 +11,7 @@ class OfferAdmin(VersionAdmin, admin.ModelAdmin):
 
 
 class ImageAdmin(VersionAdmin, admin.ModelAdmin):
-    list_display = ('book', 'image',)
+    list_display = ('offer', 'image',)
 
 admin.site.register(Offer, OfferAdmin)
 admin.site.register(Image, ImageAdmin)

@@ -9,7 +9,6 @@ class OfferSerializer(serializers.ModelSerializer):
 
 
 class OfferImageSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Image
         fields = ('id', 'image', )

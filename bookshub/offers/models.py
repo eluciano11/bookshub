@@ -26,7 +26,7 @@ class Offer(BaseModel):
 
 
 class Image(BaseModel):
-    book = models.ForeignKey(Book, related_name='book_picture')
+    offer = models.ForeignKey(Offer)
 
     def get_book_image_path(self, filename):
         return "uploaded_files/books/%s_%s"\

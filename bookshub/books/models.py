@@ -22,14 +22,14 @@ class Category(BaseModel):
 class Book(BaseModel):
     category = models.ForeignKey(Category)
 
-    isbn_10 = models.CharField(max_length=10, blank=True)
-    isbn_13 = models.CharField(max_length=13, blank=True)
     title = models.CharField(max_length=75)
     author = models.CharField(max_length=50)
+    isbn_10 = models.CharField(max_length=10, blank=True)
+    isbn_13 = models.CharField(max_length=13, blank=True)
     edition = models.CharField(max_length=15, blank=True)
+    publisher = models.CharField(max_length=75)
 
     score = models.FloatField(null=True, default=0.0)
-    publisher = models.CharField(max_length=75)
     tags = TaggableManager(blank=True)
 
     def get_book_image_path(self, filename):
