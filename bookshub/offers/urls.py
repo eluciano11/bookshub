@@ -4,7 +4,7 @@ from . import views
 
 router = DefaultRouter()
 
-# router.register(r'books/(?P<id>\d+)/images', views.BookImageViewSet)
-router.register(r'offers', views.OffersViewSet)
+router.register(r'offers/(?P<id>\d+)/images', views.OfferImageViewSet)
+router.register(r'offers', views.OfferViewSet)
 
 urlpatterns = router.urls

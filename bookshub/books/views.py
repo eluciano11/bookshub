@@ -1,9 +1,7 @@
 from rest_framework import generics
-# from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-# from rest_framework import status
 
 from .models import Book, Requested, Review, Viewed
 from .permissions import BookPermission
@@ -35,19 +33,6 @@ class RequestedViewSet(ModelViewSet):
             return Response(serializer.object)
 
         return ErrorResponse(serializer.errors)
-
-
-# class BookImageViewSet(ModelViewSet):
-#     model = Image
-#     serializer_class = ImageSerializer
-#     permission_classes = (ImagePermission, )
-
-#     def get_queryset(self):
-#         return Image.objects.filter(
-#             book=self.kwargs['id'], book__owner=self.request.user)
-
-#     def pre_save(self, obj, *args, **kwargs):
-#         obj.book_id = self.kwargs['id']
 
 
 class ReviewViewSet(ModelViewSet):

@@ -1,20 +1,21 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .models import Offer
-from .serializers import OffersSerializer
+from .models import Offer, Image
+from .serializers import OfferSerializer, OfferImageSerializer
+from .permissions import ImagePermission
 
 
-class OffersViewSet(ModelViewSet):
+class OfferViewSet(ModelViewSet):
     model = Offer
-    serializer_class = OffersSerializer
+    serializer_class = OfferSerializer
 
     def initialize_request(self, request, *args, **kwargs):
         """
         Disable authentication and permissions for `create` action.
         """
         initialized_request = super(
-            OffersViewSet, self).initialize_request(request, *args, **kwargs)
+            OfferViewSet, self).initialize_request(request, *args, **kwargs)
 
         user = request.user
         request_method = request.method.lower()
@@ -25,3 +26,16 @@ class OffersViewSet(ModelViewSet):
             self.permission_classes = (IsAuthenticatedOrReadOnly,)
 
         return initialized_request
+
+
+class OfferImageViewSet(ModelViewSet):
+    model = Image
+    serializer_class = OfferImageSerializer
+    permission_classes = (ImagePermission, )
+
+    def get_queryset(self):
+        return Image.objects.filter(
+            book=self.kwargs['id'], book__owner=self.request.user)
+
+    def pre_save(self, obj, *args, **kwargs):
+        obj.book_id = self.kwargs['id']

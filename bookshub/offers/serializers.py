@@ -1,8 +1,15 @@
 from rest_framework import serializers
 
-from .models import Offer
+from .models import Offer, Image
 
 
-class OffersSerializer(serializers.ModelSerializer):
+class OfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = Offer
+
+
+class OfferImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Image
+        fields = ('id', 'image', )

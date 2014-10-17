@@ -3,13 +3,6 @@ from rest_framework import serializers
 from .models import Book, Requested, Review
 
 
-# class ImageSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = Image
-#         fields = ('id', 'image', )
-
-
 class BookSimpleSerializer(serializers.ModelSerializer):
 
     class Meta:
