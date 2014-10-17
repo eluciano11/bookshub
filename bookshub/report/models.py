@@ -3,7 +3,8 @@ from django.db import models
 from ..utils.models import BaseModel
 from ..users.models import User
 from ..books.models import Book
-from .constans import USER_REPORT, BOOK_REPORT
+from ..offers.models import Offer
+from .constans import USER_REPORT, BOOK_REPORT, OFFER_REPORT
 
 
 class ReportedUser(BaseModel):
@@ -25,3 +26,13 @@ class ReportedBook(BaseModel):
 
     def __str__(self):
         return self.book
+
+
+class ReportedOffer(BaseModel):
+    offer = models.ForeignKey(Offer)
+    sender = models.ForeignKey(User)
+
+    reason = models.CharField(choices=OFFER_REPORT, max_length=1)
+
+    def __str__(self):
+        return self.reason

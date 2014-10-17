@@ -46,6 +46,7 @@ class Common(Configuration):
         'bookshub.books',
         'bookshub.contact',
         'bookshub.report',
+        'bookshub.offers',
     )
 
     MIDDLEWARE_CLASSES = (
