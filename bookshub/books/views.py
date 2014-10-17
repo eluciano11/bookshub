@@ -65,7 +65,7 @@ class ReviewViewSet(ModelViewSet):
         request_method = request.method.lower()
         action = self.action_map.get(request_method)
 
-        if not user.is_authenticated() and (action == 'list' or action == 'retrive'):
+        if not user.is_authenticated() and (action == 'list' or action == 'retrieve'):
             self.authentication_classes = ()
             self.permission_classes = (IsAuthenticatedOrReadOnly,)
 
