@@ -11,26 +11,16 @@ from .serializers import BookSerializer, RequestedSerializer, ImageSerializer, R
 from ..utils.response import ErrorResponse
 
 
-class BookViewSet(ModelViewSet):
+class CreateBookAPIView(generics.CreateAPIView):
     model = Book
     serializer_class = BookSerializer
     permission_classes = (BookPermission, )
 
-    def get_queryset(self):
-        return Book.objects.filter(owner=self.request.user)
 
-    def post_save(self, *args, **kwargs):
-        if 'tags' in self.request.DATA:
-            self.object.tags.set(*self.request.DATA['tags'])
-        return super(BookViewSet, self).post_save(*args, **kwargs)
-
-    def post(self, request):
-        serializer = self.get_serializer(data=request.DATA)
-
-        if serializer.is_valid():
-            return Response(serializer.object)
-
-        return ErrorResponse(serializer.errors)
+class SpecificBookAPIView(generics.RetrieveAPIView):
+    model = Book
+    serializer_class = BookSerializer
+    lookup_field = 'id'
 
 
 class RequestedViewSet(ModelViewSet):
