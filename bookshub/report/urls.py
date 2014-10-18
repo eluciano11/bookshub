@@ -8,4 +8,6 @@ urlpatterns = patterns(
         views.ReportUserAPIView.as_view(), name='report_user'),
     url(r'^report/offer/$',
         views.ReportOfferAPIView.as_view(), name='report_offer'),
+    url(r'^report/book/$',
+        views.ReportBookAPIView.as_view(), name='report_offer'),
 )

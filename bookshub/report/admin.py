@@ -6,7 +6,7 @@ from reversion import VersionAdmin
 
 
 class ReportedBookAdmin(VersionAdmin, admin.ModelAdmin):
-    list_display = ('reason', 'book', 'seller', 'sender')
+    list_display = ('reason', 'book', 'sender')
 
 
 class ReportedUserAdmin(VersionAdmin, admin.ModelAdmin):

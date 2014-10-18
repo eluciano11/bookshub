@@ -18,9 +18,8 @@ class ReportedUser(BaseModel):
 
 
 class ReportedBook(BaseModel):
-    book = models.ForeignKey(Book, related_name='book_title')
+    book = models.ForeignKey(Book)
     sender = models.ForeignKey(User)
-    seller = models.ForeignKey(Book, related_name='book_owner')
 
     reason = models.CharField(choices=BOOK_REPORT, max_length=1)
 

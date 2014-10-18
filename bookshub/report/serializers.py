@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import ReportedUser, ReportedOffer
+from .models import ReportedUser, ReportedOffer, ReportedBook
 
 
 class ReportUserSerializer(serializers.ModelSerializer):
@@ -11,3 +11,8 @@ class ReportUserSerializer(serializers.ModelSerializer):
 class ReportOfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReportedOffer
+
+
+class ReportBookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReportedBook
