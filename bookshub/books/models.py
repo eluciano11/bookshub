@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 
 from ..users.models import User
 from ..utils.models import BaseModel
-from .constants import BOOK_CONDITION, CATEGORY_CHOICES, REQUEST_STATUS, MULTIPLY_VALUE
+from .constants import CATEGORY_CHOICES, REQUEST_STATUS, MULTIPLY_VALUE
 from jsonfield import JSONField
 
 from taggit.managers import TaggableManager
@@ -20,27 +20,23 @@ class Category(BaseModel):
 
 
 class Book(BaseModel):
-    description_help_text = "Tell us more about the condition of your book."
-
-    owner = models.ForeignKey(User)
     category = models.ForeignKey(Category)
 
+    title = models.CharField(max_length=75)
+    author = models.CharField(max_length=50)
     isbn_10 = models.CharField(max_length=10, blank=True)
     isbn_13 = models.CharField(max_length=13, blank=True)
-    title = models.CharField(max_length=75)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
-    condition = models.CharField(choices=BOOK_CONDITION, max_length=10)
-    quantity = models.PositiveSmallIntegerField(default=1)
-    author = models.CharField(max_length=50)
     edition = models.CharField(max_length=15, blank=True)
-    start_date = models.DateTimeField(auto_now_add=True)
-    end_date = models.DateTimeField(null=True)
+    publisher = models.CharField(max_length=75)
 
     score = models.FloatField(null=True, default=0.0)
-    description = models.CharField(
-        max_length=140, help_text=description_help_text)
-    publisher = models.CharField(max_length=75)
     tags = TaggableManager(blank=True)
+
+    def get_book_image_path(self, filename):
+        return "uploaded_files/books/%s_%s"\
+            % (str(time()).replace('.', '_'), filename)
+
+    image = models.ImageField(upload_to=get_book_image_path, blank=True)
 
     def __str__(self):
         return self.title
@@ -59,19 +55,6 @@ class Review(BaseModel):
 
     def __str__(self):
         return self.review
-
-
-class Image(BaseModel):
-    book = models.ForeignKey(Book)
-
-    def get_book_image_path(self, filename):
-        return "uploaded_files/books/%s_%s"\
-            % (str(time()).replace('.', '_'), filename)
-
-    image = models.ImageField(upload_to=get_book_image_path)
-
-    def __str__(self):
-        return self.book
 
 
 class Viewed(BaseModel):

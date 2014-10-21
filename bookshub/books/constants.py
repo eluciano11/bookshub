@@ -1,7 +1,3 @@
-BOOK_CONDITION = (
-    ('new', 'New'),
-    ('used', 'Used')
-)
 CATEGORY_CHOICES = (
     ('accounting', 'Accounting'),
     ('architecture', 'Architecture'),

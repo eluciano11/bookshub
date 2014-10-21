@@ -131,7 +131,7 @@ class CancelAccountAPIView(generics.UpdateAPIView):
         return ErrorResponse(serializer.errors)
 
 
-class UserSettingsAPIView(generics.RetrieveAPIView, generics.UpdateAPIView):
+class UserSettingsAPIView(generics.UpdateAPIView):
     model = User
     serializer_class = serializers.UserSettingsSerializer
 
@@ -186,3 +186,9 @@ class UserReviewViewSet(ModelViewSet):
             })
 
         return serializer_class(*args, **kwargs)
+
+
+class UserProfileAPIView(generics.RetrieveAPIView):
+    model = User
+    serializer_class = serializers.UserSimpleSerializer
+    lookup_url_kwarg = 'id'

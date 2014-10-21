@@ -44,6 +44,10 @@ class Common(Configuration):
         # Apps
         'bookshub.users',
         'bookshub.books',
+        'bookshub.contact',
+        'bookshub.report',
+        'bookshub.offers',
+        'bookshub.cart',
     )
 
     MIDDLEWARE_CLASSES = (
@@ -152,6 +156,9 @@ class Common(Configuration):
 
     # CORS settings
     CORS_ORIGIN_ALLOW_ALL = True
+
+    #Email
+    BOOKSHUB_EMAIL = values.Value(environ_prefix=None, default='DEVELOPMENT')
 
 
 class Development(Common):

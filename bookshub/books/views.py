@@ -1,36 +1,25 @@
 from rest_framework import generics
-# from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-# from rest_framework import status
 
-from .models import Book, Requested, Image, Review, Viewed
-from .permissions import BookPermission, ImagePermission
-from .serializers import BookSerializer, RequestedSerializer, ImageSerializer, ReviewSerializer, BookSimpleSerializer
+from .models import Book, Requested, Review, Viewed
+from .permissions import BookPermission
+from .serializers import (BookSerializer, RequestedSerializer,
+                          ReviewSerializer, BookSimpleSerializer)
 from ..utils.response import ErrorResponse
 
 
-class BookViewSet(ModelViewSet):
+class CreateBookAPIView(generics.CreateAPIView):
     model = Book
     serializer_class = BookSerializer
     permission_classes = (BookPermission, )
 
-    def get_queryset(self):
-        return Book.objects.filter(owner=self.request.user)
 
-    def post_save(self, *args, **kwargs):
-        if 'tags' in self.request.DATA:
-            self.object.tags.set(*self.request.DATA['tags'])
-        return super(BookViewSet, self).post_save(*args, **kwargs)
-
-    def post(self, request):
-        serializer = self.get_serializer(data=request.DATA)
-
-        if serializer.is_valid():
-            return Response(serializer.object)
-
-        return ErrorResponse(serializer.errors)
+class SpecificBookAPIView(generics.RetrieveAPIView):
+    model = Book
+    serializer_class = BookSerializer
+    lookup_field = 'id'
 
 
 class RequestedViewSet(ModelViewSet):
@@ -45,19 +34,6 @@ class RequestedViewSet(ModelViewSet):
             return Response(serializer.object)
 
         return ErrorResponse(serializer.errors)
-
-
-class BookImageViewSet(ModelViewSet):
-    model = Image
-    serializer_class = ImageSerializer
-    permission_classes = (ImagePermission, )
-
-    def get_queryset(self):
-        return Image.objects.filter(
-            book=self.kwargs['id'], book__owner=self.request.user)
-
-    def pre_save(self, obj, *args, **kwargs):
-        obj.book_id = self.kwargs['id']
 
 
 class ReviewViewSet(ModelViewSet):
@@ -75,7 +51,8 @@ class ReviewViewSet(ModelViewSet):
         request_method = request.method.lower()
         action = self.action_map.get(request_method)
 
-        if not user.is_authenticated() and (action == 'list' or action == 'retrive'):
+        if not user.is_authenticated() and\
+                (action == 'list' or action == 'retrieve'):
             self.authentication_classes = ()
             self.permission_classes = (IsAuthenticatedOrReadOnly,)
 
@@ -129,7 +106,8 @@ class TopRecommendedAPIView(generics.ListAPIView):
                 category_recommended.append(data.book.category)
                 top_reviewed.append(
                     Review.objects.filter(
-                        book__category=data.book.category).order_by('-score')[:5])
+                        book__category=data.book.category
+                    ).order_by('-score')[:5])
 
 
 # class TopSellersAPIView(generics.ListAPIView):

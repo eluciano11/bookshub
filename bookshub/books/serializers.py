@@ -1,22 +1,14 @@
 from rest_framework import serializers
 
-from .models import Book, Requested, Image, Review
-
-
-class ImageSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Image
-        fields = ('id', 'image', )
+from .models import Book, Requested, Review
 
 
 class BookSimpleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ('id', 'title', 'condition', 'price', 'author', 'description',
-                  'publisher', 'category', 'isbn_10', 'isbn_13', 'quantity',
-                  'edition')
+        fields = ('id', 'title', 'author', 'publisher', 'score',
+                  'category', 'isbn_10', 'isbn_13', 'edition')
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -24,9 +16,8 @@ class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ('id', 'title', 'condition', 'price', 'author', 'description',
-                  'publisher', 'category', 'isbn_10', 'isbn_13', 'quantity',
-                  'edition', 'tags')
+        fields = ('id', 'title', 'author', 'publisher', 'score',
+                  'category', 'isbn_10', 'isbn_13', 'edition')
 
     def save_object(self, obj, **kwargs):
         obj.owner = self.context['request'].user
