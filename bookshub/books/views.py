@@ -5,7 +5,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Book, Requested, Review, Viewed
 from .permissions import BookPermission
-from .serializers import BookSerializer, RequestedSerializer, ReviewSerializer, BookSimpleSerializer
+from .serializers import (BookSerializer, RequestedSerializer,
+                          ReviewSerializer, BookSimpleSerializer)
 from ..utils.response import ErrorResponse
 
 
@@ -50,7 +51,8 @@ class ReviewViewSet(ModelViewSet):
         request_method = request.method.lower()
         action = self.action_map.get(request_method)
 
-        if not user.is_authenticated() and (action == 'list' or action == 'retrieve'):
+        if not user.is_authenticated() and\
+                (action == 'list' or action == 'retrieve'):
             self.authentication_classes = ()
             self.permission_classes = (IsAuthenticatedOrReadOnly,)
 
@@ -104,7 +106,8 @@ class TopRecommendedAPIView(generics.ListAPIView):
                 category_recommended.append(data.book.category)
                 top_reviewed.append(
                     Review.objects.filter(
-                        book__category=data.book.category).order_by('-score')[:5])
+                        book__category=data.book.category
+                    ).order_by('-score')[:5])
 
 
 # class TopSellersAPIView(generics.ListAPIView):
