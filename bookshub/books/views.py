@@ -19,6 +19,7 @@ class CreateBookAPIView(generics.CreateAPIView):
 class SpecificBookAPIView(generics.RetrieveAPIView):
     model = Book
     serializer_class = BookSerializer
+    authentication_classes = ()
     lookup_field = 'id'
 
 
@@ -70,6 +71,7 @@ class ReviewViewSet(ModelViewSet):
 class SearchAPIView(generics.ListAPIView):
     serializer_class = BookSimpleSerializer
     permission_classes = ()
+    authentication_classes = ()
 
     def get_queryset(self):
         search_by = self.request.QUERY_PARAMS.get('search_by')
@@ -90,12 +92,12 @@ class TopRequestedAPIView(generics.ListAPIView):
     queryset = Requested.objects.order_by('-count')[:5]
     serializer_class = RequestedSerializer
     permission_classes = ()
+    authentication_classes = ()
 
 
 class TopRecommendedAPIView(generics.ListAPIView):
     model = Book
     serializer_class = BookSimpleSerializer
-    permission_classes = ()
 
     def get_queryset(self):
         viewed = Viewed.objects.filter(user=self.request.user)

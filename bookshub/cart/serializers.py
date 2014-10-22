@@ -1,16 +1,16 @@
 from rest_framework import serializers
 
-from .models import Cart
+from .models import OrderItem
 
 
-class CartSerializer(serializers.ModelSerializer):
+class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Cart
+        model = OrderItem
 
     def validate(self, attrs):
         quantity = attrs['quantity']
         offer = attrs['offer']
-        buyer = attrs['buyer']
+        buyer = attrs['user']
 
         if buyer == offer.owner:
             message = 'Invalid action, you can not buy your own book.'

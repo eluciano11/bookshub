@@ -12,7 +12,7 @@ class OfferViewSet(ModelViewSet):
 
     def initialize_request(self, request, *args, **kwargs):
         """
-        Disable authentication and permissions for `create` action.
+        Disable authentication and permissions for `list or retrieve` action.
         """
         initialized_request = super(
             OfferViewSet, self).initialize_request(request, *args, **kwargs)
@@ -21,7 +21,8 @@ class OfferViewSet(ModelViewSet):
         request_method = request.method.lower()
         action = self.action_map.get(request_method)
 
-        if not user.is_authenticated() and (action == 'list' or action == 'retrieve'):
+        if not user.is_authenticated() and\
+                (action == 'list' or action == 'retrieve'):
             self.authentication_classes = ()
             self.permission_classes = (IsAuthenticatedOrReadOnly,)
 
@@ -32,6 +33,24 @@ class OfferImageViewSet(ModelViewSet):
     model = Image
     serializer_class = OfferImageSerializer
     permission_classes = (ImagePermission, )
+
+    def initialize_request(self, request, *args, **kwargs):
+        """
+        Disable authentication and permissions for `list or retrieve` action.
+        """
+        initialized_request = super(
+            OfferViewSet, self).initialize_request(request, *args, **kwargs)
+
+        user = request.user
+        request_method = request.method.lower()
+        action = self.action_map.get(request_method)
+
+        if not user.is_authenticated() and\
+                (action == 'list' or action == 'retrieve'):
+            self.authentication_classes = ()
+            self.permission_classes = (IsAuthenticatedOrReadOnly,)
+
+        return initialized_request
 
     def get_queryset(self):
         return Image.objects.filter(

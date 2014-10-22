@@ -82,23 +82,22 @@ class Requested(BaseModel):
 
 def recalculate_total_score(sender, **kwargs):
     c = kwargs['instance']
+    if c.score > 0.0:
+        reviews = Review.objects.filter(book=c.book.id).exclude(score__lte=0.0)
 
-    reviews = Review.objects.filter(
-        book=c.book.id, score__isnull=False).exclude(score__lte=0.0)
+        accumulator = 0
+        score = 0
+        count = reviews.count()
 
-    accumulator = 0
-    score = 0
-    count = reviews.count()
+        if count > 0:
+            for r in reviews:
+                accumulator += r.score
 
-    if count > 0:
-        for r in reviews:
-            accumulator += r.score
+            score = accumulator / (count * MULTIPLY_VALUE)
 
-        score = (accumulator * MULTIPLY_VALUE) / count
+            book = Book.objects.get(id=c.book.id)
+            book.score = score
 
-        book = Book.objects.get(id=c.book.id)
-        book.score = score
-
-        book.save()
+            book.save()
 
 post_save.connect(recalculate_total_score, sender=Review)

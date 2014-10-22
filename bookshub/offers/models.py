@@ -35,4 +35,4 @@ class Image(BaseModel):
     image = models.ImageField(upload_to=get_book_image_path)
 
     def __str__(self):
-        return self.book
+        return self.offer.description

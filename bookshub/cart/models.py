@@ -1,25 +1,27 @@
 from django.db import models
-from django.db.models.signals import pre_save
 
 from ..offers.models import Offer
 from ..users.models import User
 from ..utils.models import BaseModel
 
 
-class Cart(BaseModel):
-    buyer = models.ForeignKey(User)
+class OrderItem(BaseModel):
     offer = models.ForeignKey(Offer)
+    user = models.ForeignKey(User)
 
-    quantity = models.SmallIntegerField(default=1)
-    total = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    quantity = models.PositiveIntegerField(default=1)
+    is_purchased = models.BooleanField(default=False)
+    purchased_date = models.DateTimeField(auto_now=True)
 
-    REQUIRED_FIELDS = ['buyer', 'offer', 'quantity']
+    def __str__(self):
+        return self.id
 
+    def get_cart_items(self):
+        return OrderItem.objects.filter(user=self.user, is_purchased=False)
 
-def calculate_total(sender, **kwargs):
-    t = kwargs['instance']
-
-    total = t.offer.price * t.quantity
-    t.total = total
-
-pre_save.connect(calculate_total, sender=Cart)
+    def get_cart_total(self):
+        total = 0
+        items = self.get_cart_items()
+        for item in items:
+            total += item.offer.price * item.quantity
+        return total

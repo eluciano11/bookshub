@@ -4,7 +4,7 @@ from ..utils.models import BaseModel
 from ..users.models import User
 from ..books.models import Book
 from ..offers.models import Offer
-from .constans import USER_REPORT, BOOK_REPORT, OFFER_REPORT
+from .constants import USER_REPORT, BOOK_REPORT, OFFER_REPORT
 
 
 class ReportedUser(BaseModel):
@@ -24,7 +24,7 @@ class ReportedBook(BaseModel):
     reason = models.CharField(choices=BOOK_REPORT, max_length=1)
 
     def __str__(self):
-        return self.book
+        return self.reason
 
 
 class ReportedOffer(BaseModel):
