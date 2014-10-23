@@ -43,9 +43,11 @@ def create_json(data, search_by):
             for a in d['author_data']:
                 author.append(a['name'])
 
-        print search_by.lower() == 'author'
+        print 'hello ' + str(search_by.lower() == 'author')
+        print author
+        print 'is there an author? ' + str(len(author))
 
-        if search_by.lower() == 'author' and author:
+        if search_by.lower() == 'author' and len(author) > 0:
             info = {
                 'author': author,
                 'title': d['title'],
@@ -54,8 +56,9 @@ def create_json(data, search_by):
                 'publisher': d['publisher_name'],
                 'edition': d['edition_info']
             }
+            data_list.append(info)
 
-        else:
+        elif search_by.lower() != 'author':
             info = {
                 'author': author,
                 'title': d['title'],
@@ -64,7 +67,6 @@ def create_json(data, search_by):
                 'publisher': d['publisher_name'],
                 'edition': d['edition_info']
             }
-
             data_list.append(info)
 
         json_format = json.dumps(data_list)
