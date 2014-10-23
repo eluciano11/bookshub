@@ -51,6 +51,9 @@ class Review(BaseModel):
 
     review = models.CharField(max_length=200, blank=True)
     score = models.FloatField(default=0.0)
+
+
+    # remove 
     pub_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
