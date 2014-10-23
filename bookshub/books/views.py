@@ -1,3 +1,5 @@
+import json
+
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -8,6 +10,7 @@ from .permissions import BookPermission
 from .serializers import (BookSerializer, RequestedSerializer,
                           ReviewSerializer, BookSimpleSerializer)
 from ..utils.response import ErrorResponse
+from ..utils.search_api import SearchWrapper
 
 
 class CreateBookAPIView(generics.CreateAPIView):
@@ -75,16 +78,44 @@ class SearchAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         search_by = self.request.QUERY_PARAMS.get('search_by')
-        search_string = self.request.QUERY_PARAMS.get('search_string')
+        search_value = self.request.QUERY_PARAMS.get('search_value')
 
         if search_by != 'isbn_10' and search_by != 'isbn_13':
             field_specification = search_by + '__icontains'
             return Book.objects.filter(**{
-                field_specification: search_string})
+                field_specification: search_value})
         else:
             field_specification = search_by + '__iexact'
             return Book.objects.filter(**{
-                field_specification: search_string})
+                field_specification: search_value})
+
+
+class SearchAutoCompleteAPIView(generics.ListAPIView):
+    serializer_class = BookSimpleSerializer
+    permission_classes = ()
+    authentication_classes = ()
+
+    def get_queryset(self):
+        search_by = self.request.QUERY_PARAMS.get('search_by')
+        search_value = self.request.QUERY_PARAMS.get('search_value')
+
+        query = None
+
+        if search_by != 'isbn_10' and search_by != 'isbn_13':
+            field_specification = search_by + '__icontains'
+            query = Book.objects.filter(**{
+                field_specification: search_value})
+        else:
+            field_specification = search_by + '__iexact'
+            query = Book.objects.filter(**{
+                field_specification: search_value})
+
+        if query:
+            return query
+        else:
+            wrapper = SearchWrapper()
+            data = wrapper.search_isbndb_api(search_by, search_value)
+            return json.loads(data)
 
 
 class TopRequestedAPIView(generics.ListAPIView):

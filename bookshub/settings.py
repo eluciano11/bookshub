@@ -160,6 +160,9 @@ class Common(Configuration):
     #Email
     BOOKSHUB_EMAIL = values.Value(environ_prefix=None, default='DEVELOPMENT')
 
+    #ISBNDB API KEY
+    ISBNDB_API_KEY = values.Value(environ_prefix=None, default='DEVELOPMENT')
+
 
 class Development(Common):
 

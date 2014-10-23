@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from .models import Cart
+from .models import OrderItem
 
 from reversion import VersionAdmin
 
 
-class CartAdmin(VersionAdmin):
-    list_display = ('buyer', 'quantity')
+class OrderItemAdmin(VersionAdmin):
+    list_display = ('offer', 'user', 'quantity', 'is_purchased')
 
-admin.site.register(Cart, CartAdmin)
+admin.site.register(OrderItem, OrderItemAdmin)
