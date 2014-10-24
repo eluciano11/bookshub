@@ -49,7 +49,9 @@ class User(BaseModel, AbstractBaseUser):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     phone = models.CharField(max_length=16, blank=True)
-    type = models.CharField(max_length=20, choices=ACCOUNT_TYPE_CHOICES)
+    type = models.CharField(
+        max_length=20, choices=ACCOUNT_TYPE_CHOICES,
+        default='standard')
     status = models.CharField(
         max_length=20, choices=ACCOUNT_STATUS_CHOICES,
         default='normal')
