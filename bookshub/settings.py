@@ -175,8 +175,7 @@ class Development(Common):
 
     SWAGGER_SETTINGS = {
         "exclude_namespaces": [],
-        "api_version": '0.1',
-        "api_path": "/",
+        "api_version": '0.3',
         "enabled_methods": [
             'get',
             'post',
@@ -184,7 +183,6 @@ class Development(Common):
             'patch',
             'delete'
         ],
-        "api_key": '',
         "is_authenticated": False,
         "is_superuser": False,
     }

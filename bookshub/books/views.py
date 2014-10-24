@@ -143,6 +143,7 @@ class TopRecommendedAPIView(generics.ListAPIView):
                     ).order_by('-score')[:5])
 
 
+
 # class TopSellersAPIView(generics.ListAPIView):
 #     model = Book
 #     serializer_class = BookSerializer
