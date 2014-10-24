@@ -8,7 +8,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Book, Requested, Review, Viewed
 from .permissions import BookPermission
 from .serializers import (BookSerializer, RequestedSerializer,
-                          ReviewSerializer, BookSimpleSerializer)
+                          ReviewSerializer, BookSimpleSerializer,
+                          SearchSerializer)
 from ..utils.response import ErrorResponse
 from ..utils.search_api import SearchWrapper
 
@@ -72,22 +73,30 @@ class ReviewViewSet(ModelViewSet):
 
 
 class SearchAPIView(generics.ListAPIView):
-    serializer_class = BookSimpleSerializer
+    serializer_class = SearchSerializer
     permission_classes = ()
     authentication_classes = ()
 
     def get_queryset(self):
         search_by = self.request.QUERY_PARAMS.get('search_by')
         search_value = self.request.QUERY_PARAMS.get('search_value')
+        sort_field = self.request.QUERY_PARAMS.get('sort_field')
+
+        query = None
 
         if search_by != 'isbn_10' and search_by != 'isbn_13':
             field_specification = search_by + '__icontains'
-            return Book.objects.filter(**{
+            query = Book.objects.filter(**{
                 field_specification: search_value})
         else:
             field_specification = search_by + '__iexact'
-            return Book.objects.filter(**{
+            query = Book.objects.filter(**{
                 field_specification: search_value})
+
+        if sort_field.lower() != 'price':
+            query = query.order_by((sort_field.lower()))
+
+        return query
 
 
 class SearchAutoCompleteAPIView(generics.ListAPIView):
