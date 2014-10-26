@@ -123,6 +123,7 @@ class Common(Configuration):
         ),
         'EXCEPTION_HANDLER':
         'bookshub.utils.exceptions.custom_exception_handler',
+        'PAGINATE_BY': 25,
     }
 
     JWT_AUTH = {

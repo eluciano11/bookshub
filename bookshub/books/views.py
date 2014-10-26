@@ -151,9 +151,11 @@ class TopRecommendedAPIView(generics.ListAPIView):
                 Q(author__icontains=v.book.author) |
                 Q(category__iexact=v.book.category) |
                 Q(publisher__icontains=v.book.publisher)
-            ))
-        return result_query.order_by(
-            'author', 'category', 'score', 'publisher)')[:5]
+            ).order_by('author', 'category', 'score', 'publisher)')[:5]
+            )
+        if result_query is None:
+            return []
+        return result_query
 
 # No Paypal payments without being the clearing house
 # class TopSellersAPIView(generics.ListAPIView):
