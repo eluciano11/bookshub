@@ -1,4 +1,7 @@
 import json
+from itertools import chain
+
+from django.db.models import Q
 
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
@@ -135,24 +138,24 @@ class TopRequestedAPIView(generics.ListAPIView):
     authentication_classes = ()
 
 
+# Way to complicated and query hog
 class TopRecommendedAPIView(generics.ListAPIView):
     model = Book
     serializer_class = BookSimpleSerializer
 
     def get_queryset(self):
+        result_query = None
         viewed = Viewed.objects.filter(user=self.request.user)
-        category_recommended = []
-        top_reviewed = []
-        for data in viewed:
-            if data.book.category not in category_recommended:
-                category_recommended.append(data.book.category)
-                top_reviewed.append(
-                    Review.objects.filter(
-                        book__category=data.book.category
-                    ).order_by('-score')[:5])
+        for v in viewed:
+            result_query = chain(result_query, Book.objects.filter(
+                Q(author__icontains=v.book.author) |
+                Q(category__iexact=v.book.category) |
+                Q(publisher__icontains=v.book.publisher)
+            ))
+        return result_query.order_by(
+            'author', 'category', 'score', 'publisher)')[:5]
 
-
-
+# No Paypal payments without being the clearing house
 # class TopSellersAPIView(generics.ListAPIView):
 #     model = Book
 #     serializer_class = BookSerializer
