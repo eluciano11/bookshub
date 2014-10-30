@@ -174,7 +174,7 @@ class User(BaseModel, AbstractBaseUser):
         Sends an email to this User.
         """
 
-        email = EmailMessage(to=[self.email], from_email=" ")
+        email = EmailMessage(to=[self.email], from_email="")
 
         email.template_name = "forgot-password"
         email.use_template_subject = True
