@@ -25,4 +25,4 @@ REQUEST_STATUS = (
     ('requested', 'Requested'),
     ('closed', 'Closed'),
 )
-MULTIPLY_VALUE = 20
+MULTIPLY_VALUE = 5

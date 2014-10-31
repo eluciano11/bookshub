@@ -9,6 +9,8 @@ from ..utils.models import BaseModel
 
 
 class Offer(BaseModel):
+    class Meta:
+        ordering = ['price', 'condition']
     description_help_text = "Tell us more about the condition of your book."
     owner = models.ForeignKey(User)
     book = models.ForeignKey(Book)
@@ -35,4 +37,4 @@ class Image(BaseModel):
     image = models.ImageField(upload_to=get_book_image_path)
 
     def __str__(self):
-        return self.book
+        return self.offer.description

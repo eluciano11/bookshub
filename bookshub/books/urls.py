@@ -18,6 +18,8 @@ urlpatterns += patterns(
         views.SpecificBookAPIView.as_view(), name='specific_book'),
     url(r'^search/$',
         views.SearchAPIView.as_view(), name='search'),
+    url(r'^search/autocomplete/$',
+        views.SearchAutoCompleteAPIView.as_view(), name='search_autocomplete'),
     url(r'^books/top/requested/$',
         views.TopRequestedAPIView.as_view(), name='top_requested'),
     url(r'^books/top/recommended/$',

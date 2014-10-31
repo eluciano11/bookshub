@@ -1,7 +1,8 @@
 from rest_framework import generics
 
 from .models import ReportedUser, ReportedOffer, ReportedBook
-from .serializers import ReportUserSerializer, ReportOfferSerializer, ReportBookSerializer
+from .serializers import (ReportUserSerializer, ReportOfferSerializer,
+                          ReportBookSerializer)
 
 
 class ReportUserAPIView(generics.CreateAPIView):

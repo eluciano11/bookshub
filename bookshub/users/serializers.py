@@ -6,6 +6,7 @@ from .models import User, Review
 from ..utils.serializers import DynamicFieldsModelSerializer
 from ..utils import fields
 from ..utils.validators import is_valid_email
+from .constants import ACCOUNT_TYPE_CHOICES
 
 
 class SigninSerializer(serializers.Serializer):
@@ -67,7 +68,7 @@ class SignupSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=30)
     last_name = serializers.CharField(max_length=30)
     phone = serializers.CharField(max_length=16)
-    type = serializers.CharField(max_length=20)
+    type = serializers.ChoiceField(choices=ACCOUNT_TYPE_CHOICES)
     title = serializers.CharField(max_length=30)
 
     def validate_email(self, attrs, source):
@@ -107,13 +108,11 @@ class SignupSerializer(serializers.Serializer):
         last_name = attrs['last_name']
         phone = attrs['phone']
         type = attrs['type']
-        status = 'normal'
         title = attrs['title']
 
         user = User.objects.create_user(
             username, email, first_name, last_name,
             phone, type, title, password)
-        user.status = status
         user.save()
 
         return user

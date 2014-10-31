@@ -123,6 +123,7 @@ class Common(Configuration):
         ),
         'EXCEPTION_HANDLER':
         'bookshub.utils.exceptions.custom_exception_handler',
+        'PAGINATE_BY': 25,
     }
 
     JWT_AUTH = {
@@ -151,14 +152,14 @@ class Common(Configuration):
         }
     }
 
-    ENCRYPTED_FIELDS_KEYDIR = 'fieldkeys'
-    # ENCRYPTED_FIELDS_KEYDIR = 'fieldkeys'
-
     # CORS settings
     CORS_ORIGIN_ALLOW_ALL = True
 
     #Email
     BOOKSHUB_EMAIL = values.Value(environ_prefix=None, default='DEVELOPMENT')
+
+    #ISBNDB API KEY
+    ISBNDB_API_KEY = values.Value(environ_prefix=None, default='DEVELOPMENT')
 
 
 class Development(Common):
@@ -175,8 +176,7 @@ class Development(Common):
 
     SWAGGER_SETTINGS = {
         "exclude_namespaces": [],
-        "api_version": '0.1',
-        "api_path": "/",
+        "api_version": '0.3',
         "enabled_methods": [
             'get',
             'post',
@@ -184,7 +184,6 @@ class Development(Common):
             'patch',
             'delete'
         ],
-        "api_key": '',
         "is_authenticated": False,
         "is_superuser": False,
     }

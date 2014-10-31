@@ -1,9 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Cart
-from .serializers import CartSerializer
+from .models import OrderItem
+from .serializers import OrderItemSerializer
+from .permissions import OrderItemPermission
 
 
-class CartViewSet(ModelViewSet):
-    model = Cart
-    serializer_class = CartSerializer
+class OrderItemViewSet(ModelViewSet):
+    model = OrderItem
+    serializer_class = OrderItemSerializer
+    permission_classes = (OrderItemPermission, )

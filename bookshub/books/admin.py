@@ -10,7 +10,7 @@ class BookAdmin(VersionAdmin, admin.ModelAdmin):
 
 
 class ReviewAdmin(VersionAdmin, admin.ModelAdmin):
-    list_display = ('user', 'book', 'review', 'pub_date')
+    list_display = ('user', 'book', 'review')
 
 
 class RequestedAdmin(VersionAdmin, admin.ModelAdmin):

@@ -4,6 +4,6 @@ from . import views
 
 router = DefaultRouter()
 
-router.register(r'cart', views.CartViewSet)
+router.register(r'cart', views.OrderItemViewSet)
 
 urlpatterns = router.urls
