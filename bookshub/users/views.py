@@ -8,9 +8,10 @@ from ..utils.response import ErrorResponse
 
 
 class SigninAPIView(generics.CreateAPIView):
+    serializer_class = serializers.SigninSerializer
     throttle_classes = ()
     permission_classes = ()
-    serializer_class = serializers.SigninSerializer
+    authentication_classes = ()
 
     def post(self, request):
         serializer = self.get_serializer(data=request.DATA)
@@ -55,9 +56,10 @@ class UserAutoCompleteAPIView(generics.ListAPIView):
 
 
 class SignupAPIView(generics.CreateAPIView):
+    serializer_class = serializers.SignupSerializer
     throttle_classes = ()
     permission_classes = ()
-    serializer_class = serializers.SignupSerializer
+    authentication_classes = ()
 
     def post(self, request):
         serializer = self.get_serializer(data=request.DATA)
@@ -131,7 +133,7 @@ class CancelAccountAPIView(generics.UpdateAPIView):
         return ErrorResponse(serializer.errors)
 
 
-class UserSettingsAPIView(generics.RetrieveAPIView, generics.UpdateAPIView):
+class UserSettingsAPIView(generics.UpdateAPIView):
     model = User
     serializer_class = serializers.UserSettingsSerializer
 
@@ -186,3 +188,9 @@ class UserReviewViewSet(ModelViewSet):
             })
 
         return serializer_class(*args, **kwargs)
+
+
+class UserProfileAPIView(generics.RetrieveAPIView):
+    model = User
+    serializer_class = serializers.UserSimpleSerializer
+    lookup_url_kwarg = 'id'

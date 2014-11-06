@@ -5,17 +5,21 @@ from . import views
 
 router = DefaultRouter()
 
-router.register(r'books/(?P<id>\d+)/images', views.BookImageViewSet)
 router.register(r'books/(?P<id>\d+)/reviews', views.ReviewViewSet)
 router.register(r'books/requested', views.RequestedViewSet)
-router.register(r'books', views.BookViewSet)
 
 urlpatterns = router.urls
 
 urlpatterns += patterns(
     '',
+    url(r'^books/$',
+        views.CreateBookAPIView.as_view(), name='books'),
+    url(r'^books/(?P<id>\d+)/$',
+        views.SpecificBookAPIView.as_view(), name='specific_book'),
     url(r'^search/$',
         views.SearchAPIView.as_view(), name='search'),
+    url(r'^search/autocomplete/$',
+        views.SearchAutoCompleteAPIView.as_view(), name='search_autocomplete'),
     url(r'^books/top/requested/$',
         views.TopRequestedAPIView.as_view(), name='top_requested'),
     url(r'^books/top/recommended/$',

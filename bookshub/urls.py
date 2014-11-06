@@ -20,6 +20,22 @@ urlpatterns = patterns(
         r'^api/',
         include('bookshub.books.urls')
     ),
+    url(
+        r'^api/',
+        include('bookshub.contact.urls')
+    ),
+    url(
+        r'^api/',
+        include('bookshub.report.urls')
+    ),
+    url(
+        r'^api/',
+        include('bookshub.offers.urls')
+    ),
+    url(
+        r'^api/',
+        include('bookshub.cart.urls')
+    ),
 )
 
 if settings.ENVIRONMENT != 'Production':

@@ -1,7 +1,3 @@
-BOOK_CONDITION = (
-    ('new', 'New'),
-    ('used', 'Used')
-)
 CATEGORY_CHOICES = (
     ('accounting', 'Accounting'),
     ('architecture', 'Architecture'),
@@ -29,4 +25,4 @@ REQUEST_STATUS = (
     ('requested', 'Requested'),
     ('closed', 'Closed'),
 )
-MULTIPLY_VALUE = 20
+MULTIPLY_VALUE = 5

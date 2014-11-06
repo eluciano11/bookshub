@@ -13,7 +13,6 @@ from django.contrib.sites.models import Site
 from django_countries.fields import CountryField
 from django_gravatar.helpers import get_gravatar_url
 from rest_framework_jwt.settings import api_settings
-# from encrypted_fields import EncryptedCharField
 
 from ..utils.models import BaseModel
 from ..utils.jwt_handlers import jwt_payload_handler, jwt_encode_handler
@@ -50,7 +49,9 @@ class User(BaseModel, AbstractBaseUser):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     phone = models.CharField(max_length=16, blank=True)
-    type = models.CharField(max_length=20, choices=ACCOUNT_TYPE_CHOICES)
+    type = models.CharField(
+        max_length=20, choices=ACCOUNT_TYPE_CHOICES,
+        default='standard')
     status = models.CharField(
         max_length=20, choices=ACCOUNT_STATUS_CHOICES,
         default='normal')
@@ -80,9 +81,6 @@ class User(BaseModel, AbstractBaseUser):
     is_superuser = models.BooleanField(
         default=False, help_text=is_superuser_help_text)
     is_active = models.BooleanField(default=True, help_text=is_active_help_text)
-
-    # token_version = EncryptedCharField(
-    #     max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
 
     token_version = models.CharField(
         max_length=36, default=str(uuid.uuid4()), unique=True, db_index=True)
@@ -175,9 +173,10 @@ class User(BaseModel, AbstractBaseUser):
         """
         Sends an email to this User.
         """
-        email = EmailMessage(to=[self.email], from_email=" ")
 
-        email.template_name = "Test"
+        email = EmailMessage(to=[self.email], from_email=from_email)
+
+        email.template_name = "forgot-password"
         email.use_template_subject = True
         email.use_template_from = True
 

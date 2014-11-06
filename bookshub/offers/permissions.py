@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 
-class BookPermission(permissions.BasePermission):
+class ImagePermission(permissions.BasePermission):
     def is_authenticated(self, request):
         return request.user and request.user.is_authenticated()
 
@@ -13,4 +13,4 @@ class BookPermission(permissions.BasePermission):
         is_authenticated = self.is_authenticated(request)
 
         return is_authenticated\
-            and (obj is None or obj.owner == request.user)
+            and (obj is None or obj.offer.owner == request.user)
