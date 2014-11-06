@@ -49,42 +49,12 @@ $ source venv/bin/activate
 
 ###Dependencies
 
-####Backend
-
 Now that you are in your venv, let's take care of project dependencies.
 
 In the command line, go to the projects root folder and do the following:
 
 ```bash
 $ pip install -r requirements.txt
-```
-
-That will install all of the dependencies of the backend server.
-
-####Frontend
-
-Now you need to install the frontend dependencies. Go to the hub-app directory and run this:
-
-```bash
-$ npm install
-```
-
-That will install the necessary node modules for this project.
-
-Then switch to the app directory and run this:
-
-```bash
-$ bower install
-```
-
-###Security
-
-We are now encrypting certain fields with the django-encrypted-fields package. Due to this you will now have to generated keys for this package to work. You would need to do the following.
-
-```bash
-$ mkdir fieldkeys
-$ keyczart create --location=fieldkeys --purpose=crypt
-$ keyczart addkey --location=fieldkeys --status=primary --size=256
 ```
 
 ###Environment
@@ -99,13 +69,7 @@ For development, we use sqlite since python comes with the driver and it's Djang
 To create the database and run the migrations [South](https://godjango.com/3-introduction-to-south-migrations/) do the following:
 
 ```bash
-$ python manage.py syncdb
-```
-
-Then for migrations
-
-```bash
-$ python manage.py migrate
+$ python manage.py syncdb --all
 ```
 
 ###Running the project
@@ -114,12 +78,6 @@ Now, you can run the backend server.
 
 ```bash
 $ python manage.py runserver
-```
-
-To run the frontend server, we use grunt. From the root folder of the project, go into the hub-app directory and run this:
-
-```bash
-$ grunt serve
 ```
 
 ###Testing
