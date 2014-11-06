@@ -11,6 +11,11 @@ from jsonfield import JSONField
 from taggit.managers import TaggableManager
 
 
+def get_book_image_path(self, filename):
+        return "uploaded_files/books/%s_%s"\
+            % (str(time()).replace('.', '_'), filename)
+
+
 class Category(BaseModel):
     name = models.CharField(
         choices=CATEGORY_CHOICES, max_length=30, primary_key=True)
@@ -28,15 +33,9 @@ class Book(BaseModel):
     isbn_13 = models.CharField(max_length=13, blank=True)
     edition = models.CharField(max_length=15, blank=True)
     publisher = models.CharField(max_length=75)
-
+    image = models.ImageField(upload_to=get_book_image_path, blank=True)
     score = models.FloatField(null=True, default=0.0)
     tags = TaggableManager(blank=True)
-
-    def get_book_image_path(self, filename):
-        return "uploaded_files/books/%s_%s"\
-            % (str(time()).replace('.', '_'), filename)
-
-    image = models.ImageField(upload_to=get_book_image_path, blank=True)
 
     def __str__(self):
         return self.title
