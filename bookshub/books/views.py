@@ -20,14 +20,16 @@ from ..utils.search_api import SearchWrapper
 class CreateBookAPIView(generics.CreateAPIView):
     model = Book
     serializer_class = BookSerializer
-    permission_classes = (BookPermission, )
+    permission_classes = ()
+    authentication_classes = ()
 
 
 class SpecificBookAPIView(generics.RetrieveAPIView):
     model = Book
     serializer_class = BookSerializer
-    authentication_classes = ()
     lookup_field = 'id'
+    authentication_classes = ()
+    permission_classes = ()
 
 
 class RequestedViewSet(ModelViewSet):
