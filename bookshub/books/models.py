@@ -72,7 +72,7 @@ class Requested(BaseModel):
     title = models.CharField(max_length=75, blank=True)
     author = models.CharField(max_length=50, blank=True)
     count = models.SmallIntegerField(default=1)
-    extra_data = JSONField()
+    extra_data = JSONField(blank=True)
 
     def __str__(self):
         return self.id
