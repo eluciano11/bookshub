@@ -7,3 +7,5 @@ from .serializers import ContactSerializer
 class ContactAPIView(generics.CreateAPIView):
     model = Message
     serializer_class = ContactSerializer
+    authentication_classes = ()
+    permission_classes = ()

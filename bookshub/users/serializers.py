@@ -52,7 +52,7 @@ class UserSimpleSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone',
-                  'type', 'status', 'title', 'address_1', 'address_2',
+                  'type', 'title', 'address_1', 'address_2',
                   'country', 'city', 'state', 'zip', 'facebook_url',
                   'twitter_url', 'google_url', 'gravatar_url', 'institution',
                   'department', 'description', 'logo', 'company_name')

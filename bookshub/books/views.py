@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Book, Requested, Review, Viewed
-from .permissions import BookPermission
 from .serializers import (BookSerializer, RequestedSerializer,
                           ReviewSerializer, BookSimpleSerializer,
                           SearchSerializer)
@@ -37,13 +36,23 @@ class RequestedViewSet(ModelViewSet):
     serializer_class = RequestedSerializer
     permission_classes = ()
 
-    def post(self, request):
-        serializer = self.get_serializer(data=request.DATA)
+    def initialize_request(self, request, *args, **kwargs):
+        """
+        Disable authentication and permissions for `list or retrieve` action.
+        """
+        initialized_request = super(
+            RequestedViewSet, self).initialize_request(request, *args, **kwargs)
 
-        if serializer.is_valid() and request.user.is_authenticated():
-            return Response(serializer.object)
+        user = request.user
+        request_method = request.method.lower()
+        action = self.action_map.get(request_method)
 
-        return ErrorResponse(serializer.errors)
+        if not user.is_authenticated() and\
+                (action == 'list' or action == 'retrieve'):
+            self.authentication_classes = ()
+            self.permission_classes = (IsAuthenticatedOrReadOnly,)
+
+        return initialized_request
 
 
 class ReviewViewSet(ModelViewSet):

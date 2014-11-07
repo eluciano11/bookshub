@@ -27,6 +27,7 @@ class UserAutoCompleteAPIView(generics.ListAPIView):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('^username', '^first_name', '^last_name')
     serializer_class = serializers.UserSimpleSerializer
+    authentication_classes = ()
 
     def get_serializer(self, *args, **kwargs):
         serializer_class = self.get_serializer_class()
@@ -133,7 +134,7 @@ class CancelAccountAPIView(generics.UpdateAPIView):
         return ErrorResponse(serializer.errors)
 
 
-class UserSettingsAPIView(generics.UpdateAPIView):
+class UserSettingsAPIView(generics.UpdateAPIView, generics.RetrieveAPIView):
     model = User
     serializer_class = serializers.UserSettingsSerializer
 
@@ -193,4 +194,6 @@ class UserReviewViewSet(ModelViewSet):
 class UserProfileAPIView(generics.RetrieveAPIView):
     model = User
     serializer_class = serializers.UserSimpleSerializer
+    authentication_classes = ()
+    permission_classes = ()
     lookup_url_kwarg = 'id'
