@@ -6,11 +6,16 @@ from ..offers.serializers import OfferSerializer
 
 
 class BookSimpleSerializer(serializers.ModelSerializer):
+    offers = serializers.SerializerMethodField('get_book_offers')
 
     class Meta:
         model = Book
         fields = ('id', 'title', 'author', 'publisher', 'score',
-                  'category', 'isbn_10', 'isbn_13', 'edition')
+                  'category', 'isbn_10', 'isbn_13', 'edition', 'offers')
+
+    def get_book_offers(self, obj):
+        offers = Offer.objects.filter(book=obj.id).order_by('price')[:10]
+        return OfferSerializer(offers).data
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -20,7 +25,8 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'title', 'author', 'publisher', 'score',
-                  'category', 'isbn_10', 'isbn_13', 'edition')
+                  'category', 'isbn_10', 'isbn_13', 'edition', 'offers',
+                  'tags')
 
     def get_book_offers(self, obj):
         offers = Offer.objects.filter(book=obj.id).order_by('price')[:10]
