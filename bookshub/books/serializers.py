@@ -15,11 +15,16 @@ class BookSimpleSerializer(serializers.ModelSerializer):
 
 class BookSerializer(serializers.ModelSerializer):
     tags = serializers.Field(source='get_tags_display')
+    offers = serializers.SerializerMethodField('get_book_offers')
 
     class Meta:
         model = Book
         fields = ('id', 'title', 'author', 'publisher', 'score',
                   'category', 'isbn_10', 'isbn_13', 'edition')
+
+    def get_book_offers(self, obj):
+        offers = Offer.objects.filter(book=obj.id).order_by('price')[:10]
+        return OfferSerializer(offers).data
 
     def save_object(self, obj, **kwargs):
         obj.owner = self.context['request'].user
@@ -54,6 +59,7 @@ class SearchSerializer(serializers.ModelSerializer):
 
 
 class RequestedSerializer(serializers.ModelSerializer):
+    user = serializers.RelatedField()
 
     class Meta:
         model = Requested
@@ -62,6 +68,7 @@ class RequestedSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    user = serializers.RelatedField()
 
     class Meta:
         model = Review

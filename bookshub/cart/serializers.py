@@ -4,8 +4,11 @@ from .models import OrderItem
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    offer = serializers.RelatedField()
+
     class Meta:
         model = OrderItem
+        fields = ('offer', 'quantity', 'is_purchased', 'purchased_date')
 
     def validate(self, attrs):
         quantity = attrs['quantity']
