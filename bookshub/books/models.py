@@ -75,7 +75,7 @@ class Requested(BaseModel):
     extra_data = JSONField(blank=True)
 
     def __str__(self):
-        return self.id
+        return self.title
 
 
 def recalculate_total_score(sender, **kwargs):
