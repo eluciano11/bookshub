@@ -65,7 +65,7 @@ class SearchSerializer(serializers.ModelSerializer):
 
 
 class RequestedSerializer(serializers.ModelSerializer):
-    user = serializers.RelatedField()
+    user = serializers.RelatedField(many=True)
 
     class Meta:
         model = Requested
