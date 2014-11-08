@@ -75,12 +75,7 @@ class RequestedSerializer(serializers.ModelSerializer):
                   'isbn_13', 'title', 'author', 'count', 'image')
 
     def get_user_image(self, obj):
-        users = []
-
-        for u in obj.user.all():
-            users.append(u)
-
-        return UserImageSerializer(users).data
+        return UserImageSerializer(obj.user.all()).data
 
 
 class ReviewSerializer(serializers.ModelSerializer):
