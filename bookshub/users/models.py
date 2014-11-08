@@ -95,6 +95,9 @@ class User(BaseModel, AbstractBaseUser):
     def __str__(self):
         return self.email
 
+    def __unicode__(self):
+        return self.username
+
     def is_admin(self):
         return self.is_superuser
 
