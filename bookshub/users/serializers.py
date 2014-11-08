@@ -312,3 +312,9 @@ class UserReviewSerializer(DynamicFieldsModelSerializer):
         obj.created_by = self.context['request'].user
         obj.owner_id = self.context['view'].kwargs['user_id']
         super(UserReviewSerializer, self).save_object(obj, **kwargs)
+
+
+class UserImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('gravatar_url',)

@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Book, Requested, Review
 from ..offers.models import Offer
 from ..offers.serializers import OfferSerializer
+from ..users.serializers import UserImageSerializer
 
 
 class BookSimpleSerializer(serializers.ModelSerializer):
@@ -66,11 +67,20 @@ class SearchSerializer(serializers.ModelSerializer):
 
 class RequestedSerializer(serializers.ModelSerializer):
     user = serializers.RelatedField(many=True)
+    image = serializers.SerializerMethodField('get_user_image')
 
     class Meta:
         model = Requested
         fields = ('user', 'status', 'isbn_10',
-                  'isbn_13', 'title', 'author', 'count')
+                  'isbn_13', 'title', 'author', 'count', 'image')
+
+    def get_user_image(self, obj):
+        users = []
+
+        for u in obj.user.all():
+            users.append(u)
+
+        return UserImageSerializer(users).data
 
 
 class ReviewSerializer(serializers.ModelSerializer):
