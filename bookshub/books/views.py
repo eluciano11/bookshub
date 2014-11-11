@@ -107,7 +107,7 @@ class SearchAPIView(generics.ListAPIView):
             query = Book.objects.filter(**{
                 field_specification: search_value})
 
-        if sort_field:            
+        if sort_field:
             if sort_field.lower() != 'price':
                 query = query.order_by((sort_field.lower()))
 
@@ -153,7 +153,7 @@ class TopRequestedAPIView(generics.ListAPIView):
 # Way to complicated and query hog
 class TopRecommendedAPIView(generics.ListAPIView):
     model = Book
-    serializer_class = BookSimpleSerializer
+    serializer_class = BookSerializer
 
     def get_queryset(self):
         result_query = None
