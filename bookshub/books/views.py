@@ -107,8 +107,9 @@ class SearchAPIView(generics.ListAPIView):
             query = Book.objects.filter(**{
                 field_specification: search_value})
 
-        if sort_field.lower() != 'price':
-            query = query.order_by((sort_field.lower()))
+        if sort_field:            
+            if sort_field.lower() != 'price':
+                query = query.order_by((sort_field.lower()))
 
         return query
 
