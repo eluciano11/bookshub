@@ -38,7 +38,7 @@ urlpatterns = patterns(
     ),
 )
 
-if settings.ENVIRONMENT != 'Production':
+if settings.ENVIRONMENT != 'PRODUCTION':
     urlpatterns += (
         url(
             r'^api-docs/',
