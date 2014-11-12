@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Offer, Image
-from books.serializers import BookSimpleSerializer
+from ..books.serializers import BookSimpleSerializer
 
 
 class OfferSerializer(serializers.ModelSerializer):
