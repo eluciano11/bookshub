@@ -5,7 +5,6 @@ from .models import Offer, Image
 
 class OfferSerializer(serializers.ModelSerializer):
     owner = serializers.RelatedField()
-    book = serializers.RelatedField()
 
     class Meta:
         model = Offer
