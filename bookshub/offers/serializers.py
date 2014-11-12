@@ -35,7 +35,7 @@ class OfferSerializer(serializers.ModelSerializer):
                 "edition": obj.book.edition,
                 "publisher": obj.book.publisher,
                 "score": obj.book.score,
-                "tags": obj.get_tags_display(),
+                "tags": obj.book.get_tags_display(),
                 "category": obj.book.category.name,
                 "image": obj.book.image.url
             }
