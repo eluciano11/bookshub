@@ -37,7 +37,7 @@ class OfferSerializer(serializers.ModelSerializer):
                 "score": obj.book.score,
                 "tags": obj.book.get_tags_display(),
                 "category": obj.book.category.name,
-                "image": obj.book.image.url
+                # "image": obj.book.image.url
             }
         }
         return metadata
