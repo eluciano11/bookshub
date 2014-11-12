@@ -110,6 +110,8 @@ class Common(Configuration):
     EMAIL_PORT = values.IntegerValue()
     EMAIL_USE_TLS = values.BooleanValue(False)
 
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
     # Django REST framework
     REST_FRAMEWORK = {
         'DEFAULT_PERMISSION_CLASSES': (
@@ -239,4 +241,3 @@ class Production(Common):
     SECURE_FRAME_DENY = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
