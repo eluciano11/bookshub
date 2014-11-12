@@ -10,7 +10,11 @@ class OfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = Offer
         fields = ('owner', 'book', 'price', 'condition',
-                  'quantity', 'start_date', 'end_date', 'description')
+                  'quantity', 'start_date', 'description')
+
+    def save_object(self, obj, **kwargs):
+        obj.owner = self.context['request'].user
+        super(OfferSerializer, self).save_object(obj, **kwargs)
 
 
 class OfferImageSerializer(serializers.ModelSerializer):
