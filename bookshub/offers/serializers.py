@@ -3,14 +3,6 @@ from rest_framework import serializers
 from .models import Offer, Image
 
 
-# class BookSimpleSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = Book
-#         fields = ('id', 'title', 'author', 'publisher', 'score',
-#                   'category', 'isbn_10', 'isbn_13', 'edition')
-
-
 class OfferSerializer(serializers.ModelSerializer):
     metadata = serializers.SerializerMethodField('get_metadata')
 
