@@ -103,7 +103,7 @@ class User(BaseModel, AbstractBaseUser):
 
     def save(self, *args, **kwargs):
         if not self.pk or self.has_field_changed('email'):
-            self.gravatar_url = get_gravatar_url(self.email)
+            self.gravatar_url = get_gravatar_url(self.email, size=150)
 
         return super(User, self).save(*args, **kwargs)
 
