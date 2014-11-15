@@ -303,15 +303,25 @@ class UserSettingsSerializer(serializers.ModelSerializer):
 
 
 class UserReviewSerializer(DynamicFieldsModelSerializer):
+    metadata = serializers.SerializerMethodField('get_metadata')
 
     class Meta:
         model = Review
-        fields = ('id', 'created_by', 'owner', 'score', 'text', 'created_at')
+        fields = ('id', 'created_by', 'owner', 'score',
+                  'text', 'created_at', 'metadata')
 
     def save_object(self, obj, **kwargs):
         obj.created_by = self.context['request'].user
         obj.owner_id = self.context['view'].kwargs['user_id']
         super(UserReviewSerializer, self).save_object(obj, **kwargs)
+
+    def get_metadata(self, obj):
+        metadata = {
+            "created_by_name": obj.created_by.username,
+            "owner_name": obj.owner.username,
+            "created_by_gravatar_url": obj.created_by.gravatar_url
+        }
+        return metadata
 
 
 class UserImageSerializer(serializers.ModelSerializer):
