@@ -9,6 +9,7 @@ from .permissions import ImagePermission
 class OfferViewSet(ModelViewSet):
     model = Offer
     serializer_class = OfferSerializer
+    filter_fields = ('owner', )
 
     def initialize_request(self, request, *args, **kwargs):
         """

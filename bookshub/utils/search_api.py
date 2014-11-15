@@ -20,12 +20,10 @@ class SearchWrapper:
             title = value.replace(' ', '+')
             final_url = isbndb_url + 'books?q=' + str(title)
         elif search == 'author':
-            print 'hello'
             author = value.replace(' ', '+')
             final_url = isbndb_url + 'books?q=' + str(
                 author) + '&i=author_name'
 
-        print final_url
         if final_url:
             request = urllib2.urlopen(final_url)
             data = json.load(request)
@@ -39,13 +37,8 @@ def create_json(data, search_by):
         author = []
 
         if d['author_data']:
-            print 'aqui'
             for a in d['author_data']:
                 author.append(a['name'])
-
-        print 'hello ' + str(search_by.lower() == 'author')
-        print author
-        print 'is there an author? ' + str(len(author))
 
         if search_by.lower() == 'author' and len(author) > 0:
             info = {

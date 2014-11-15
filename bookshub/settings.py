@@ -40,6 +40,7 @@ class Common(Configuration):
         'taggit',
         'djangosecure',
         'corsheaders',
+        'django_filters',
 
         # Apps
         'bookshub.users',
@@ -101,12 +102,16 @@ class Common(Configuration):
 
     MANDRILL_API_KEY = values.Value(environ_prefix=None)
 
+    EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
+
     DEFAULT_FROM_EMAIL = values.Value()
     EMAIL_HOST = values.Value()
     EMAIL_HOST_USER = values.Value()
     EMAIL_HOST_PASSWORD = values.Value()
     EMAIL_PORT = values.IntegerValue()
     EMAIL_USE_TLS = values.BooleanValue(False)
+
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     # Django REST framework
     REST_FRAMEWORK = {
@@ -120,6 +125,9 @@ class Common(Configuration):
         'DEFAULT_RENDERER_CLASSES': (
             'rest_framework.renderers.JSONRenderer',
             'rest_framework.renderers.BrowsableAPIRenderer',
+        ),
+        'DEFAULT_FILTER_BACKENDS': (
+            'rest_framework.filters.DjangoFilterBackend',
         ),
         'EXCEPTION_HANDLER':
         'bookshub.utils.exceptions.custom_exception_handler',
@@ -190,8 +198,6 @@ class Development(Common):
 
     PROTOCOL = 'http'
 
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
     # Django Debug Toolbar
     DEBUG_TOOLBAR_PATCH_SETTINGS = values.BooleanValue(
         environ_prefix=None, default=False)
@@ -229,7 +235,6 @@ class Testing(Development):
 
 class Production(Common):
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
-    EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
 
     # django-secure settings
     PROTOCOL = 'https'
@@ -240,4 +245,3 @@ class Production(Common):
     SECURE_FRAME_DENY = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

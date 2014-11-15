@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Book, Requested, Review, Viewed
-from .permissions import BookPermission
 from .serializers import (BookSerializer, RequestedSerializer,
                           ReviewSerializer, BookSimpleSerializer,
                           SearchSerializer)
@@ -20,14 +19,16 @@ from ..utils.search_api import SearchWrapper
 class CreateBookAPIView(generics.CreateAPIView):
     model = Book
     serializer_class = BookSerializer
-    permission_classes = (BookPermission, )
+    permission_classes = ()
+    authentication_classes = ()
 
 
 class SpecificBookAPIView(generics.RetrieveAPIView):
     model = Book
     serializer_class = BookSerializer
-    authentication_classes = ()
     lookup_field = 'id'
+    authentication_classes = ()
+    permission_classes = ()
 
 
 class RequestedViewSet(ModelViewSet):
@@ -35,13 +36,23 @@ class RequestedViewSet(ModelViewSet):
     serializer_class = RequestedSerializer
     permission_classes = ()
 
-    def post(self, request):
-        serializer = self.get_serializer(data=request.DATA)
+    def initialize_request(self, request, *args, **kwargs):
+        """
+        Disable authentication and permissions for `list or retrieve` action.
+        """
+        initialized_request = super(
+            RequestedViewSet, self).initialize_request(request, *args, **kwargs)
 
-        if serializer.is_valid() and request.user.is_authenticated():
-            return Response(serializer.object)
+        user = request.user
+        request_method = request.method.lower()
+        action = self.action_map.get(request_method)
 
-        return ErrorResponse(serializer.errors)
+        if not user.is_authenticated() and\
+                (action == 'list' or action == 'retrieve'):
+            self.authentication_classes = ()
+            self.permission_classes = (IsAuthenticatedOrReadOnly,)
+
+        return initialized_request
 
 
 class ReviewViewSet(ModelViewSet):
@@ -96,8 +107,9 @@ class SearchAPIView(generics.ListAPIView):
             query = Book.objects.filter(**{
                 field_specification: search_value})
 
-        if sort_field.lower() != 'price':
-            query = query.order_by((sort_field.lower()))
+        if sort_field:
+            if sort_field.lower() != 'price':
+                query = query.order_by((sort_field.lower()))
 
         return query
 
@@ -141,7 +153,7 @@ class TopRequestedAPIView(generics.ListAPIView):
 # Way to complicated and query hog
 class TopRecommendedAPIView(generics.ListAPIView):
     model = Book
-    serializer_class = BookSimpleSerializer
+    serializer_class = BookSerializer
 
     def get_queryset(self):
         result_query = None

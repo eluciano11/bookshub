@@ -52,7 +52,7 @@ class UserSimpleSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone',
-                  'type', 'status', 'title', 'address_1', 'address_2',
+                  'type', 'title', 'address_1', 'address_2',
                   'country', 'city', 'state', 'zip', 'facebook_url',
                   'twitter_url', 'google_url', 'gravatar_url', 'institution',
                   'department', 'description', 'logo', 'company_name')
@@ -303,12 +303,28 @@ class UserSettingsSerializer(serializers.ModelSerializer):
 
 
 class UserReviewSerializer(DynamicFieldsModelSerializer):
+    metadata = serializers.SerializerMethodField('get_metadata')
 
     class Meta:
         model = Review
-        fields = ('id', 'created_by', 'owner', 'score', 'text', 'created_at')
+        fields = ('id', 'created_by', 'owner', 'score',
+                  'text', 'created_at', 'metadata')
 
     def save_object(self, obj, **kwargs):
         obj.created_by = self.context['request'].user
         obj.owner_id = self.context['view'].kwargs['user_id']
         super(UserReviewSerializer, self).save_object(obj, **kwargs)
+
+    def get_metadata(self, obj):
+        metadata = {
+            "created_by_name": obj.created_by.username,
+            "owner_name": obj.owner.username,
+            "created_by_gravatar_url": obj.created_by.gravatar_url
+        }
+        return metadata
+
+
+class UserImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('gravatar_url',)

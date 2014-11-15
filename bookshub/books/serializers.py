@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Book, Requested, Review
 from ..offers.models import Offer
 from ..offers.serializers import OfferSerializer
+from ..users.serializers import UserImageSerializer
 
 
 class BookSimpleSerializer(serializers.ModelSerializer):
@@ -15,11 +16,17 @@ class BookSimpleSerializer(serializers.ModelSerializer):
 
 class BookSerializer(serializers.ModelSerializer):
     tags = serializers.Field(source='get_tags_display')
+    offers = serializers.SerializerMethodField('get_book_offers')
 
     class Meta:
         model = Book
         fields = ('id', 'title', 'author', 'publisher', 'score',
-                  'category', 'isbn_10', 'isbn_13', 'edition')
+                  'category', 'isbn_10', 'isbn_13', 'edition', 'offers',
+                  'tags')
+
+    def get_book_offers(self, obj):
+        offers = Offer.objects.filter(book=obj.id).order_by('price')[:10]
+        return OfferSerializer(offers).data
 
     def save_object(self, obj, **kwargs):
         obj.owner = self.context['request'].user
@@ -54,14 +61,20 @@ class SearchSerializer(serializers.ModelSerializer):
 
 
 class RequestedSerializer(serializers.ModelSerializer):
+    user = serializers.RelatedField(many=True)
+    image = serializers.SerializerMethodField('get_user_image')
 
     class Meta:
         model = Requested
         fields = ('user', 'status', 'isbn_10',
-                  'isbn_13', 'title', 'author', 'count')
+                  'isbn_13', 'title', 'author', 'count', 'image')
+
+    def get_user_image(self, obj):
+        return UserImageSerializer(obj.user.all()).data
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    user = serializers.RelatedField()
 
     class Meta:
         model = Review
