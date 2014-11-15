@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 from reversion import VersionAdmin
 
 from .forms import UserChangeForm, UserCreationForm
-from .models import User
+from .models import User, Review
 
 
 class CustomUserAdmin(UserAdmin, VersionAdmin):
@@ -38,5 +38,9 @@ class CustomUserAdmin(UserAdmin, VersionAdmin):
     )
 
 
+class UserReviewAdmin(VersionAdmin, admin.ModelAdmin):
+    list_display = ('owner', 'score', 'text')
+
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Review, UserReviewAdmin)
 admin.site.unregister(Group)
