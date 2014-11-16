@@ -13,7 +13,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         print attrs
         quantity = attrs['quantity']
         offer = attrs['offer']
-        buyer = attrs['user']
+        buyer = self.context['request'].user
 
         if buyer == offer.owner:
             message = 'Invalid action, you can not buy your own book.'
@@ -24,3 +24,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(message)
 
         return attrs
+
+    def save_object(self, obj, **kwargs):
+        obj.user = self.context['request'].user
+        super(OrderItemSerializer, self).save_object(obj, **kwargs)
