@@ -14,7 +14,7 @@ class OrderItem(BaseModel):
     purchased_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     def get_cart_items(self):
         return OrderItem.objects.filter(user=self.user, is_purchased=False)

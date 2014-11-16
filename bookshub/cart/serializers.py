@@ -4,7 +4,6 @@ from .models import OrderItem
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    offer = serializers.RelatedField()
 
     class Meta:
         model = OrderItem
