@@ -59,6 +59,9 @@ class ReviewViewSet(ModelViewSet):
     model = Review
     serializer_class = ReviewSerializer
 
+    def get_queryset(self):
+        return self.model.objects.filter(pk=self.kwargs['book_id'])
+
     def initialize_request(self, request, *args, **kwargs):
         """
         Disable authentication and permissions for `create` action.

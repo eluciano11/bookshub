@@ -5,7 +5,7 @@ from . import views
 
 router = DefaultRouter()
 
-router.register(r'books/(?P<id>\d+)/reviews', views.ReviewViewSet)
+router.register(r'books/(?P<book_id>\d+)/reviews', views.ReviewViewSet)
 router.register(r'books/requested', views.RequestedViewSet)
 
 urlpatterns = router.urls
