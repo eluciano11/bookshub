@@ -78,7 +78,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('user', 'book', 'review', 'score')
+        fields = ('id', 'user', 'book', 'review', 'score')
 
     def validate(self, attrs):
         review = attrs.get('review')
