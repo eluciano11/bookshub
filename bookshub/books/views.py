@@ -60,7 +60,7 @@ class ReviewViewSet(ModelViewSet):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        return self.model.objects.filter(pk=self.kwargs['book_id'])
+        return self.model.objects.filter(book=self.kwargs['book_id'])
 
     def initialize_request(self, request, *args, **kwargs):
         """
