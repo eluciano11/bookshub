@@ -9,3 +9,6 @@ class OrderItemViewSet(ModelViewSet):
     model = OrderItem
     serializer_class = OrderItemSerializer
     permission_classes = (OrderItemPermission, )
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
