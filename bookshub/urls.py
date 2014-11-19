@@ -36,6 +36,10 @@ urlpatterns = patterns(
         r'^api/',
         include('bookshub.cart.urls')
     ),
+    url(
+        r'^payments/',
+        include('djstripe.urls', namespace="djstripe")
+    ),
 )
 
 if settings.ENVIRONMENT != 'PRODUCTION':

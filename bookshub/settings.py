@@ -41,6 +41,7 @@ class Common(Configuration):
         'djangosecure',
         'corsheaders',
         'django_filters',
+        'djstripe',
 
         # Apps
         'bookshub.users',
@@ -60,6 +61,18 @@ class Common(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
+
+    TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.contrib.auth.context_processors.auth',
+        'django.core.context_processors.debug',
+        'django.core.context_processors.i18n',
+        'django.core.context_processors.media',
+        'django.core.context_processors.static',
+        'django.core.context_processors.tz',
+        'django.core.context_processors.request',
+        'django.contrib.messages.context_processors.messages',
+        'djstripe.context_processors.djstripe_settings',
     )
 
     ROOT_URLCONF = 'bookshub.urls'
@@ -163,11 +176,35 @@ class Common(Configuration):
     # CORS settings
     CORS_ORIGIN_ALLOW_ALL = True
 
-    #Email
-    BOOKSHUB_EMAIL = values.Value(environ_prefix=None, default='DEVELOPMENT')
+    # Email
+    BOOKSHUB_EMAIL = values.Value(environ_prefix=None)
 
-    #ISBNDB API KEY
-    ISBNDB_API_KEY = values.Value(environ_prefix=None, default='DEVELOPMENT')
+    # ISBNDB API KEY
+    ISBNDB_API_KEY = values.Value(environ_prefix=None)
+
+    # Stripe Keys
+    STRIPE_PUBLIC_KEY = values.Value(environ_prefix=None)
+    STRIPE_SECRET_KEY = values.Value(environ_prefix=None)
+
+    DJSTRIPE_PLANS = {
+        # PAYMENT PLANS GO HERE
+        # "monthly": {
+        #     "stripe_plan_id": "pro-monthly",
+        #     "name": "Web App Pro ($25/month)",
+        #     "description": "The monthly subscription plan to WebApp",
+        #     "price": 2500,  # $25.00
+        #     "currency": "usd",
+        #     "interval": "month"
+        # },
+        # "yearly": {
+        #     "stripe_plan_id": "pro-yearly",
+        #     "name": "Web App Pro ($199/year)",
+        #     "description": "The annual subscription plan to WebApp",
+        #     "price": 19900,  # $199.00
+        #     "currency": "usd",
+        #     "interval": "year"
+        # }
+    }
 
 
 class Development(Common):
