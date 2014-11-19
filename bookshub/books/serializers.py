@@ -74,11 +74,17 @@ class RequestedSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = serializers.RelatedField()
 
     class Meta:
         model = Review
-        fields = ('id', 'user', 'book', 'review', 'score')
+        fields = ('id', 'review', 'score')
+
+    def save_object(self, obj, **kwargs):
+        obj.user = self.context['request'].user
+        obj.book = Book.objects.get(
+            id=self.context['request'].QUERY_PARAMS.get('id')
+        )
+        super(ReviewSerializer, self).save_object(obj, **kwargs)
 
     def validate(self, attrs):
         review = attrs.get('review')
