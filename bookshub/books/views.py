@@ -35,6 +35,7 @@ class RequestedViewSet(ModelViewSet):
     model = Requested
     serializer_class = RequestedSerializer
     permission_classes = ()
+    filter_fields = ('title', )
 
     def initialize_request(self, request, *args, **kwargs):
         """
