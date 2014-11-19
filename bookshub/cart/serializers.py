@@ -7,7 +7,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ('offer', 'quantity', 'is_purchased', 'purchased_date')
+        fields = ('id', 'offer', 'quantity', 'is_purchased', 'purchased_date')
 
     def validate(self, attrs):
         print attrs
