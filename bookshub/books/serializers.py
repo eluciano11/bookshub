@@ -77,7 +77,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'review', 'score')
+        fields = ('id', 'review', 'score', 'user')
 
     def save_object(self, obj, **kwargs):
         obj.user = self.context['request'].user
