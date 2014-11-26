@@ -69,7 +69,7 @@ class Requested(BaseModel):
         choices=REQUEST_STATUS, max_length=10, default='requested')
     isbn_10 = models.CharField(max_length=10, blank=True)
     isbn_13 = models.CharField(max_length=13, blank=True)
-    title = models.CharField(max_length=75, blank=True)
+    title = models.CharField(max_length=75)
     author = models.CharField(max_length=50, blank=True)
     count = models.SmallIntegerField(default=1)
     extra_data = JSONField(blank=True)

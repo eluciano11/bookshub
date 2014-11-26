@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from . import serializers
 from .models import User, Review
 from ..utils.response import ErrorResponse
+from ..books.models import Book
 
 
 class SigninAPIView(generics.CreateAPIView):
