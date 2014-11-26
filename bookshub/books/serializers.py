@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework import status
 
 from .models import Book, Requested, Review
 from ..offers.models import Offer
