@@ -169,9 +169,6 @@ class Common(Configuration):
     #ISBNDB API KEY
     ISBNDB_API_KEY = values.Value(environ_prefix=None, default='DEVELOPMENT')
 
-    CWD = os.getcwd()
-    MEDIA_ROOT = os.path.join(CWD, 'media')
-
 
 class Development(Common):
 
@@ -211,9 +208,6 @@ class Development(Common):
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
-
-    # FilePicker.io API KEY
-    FILEPICKER_API_KEY = values.Value(environ_prefix=None)
 
 
 class Testing(Development):

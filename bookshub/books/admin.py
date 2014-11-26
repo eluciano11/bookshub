@@ -1,23 +1,11 @@
 from django.contrib import admin
-from django import forms
 
 from .models import Book, Review, Category, Requested, Viewed
 
 from reversion import VersionAdmin
 
-from django_filepicker.widgets import FPFileWidget
-
-
-class MyBookFormAdmin(forms.ModelForm):
-    class Meta:
-        model = Book
-        widgets = {
-            'image': FPFileWidget
-        }
-
 
 class BookAdmin(VersionAdmin, admin.ModelAdmin):
-    form = MyBookFormAdmin
     list_display = ('title', 'edition', 'author', 'publisher')
 
 

@@ -1,9 +1,12 @@
 from rest_framework import serializers
+from rest_framework import status
 
 from .models import Book, Requested, Review
 from ..offers.models import Offer
 from ..offers.serializers import OfferSerializer
 from ..users.serializers import UserImageSerializer
+
+from ..utils.response import ErrorResponse
 
 
 class BookSimpleSerializer(serializers.ModelSerializer):
@@ -17,13 +20,12 @@ class BookSimpleSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     tags = serializers.Field(source='get_tags_display')
     offers = serializers.SerializerMethodField('get_book_offers')
-    image = serializers.Field(source='image.url')
 
     class Meta:
         model = Book
         fields = ('id', 'title', 'author', 'publisher', 'score',
                   'category', 'isbn_10', 'isbn_13', 'edition', 'offers',
-                  'tags', 'image')
+                  'tags')
 
     def get_book_offers(self, obj):
         offers = Offer.objects.filter(book=obj.id).order_by('price')[:10]
