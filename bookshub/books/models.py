@@ -9,6 +9,7 @@ from .constants import CATEGORY_CHOICES, REQUEST_STATUS, MULTIPLY_VALUE
 from jsonfield import JSONField
 
 from taggit.managers import TaggableManager
+from django_filepicker.models import FPFileField
 
 
 def get_book_image_path(self, filename):
@@ -33,7 +34,7 @@ class Book(BaseModel):
     isbn_13 = models.CharField(max_length=13, blank=True)
     edition = models.CharField(max_length=15, blank=True)
     publisher = models.CharField(max_length=75)
-    image = models.ImageField(upload_to=get_book_image_path, blank=True)
+    image = FPFileField(upload_to=get_book_image_path, blank=True)
     score = models.FloatField(null=True, default=0.0)
     tags = TaggableManager(blank=True)
 

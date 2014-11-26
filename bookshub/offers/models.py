@@ -7,6 +7,8 @@ from ..users.models import User
 from ..books.models import Book
 from ..utils.models import BaseModel
 
+from django_filepicker.models import FPFileField
+
 
 class Offer(BaseModel):
     class Meta:
@@ -34,7 +36,7 @@ class Image(BaseModel):
         return "uploaded_files/books/%s_%s"\
             % (str(time()).replace('.', '_'), filename)
 
-    image = models.ImageField(upload_to=get_book_image_path)
+    image = FPFileField(upload_to=get_book_image_path)
 
     def __str__(self):
         return self.offer.description
