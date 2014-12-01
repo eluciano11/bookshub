@@ -246,6 +246,36 @@ class Development(Common):
         }
     }
 
+    STRIPE_PUBLIC_KEY = values.Value(environ_prefix=None)
+    STRIPE_SECRET_KEY = values.Value(environ_prefix=None)
+
+    DJSTRIPE_PLANS = {
+        "monthly_5": {
+            "stripe_plan_id": "bronze_plan",
+            "name": "Monthly Subscription $5",
+            "description": "Place up to 20 unique books for sale.",
+            "price": 500,
+            "currency": "usd",
+            "interval": "month"
+        },
+        "monthly_10": {
+            "stripe_plan_id": "silver_plan",
+            "name": "Monthly Subscription $10",
+            "description": "Place up to 20 unique books for sale.",
+            "price": 1000,
+            "currency": "usd",
+            "interval": "month"
+        },
+        "monthly_20": {
+            "stripe_plan_id": "gold_plan",
+            "name": "Monthly Subscription $20",
+            "description": "Place up to 20 unique books for sale.",
+            "price": 2000,
+            "currency": "usd",
+            "interval": "month"
+        },
+    }
+
 
 class Testing(Development):
     LOGGING_CONFIG = None

@@ -52,5 +52,9 @@ urlpatterns += patterns(
         r'^auth/refresh_token/',
         'rest_framework_jwt.views.refresh_jwt_token'
     ),
+    (
+        r'auth/subscription/$',
+        views.StripeCreateSubscriptionView.as_view()
+    ),
 
 )

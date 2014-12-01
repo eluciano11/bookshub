@@ -8,6 +8,8 @@ from ..utils import fields
 from ..utils.validators import is_valid_email
 from .constants import ACCOUNT_TYPE_CHOICES
 
+from djstripe.models import Customer
+
 
 class SigninSerializer(serializers.Serializer):
     """
@@ -328,3 +330,8 @@ class UserImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('gravatar_url',)
+
+
+class StripeSubscriptionSerializer(serializers.Serializer):
+    stripe_token = serializers.CharField()
+    plan = serializers.CharField()
