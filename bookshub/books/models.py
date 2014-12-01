@@ -6,7 +6,6 @@ from django.db.models.signals import post_save
 from ..users.models import User
 from ..utils.models import BaseModel
 from .constants import CATEGORY_CHOICES, REQUEST_STATUS, MULTIPLY_VALUE
-from jsonfield import JSONField
 
 from taggit.managers import TaggableManager
 
@@ -72,7 +71,6 @@ class Requested(BaseModel):
     title = models.CharField(max_length=75)
     author = models.CharField(max_length=50, blank=True)
     count = models.SmallIntegerField(default=1)
-    extra_data = JSONField(blank=True)
 
     def __str__(self):
         return self.title
