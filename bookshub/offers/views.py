@@ -40,7 +40,8 @@ class OfferImageViewSet(ModelViewSet):
         Disable authentication and permissions for `list or retrieve` action.
         """
         initialized_request = super(
-            OfferViewSet, self).initialize_request(request, *args, **kwargs)
+            OfferImageViewSet,
+            self).initialize_request(request, *args, **kwargs)
 
         user = request.user
         request_method = request.method.lower()
@@ -54,8 +55,7 @@ class OfferImageViewSet(ModelViewSet):
         return initialized_request
 
     def get_queryset(self):
-        return Image.objects.filter(
-            book=self.kwargs['id'], book__owner=self.request.user)
+        return Image.objects.filter(offer=self.kwargs['offer_id'])
 
     def pre_save(self, obj, *args, **kwargs):
-        obj.book_id = self.kwargs['id']
+        obj.offer_id = self.kwargs['offer_id']

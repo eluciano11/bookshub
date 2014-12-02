@@ -1,9 +1,12 @@
 from rest_framework import serializers
+from rest_framework import status
 
 from .models import Book, Requested, Review
 from ..offers.models import Offer
 from ..offers.serializers import OfferSerializer
 from ..users.serializers import UserImageSerializer
+
+from ..utils.response import ErrorResponse
 
 
 class BookSimpleSerializer(serializers.ModelSerializer):
@@ -66,7 +69,7 @@ class RequestedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Requested
-        fields = ('user', 'status', 'isbn_10',
+        fields = ('id', 'user', 'status', 'isbn_10',
                   'isbn_13', 'title', 'author', 'count', 'image')
 
     def get_user_image(self, obj):
@@ -74,29 +77,32 @@ class RequestedSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = serializers.RelatedField()
 
     class Meta:
         model = Review
-        fields = ('id', 'user', 'book', 'review', 'score')
+        fields = ('id', 'review', 'score', 'user')
 
     def validate(self, attrs):
-        review = attrs.get('review')
-        score = attrs.get('score')
+        request = self.context['request']
+        view = self.context['view']
+        attrs['user'] = request.user
+        attrs['book'] = Book.objects.get(id=view.kwargs['book_id'])
+        review = attrs
+        score = review['score']
 
         if not review and score == 0.0:
-            msg = 'Please write a review and/or give a score.'
+            msg = "Please write a review and/or give a score."
             raise serializers.ValidationError(msg)
 
         if review:
-            user = attrs['user']
-            book = attrs['book']
+            user = review['user']
+            book = review['book']
 
             reviews = Review.objects.filter(
                 user=user, book=book).exclude(score__lte=0.0).count()
 
             if reviews > 0 and score != 0.0:
-                msg = 'You have already scored this book.'
+                msg = "You have already scored this book."
                 raise serializers.ValidationError(msg)
 
         return attrs

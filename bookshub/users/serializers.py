@@ -67,9 +67,7 @@ class SignupSerializer(serializers.Serializer):
     password = fields.PasswordField(write_only=True)
     first_name = serializers.CharField(max_length=30)
     last_name = serializers.CharField(max_length=30)
-    phone = serializers.CharField(max_length=16)
     type = serializers.ChoiceField(choices=ACCOUNT_TYPE_CHOICES)
-    title = serializers.CharField(max_length=30)
 
     def validate_email(self, attrs, source):
         email = attrs[source].lower().strip()
@@ -106,13 +104,10 @@ class SignupSerializer(serializers.Serializer):
         password = attrs['password']
         first_name = attrs['first_name']
         last_name = attrs['last_name']
-        phone = attrs['phone']
         type = attrs['type']
-        title = attrs['title']
 
         user = User.objects.create_user(
-            username, email, first_name, last_name,
-            phone, type, title, password)
+            username, email, first_name, last_name, type, password)
         user.save()
 
         return user
@@ -342,7 +337,7 @@ class StripeSubscriptionSerializer(serializers.Serializer):
 
         plans = ["student", "monthly_5", "monthly_10", "monthly_20"]
 
-        if plan in plans:
+        if not plan in plans:
             msg = 'Invalid plan name.'
             raise serializers.ValidationError(msg)
 

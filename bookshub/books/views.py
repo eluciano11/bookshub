@@ -35,6 +35,7 @@ class RequestedViewSet(ModelViewSet):
     model = Requested
     serializer_class = RequestedSerializer
     permission_classes = ()
+    filter_fields = ('title', )
 
     def initialize_request(self, request, *args, **kwargs):
         """
@@ -147,7 +148,7 @@ class SearchAutoCompleteAPIView(generics.ListAPIView):
 
 class TopRequestedAPIView(generics.ListAPIView):
     model = Requested
-    queryset = Requested.objects.order_by('-count')[:5]
+    queryset = Requested.objects.order_by('-count')[:6]
     serializer_class = RequestedSerializer
     permission_classes = ()
     authentication_classes = ()
