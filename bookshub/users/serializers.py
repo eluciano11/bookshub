@@ -8,8 +8,6 @@ from ..utils import fields
 from ..utils.validators import is_valid_email
 from .constants import ACCOUNT_TYPE_CHOICES
 
-from djstripe.models import Customer
-
 
 class SigninSerializer(serializers.Serializer):
     """
@@ -335,3 +333,17 @@ class UserImageSerializer(serializers.ModelSerializer):
 class StripeSubscriptionSerializer(serializers.Serializer):
     stripe_token = serializers.CharField()
     plan = serializers.CharField()
+
+    def validate_plan(self, attrs, source):
+        if not source in attrs:
+            return attrs
+
+        plan = attrs[source].lower()
+
+        plans = ["student", "monthly_5", "monthly_10", "monthly_20"]
+
+        if plan in plans:
+            msg = 'Invalid plan name.'
+            raise serializers.ValidationError(msg)
+
+        return attrs

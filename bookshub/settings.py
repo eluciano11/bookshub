@@ -187,23 +187,38 @@ class Common(Configuration):
     STRIPE_SECRET_KEY = values.Value(environ_prefix=None)
 
     DJSTRIPE_PLANS = {
-        # PAYMENT PLANS GO HERE
-        # "monthly": {
-        #     "stripe_plan_id": "pro-monthly",
-        #     "name": "Web App Pro ($25/month)",
-        #     "description": "The monthly subscription plan to WebApp",
-        #     "price": 2500,  # $25.00
-        #     "currency": "usd",
-        #     "interval": "month"
-        # },
-        # "yearly": {
-        #     "stripe_plan_id": "pro-yearly",
-        #     "name": "Web App Pro ($199/year)",
-        #     "description": "The annual subscription plan to WebApp",
-        #     "price": 19900,  # $199.00
-        #     "currency": "usd",
-        #     "interval": "year"
-        # }
+        "student": {
+            "stripe_plan_id": "student_plan",
+            "name": "Monthly Subscription $0",
+            "description": "Place up to 10 unique books for sale.",
+            "price": 0,
+            "currency": "usd",
+            "interval": "month"
+        },
+        "monthly_5": {
+            "stripe_plan_id": "bronze_plan",
+            "name": "Monthly Subscription $5",
+            "description": "Place up to 20 unique books for sale.",
+            "price": 500,
+            "currency": "usd",
+            "interval": "month"
+        },
+        "monthly_10": {
+            "stripe_plan_id": "silver_plan",
+            "name": "Monthly Subscription $10",
+            "description": "Place up to 20 unique books for sale.",
+            "price": 1000,
+            "currency": "usd",
+            "interval": "month"
+        },
+        "monthly_20": {
+            "stripe_plan_id": "gold_plan",
+            "name": "Monthly Subscription $20",
+            "description": "Place up to 20 unique books for sale.",
+            "price": 2000,
+            "currency": "usd",
+            "interval": "month"
+        },
     }
 
 
@@ -244,36 +259,6 @@ class Development(Common):
         'default': {
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
-    }
-
-    STRIPE_PUBLIC_KEY = values.Value(environ_prefix=None)
-    STRIPE_SECRET_KEY = values.Value(environ_prefix=None)
-
-    DJSTRIPE_PLANS = {
-        "monthly_5": {
-            "stripe_plan_id": "bronze_plan",
-            "name": "Monthly Subscription $5",
-            "description": "Place up to 20 unique books for sale.",
-            "price": 500,
-            "currency": "usd",
-            "interval": "month"
-        },
-        "monthly_10": {
-            "stripe_plan_id": "silver_plan",
-            "name": "Monthly Subscription $10",
-            "description": "Place up to 20 unique books for sale.",
-            "price": 1000,
-            "currency": "usd",
-            "interval": "month"
-        },
-        "monthly_20": {
-            "stripe_plan_id": "gold_plan",
-            "name": "Monthly Subscription $20",
-            "description": "Place up to 20 unique books for sale.",
-            "price": 2000,
-            "currency": "usd",
-            "interval": "month"
-        },
     }
 
 
