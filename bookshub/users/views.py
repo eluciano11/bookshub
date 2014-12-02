@@ -26,6 +26,8 @@ class SigninAPIView(generics.CreateAPIView):
 
 class UserAutoCompleteAPIView(generics.ListAPIView):
     model = User
+    authentication_classes = ()
+    permission_classes = ()
     filter_backends = (filters.SearchFilter,)
     search_fields = ('^username', '^first_name', '^last_name')
     serializer_class = serializers.UserSimpleSerializer

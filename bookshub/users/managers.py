@@ -25,8 +25,8 @@ class AccountManager(BaseUserManager):
 
         return None
 
-    def create_user(self, username, email, first_name, last_name, phone,
-                    type, title, password=None):
+    def create_user(self, username, email, first_name, last_name, type,
+                    password=None):
 
         if not email:
             raise ValueError('Users must have an email address')
@@ -36,9 +36,7 @@ class AccountManager(BaseUserManager):
             email=self.normalize_email(email),
             first_name=first_name,
             last_name=last_name,
-            phone=phone,
-            type=type,
-            title=title
+            type=type
         )
 
         user.set_password(password)
@@ -46,16 +44,14 @@ class AccountManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, email, first_name, last_name,
-                         phone, type, title, password):
+                         type, password):
         user = self.create_user(
             username,
             email,
             password=password,
             first_name=first_name,
             last_name=last_name,
-            phone=phone,
             type=type,
-            title=title,
         )
         user.is_superuser = True
         user.is_staff = True
