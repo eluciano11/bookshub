@@ -337,7 +337,7 @@ class StripeSubscriptionSerializer(serializers.Serializer):
 
         plans = ["student", "monthly_5", "monthly_10", "monthly_20"]
 
-        if plan in plans:
+        if not plan in plans:
             msg = 'Invalid plan name.'
             raise serializers.ValidationError(msg)
 
