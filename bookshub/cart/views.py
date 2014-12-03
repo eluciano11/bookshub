@@ -33,17 +33,18 @@ class BuyItemsInCartView(APIView):
 
                 item.save()
 
-                email = EmailMessage(to=[request.user.email], from_email=None)
+                # email = EmailMessage(
+                #     to=[item.offer.owner.email, ], from_email=[request.user])
 
-                email.template_name = "bought-item"
-                email.use_template_subject = True
-                email.use_template_from = True
+                # email.template_name = "bought-item"
+                # email.use_template_subject = True
+                # email.use_template_from = True
 
-                email.global_merge_vars = {
-                    "BUYER_NAME": request.user.get_full_name(),
-                    "BUYER_EMAIL": request.user.email,
-                }
+                # email.global_merge_vars = {
+                #     "BUYER_NAME": request.user.get_full_name(),
+                #     "BUYER_EMAIL": request.user.email,
+                # }
 
-                email.send(fail_silently=False)
+                # email.send(fail_silently=False)
             return Response({"success": True})
         return ErrorResponse({"message": "cart must not be empty to checkout."})
