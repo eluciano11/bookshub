@@ -36,6 +36,10 @@ class OfferSerializer(serializers.ModelSerializer):
 
 
 class OfferImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField('get_image_url')
+
     class Meta:
         model = Image
-        fields = ('id', 'image', )
+
+    def get_image_url(self, obj):
+        return obj.image.url
