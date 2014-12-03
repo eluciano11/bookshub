@@ -323,3 +323,22 @@ class UserImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('gravatar_url',)
+
+
+class StripeSubscriptionSerializer(serializers.Serializer):
+    stripe_token = serializers.CharField()
+    plan = serializers.CharField()
+
+    def validate_plan(self, attrs, source):
+        if not source in attrs:
+            return attrs
+
+        plan = attrs[source].lower()
+
+        plans = ["student", "monthly_5", "monthly_10", "monthly_20"]
+
+        if not plan in plans:
+            msg = 'Invalid plan name.'
+            raise serializers.ValidationError(msg)
+
+        return attrs

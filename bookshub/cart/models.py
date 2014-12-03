@@ -10,8 +10,9 @@ class OrderItem(BaseModel):
     user = models.ForeignKey(User)
 
     quantity = models.PositiveIntegerField(default=1)
-    is_purchased = models.BooleanField(default=False)
     purchased_date = models.DateTimeField(auto_now=True)
+    is_purchased = models.BooleanField(default=False)
+    seller_has_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)

@@ -1,11 +1,12 @@
 from rest_framework.response import Response
 from rest_framework import generics, filters
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 
 from . import serializers
 from .models import User, Review
 from ..utils.response import ErrorResponse
-from ..books.models import Book
+from .mixins import CustomerMixin
 
 
 class SigninAPIView(generics.CreateAPIView):
@@ -30,6 +31,8 @@ class UserAutoCompleteAPIView(generics.ListAPIView):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('^username', '^first_name', '^last_name')
     serializer_class = serializers.UserSimpleSerializer
+    authentication_classes = ()
+    permission_classes = ()
 
     def get_serializer(self, *args, **kwargs):
         serializer_class = self.get_serializer_class()
@@ -199,3 +202,15 @@ class UserProfileAPIView(generics.RetrieveAPIView):
     authentication_classes = ()
     permission_classes = ()
     lookup_url_kwarg = 'id'
+
+
+class StripeCreateSubscriptionView(CustomerMixin, APIView):
+
+    def post(self, request):
+        serializer = serializers.StripeSubscriptionSerializer(data=request.DATA)
+        if serializer.is_valid():
+            customer = self.get_customer()
+            customer.update_card(request.DATA['stripe_token'])
+            customer.subscribe(request.DATA['plan'])
+            return Response({"success": True})
+        return ErrorResponse(serializer.errors)

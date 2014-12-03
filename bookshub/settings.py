@@ -41,6 +41,7 @@ class Common(Configuration):
         'djangosecure',
         'corsheaders',
         'django_filters',
+        'djstripe',
 
         # Apps
         'bookshub.users',
@@ -60,6 +61,18 @@ class Common(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
+
+    TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.contrib.auth.context_processors.auth',
+        'django.core.context_processors.debug',
+        'django.core.context_processors.i18n',
+        'django.core.context_processors.media',
+        'django.core.context_processors.static',
+        'django.core.context_processors.tz',
+        'django.core.context_processors.request',
+        'django.contrib.messages.context_processors.messages',
+        'djstripe.context_processors.djstripe_settings',
     )
 
     ROOT_URLCONF = 'bookshub.urls'
@@ -163,11 +176,50 @@ class Common(Configuration):
     # CORS settings
     CORS_ORIGIN_ALLOW_ALL = True
 
-    #Email
-    BOOKSHUB_EMAIL = values.Value(environ_prefix=None, default='DEVELOPMENT')
+    # Email
+    BOOKSHUB_EMAIL = values.Value(environ_prefix=None)
 
-    #ISBNDB API KEY
-    ISBNDB_API_KEY = values.Value(environ_prefix=None, default='DEVELOPMENT')
+    # ISBNDB API KEY
+    ISBNDB_API_KEY = values.Value(environ_prefix=None)
+
+    # Stripe Keys
+    STRIPE_PUBLIC_KEY = values.Value(environ_prefix=None)
+    STRIPE_SECRET_KEY = values.Value(environ_prefix=None)
+
+    DJSTRIPE_PLANS = {
+        "student": {
+            "stripe_plan_id": "student_plan",
+            "name": "Monthly Subscription $0",
+            "description": "Place up to 10 unique books for sale.",
+            "price": 0,
+            "currency": "usd",
+            "interval": "month"
+        },
+        "monthly_5": {
+            "stripe_plan_id": "bronze_plan",
+            "name": "Monthly Subscription $5",
+            "description": "Place up to 20 unique books for sale.",
+            "price": 500,
+            "currency": "usd",
+            "interval": "month"
+        },
+        "monthly_10": {
+            "stripe_plan_id": "silver_plan",
+            "name": "Monthly Subscription $10",
+            "description": "Place up to 20 unique books for sale.",
+            "price": 1000,
+            "currency": "usd",
+            "interval": "month"
+        },
+        "monthly_20": {
+            "stripe_plan_id": "gold_plan",
+            "name": "Monthly Subscription $20",
+            "description": "Place up to 20 unique books for sale.",
+            "price": 2000,
+            "currency": "usd",
+            "interval": "month"
+        },
+    }
 
 
 class Development(Common):
