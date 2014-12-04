@@ -53,7 +53,7 @@ class UserAutoCompleteAPIView(generics.ListAPIView):
         params = self.request.QUERY_PARAMS.get('search')
 
         if not params:
-            return []
+            return User.active.all()
 
         users = User.active.exclude(pk=self.request.user.pk)
         queryset = super(UserAutoCompleteAPIView, self).filter_queryset(users)
