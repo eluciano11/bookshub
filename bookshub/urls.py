@@ -40,14 +40,14 @@ urlpatterns = patterns(
         r'^payments/',
         include('djstripe.urls', namespace="djstripe")
     ),
+    url(
+        r'^api-docs/',
+        include('rest_framework_swagger.urls')
+    ),
 )
 
 if settings.ENVIRONMENT != 'PRODUCTION':
     urlpatterns += (
-        url(
-            r'^api-docs/',
-            include('rest_framework_swagger.urls')
-        ),
         url(
             r'^(?P<path>.*)$',
             'django.views.static.serve',
