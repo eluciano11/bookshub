@@ -44,7 +44,7 @@ class AccountManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, email, first_name, last_name,
-                         type, password):
+                         password):
         user = self.create_user(
             username,
             email,
