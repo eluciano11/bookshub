@@ -42,7 +42,6 @@ class Common(Configuration):
         'corsheaders',
         'django_filters',
         'djstripe',
-        'storages',
 
         # Apps
         'bookshub.users',
@@ -287,6 +286,11 @@ class Testing(Development):
 
 
 class Production(Common):
+
+    Common.INSTALLED_APPS += (
+        'storages',
+    )
+
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
     # django-secure settings
